@@ -138,6 +138,7 @@ textarea {
 
 .safe-options {
   display: flex;
+  flex: 1;
   flex-direction: column;
 }
 
@@ -244,5 +245,6 @@ textarea {
 
   .btn-delete {
     margin-top: 0px;
+    margin-right: 0px;
   }
 }
