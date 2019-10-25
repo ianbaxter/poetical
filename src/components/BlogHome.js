@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
-// import BlogPost from "./BlogPost";
+import BlogPost from "./BlogPost";
 import { Link } from "react-router-dom";
+import Textarea from "react-textarea-autosize";
 const axios = require("axios");
 
 const BlogHome = () => {
@@ -10,22 +11,6 @@ const BlogHome = () => {
   useEffect(() => {
     getBlogPosts();
   }, []);
-
-  const BlogPost = ({ id, title, blog, date }) => {
-    return (
-      <div className="card-container">
-        <Link to={`/blog-post-details/${id}`}>
-          <h3>{title}</h3>
-        </Link>
-        <p>{blog}</p>
-        <div className="blog-post-options">
-          <div id="post-date">
-            <span>{"Posted: " + new Date(date).toLocaleString()}</span>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   // Get all blog posts
   const getBlogPosts = () => {
@@ -55,12 +40,13 @@ const BlogHome = () => {
       />
     ));
   }
-  console.log("Refreshing");
 
   return (
     <div>
       <div className="App-header">
-        <h1>My Blog</h1>
+        <Link to="/">
+          <h1>My Blog</h1>
+        </Link>
         <div className="navigation">
           <Link to="/login" className="btn">
             Login
@@ -75,14 +61,8 @@ const BlogHome = () => {
           encType="multipart/form-data"
         >
           <h3>New post</h3>
-          <textarea name="title" id="" cols="50" rows="1" placeholder="Title" />
-          <textarea
-            name="body"
-            id=""
-            cols="50"
-            rows="1"
-            placeholder="Content"
-          />
+          <Textarea name="title" cols="50" rows="1" placeholder="Title" />
+          <Textarea name="body" cols="50" rows="1" placeholder="Content" />
           <input type="submit" className="btn" value="Save" />
         </form>
       </div>

@@ -1,13 +1,15 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import history from "../history";
 import "../App.css";
 import axios from "axios";
+import Textarea from "react-textarea-autosize";
 
 class BlogPostDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: "",
       textBody: "",
       date: "",
       editMode: false,
@@ -20,13 +22,16 @@ class BlogPostDetails extends Component {
     axios
       .get("http://localhost:8000/api/blogHome/" + this.state.id)
       .then(res => {
-        this.setState({ textBody: res.data.body, date: res.data.date });
+        this.setState({
+          title: res.data.title,
+          textBody: res.data.body,
+          date: res.data.date
+        });
       })
       .catch(err => console.log("Error from BlogPostDetails" + err));
   }
 
   onDeleteClick() {
-    console.log("delete clicked");
     axios
       .delete("http://localhost:8000/api/blogHome/" + this.state.id)
       .then(res => {
@@ -46,9 +51,11 @@ class BlogPostDetails extends Component {
   }
 
   onSaveEditClick(dateEdited) {
-    console.log("Save edit clicked");
-
-    const data = { body: this.state.textBody, dateEdited: dateEdited };
+    const data = {
+      title: this.state.title,
+      body: this.state.textBody,
+      dateEdited: dateEdited
+    };
 
     axios
       .put("http://localhost:8000/api/blogHome/" + this.state.id, data)
@@ -61,20 +68,31 @@ class BlogPostDetails extends Component {
   }
 
   handleTextEdit = event => {
-    console.log(event.target.value);
-    this.setState({ textBody: event.target.value });
+    switch (event.target.name) {
+      case "title":
+        this.setState({ title: event.target.value });
+        break;
+      case "textBody":
+        this.setState({ textBody: event.target.value });
+        break;
+      default:
+        break;
+    }
   };
 
   render() {
-    const date = this.state.date;
-    const editMode = this.state.editMode;
+    const title = this.state.title;
     const textBody = this.state.textBody;
+    const editMode = this.state.editMode;
+    const date = this.state.date;
 
     if (!editMode) {
       return (
         <div>
           <div className="App-header">
-            <h1>My Blog</h1>
+            <Link to="/">
+              <h1>My Blog</h1>
+            </Link>
             <div className="navigation">
               <Link to="/login" className="btn">
                 Login
@@ -83,15 +101,10 @@ class BlogPostDetails extends Component {
           </div>
           <div className="blog-posts">
             <div className="card-container">
+              <h3>{title}</h3>
               <p>{textBody}</p>
               <div className="blog-post-options">
                 <div>
-                  <button
-                    className="btn btn-delete"
-                    onClick={() => this.onDeleteClick()}
-                  >
-                    Delete
-                  </button>
                   <button
                     className="btn btn-edit"
                     onClick={() => this.onEditClick()}
@@ -120,26 +133,43 @@ class BlogPostDetails extends Component {
           </div>
           <div className="blog-posts">
             <div className="card-container">
-              <textarea
-                name="body"
+              <Textarea
+                name="title"
+                cols="50"
+                rows="1"
+                value={this.state.title}
+                onChange={this.handleTextEdit}
+              />
+              <Textarea
+                name="textBody"
                 cols="50"
                 rows="1"
                 value={this.state.textBody}
                 onChange={this.handleTextEdit}
               />
-              <div>
-                <button
-                  className="btn btn-delete"
-                  onClick={() => this.onSaveEditClick(date)}
-                >
-                  Save
-                </button>
-                <button
-                  className="btn btn-edit"
-                  onClick={() => this.onCancelClick()}
-                >
-                  Cancel
-                </button>
+              <div className="edit-options">
+                <div className="safe-options">
+                  <button
+                    className="btn btn-save"
+                    onClick={() => this.onSaveEditClick(date)}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className="btn btn-cancel"
+                    onClick={() => this.onCancelClick()}
+                  >
+                    Cancel
+                  </button>
+                </div>
+                <div className="danger-options">
+                  <button
+                    className="btn btn-delete"
+                    onClick={() => this.onDeleteClick()}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           </div>

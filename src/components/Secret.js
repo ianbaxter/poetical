@@ -8,9 +8,10 @@ const Secret = () => {
 
   useEffect(() => {
     console.log("getting secret");
-    axios
-      .get("http://localhost:8000/api/secret")
-      .then(res => setMessage(res.text));
+    axios.get("http://localhost:8000/api/secret").then(res => {
+      console.log("Recieved secret" + res);
+      setMessage(res.data.text);
+    });
   }, []);
 
   return (

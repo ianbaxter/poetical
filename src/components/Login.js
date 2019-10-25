@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import history from "../history";
 import "../App.css";
-// const axios = require("axios");
 
 const Login = () => {
   const [email, setEmail] = useState([]);
@@ -33,6 +32,7 @@ const Login = () => {
     })
       .then(res => {
         if (res.status === 200) {
+          console.log(res);
           history.push("/");
         } else {
           const error = new Error(res.error);
@@ -48,7 +48,9 @@ const Login = () => {
   return (
     <div>
       <div className="App-header">
-        <h1>My Blog</h1>
+        <Link to="/">
+          <h1>My Blog</h1>
+        </Link>
         <div className="navigation">
           <Link to="/" className="btn">
             Home
@@ -57,12 +59,7 @@ const Login = () => {
       </div>
       <div className="main-content">
         <h2>Login</h2>
-        <form
-          onSubmit={onSubmit}
-          // action="http://localhost:8000/api/auth/login"
-          // method="post"
-          // encType="multipart/form-data"
-        >
+        <form onSubmit={onSubmit}>
           <input
             type="email"
             placeholder="Email"
@@ -77,7 +74,7 @@ const Login = () => {
             value={password}
             onChange={handleInputChange}
           />
-          <input className="btn-primary" type="submit" value="Login" />
+          <input className="btn-primary" type="submit" value="Submit" />
         </form>
       </div>
       <div className="auth-navigation">

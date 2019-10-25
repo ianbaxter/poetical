@@ -8,21 +8,33 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 10vh;
+  min-height: 12vh;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   color: white;
+}
+
+.App-header a {
+  color: white;
+  text-decoration: none;
 }
 
 .App-header h1 {
   flex: 1;
-  margin-left: 40px;
+  margin-left: 25px;
 }
 
 .navigation {
   margin-right: 40px;
+}
+
+.btn {
+  color: white;
+  width: 80px;
+  background: transparent;
+  border: 1px solid #007bff;
 }
 
 .blog-posts {
@@ -32,7 +44,6 @@
   align-items: center;
 }
 
-/* BookList Styles */
 .list {
   display: grid;
   margin: 20px 0 50px 0;
@@ -44,7 +55,7 @@
 .card-container {
   color: white;
   text-decoration: none;
-  width: 70vw;
+  width: 90vw;
   border: 1px solid rgba(0, 0, 0.125);
   margin: 20px 0px;
   padding: 10px;
@@ -53,8 +64,16 @@
   box-shadow: 0 4px 4px 0 #282c34, 0 6px 10px 0 #282c34f6;
 }
 
+.card-container a {
+  text-decoration: none;
+}
+
 .card-container h3 {
   text-decoration: none;
+}
+
+.card-container p {
+  white-space: pre-line;
 }
 
 .new-blog-post {
@@ -62,6 +81,14 @@
   flex-direction: column;
   align-items: flex-start;
 }
+
+.preview-post {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
 textarea {
   margin-bottom: 16px;
   width: 100%;
@@ -78,20 +105,44 @@ textarea {
   justify-content: space-between;
 }
 
-.btn {
-  margin-right: 20px;
-  color: white;
-  background: #007bff;
+.edit-options {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.btn-delete {
-  background: #5a5a5a;
-  color: white;
+.edit-options btn {
+  margin-bottom: 20px;
 }
 
 .btn-edit {
-  background: #3f3e3e;
   color: white;
+  margin-right: 20px;
+}
+
+.btn-cancel {
+  color: white;
+  margin-top: 20px;
+}
+
+.btn-save {
+  color: white;
+}
+
+.btn-delete {
+  color: white;
+  border: 1px solid rgb(148, 0, 0);
+  margin-top: 20px;
+}
+
+.safe-options {
+  display: flex;
+  flex-direction: column;
+}
+
+.danger-options {
+  align-items: flex-end;
 }
 
 #post-date {
@@ -101,13 +152,12 @@ textarea {
   color: rgba(255, 255, 255, 0.589);
 }
 
-/* Login page */
 .main-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 50vh;
+  height: 60vh;
 }
 
 .main-content form {
@@ -149,4 +199,50 @@ textarea {
 
 .auth-navigation a {
   margin: 0 auto;
+}
+
+@media only screen and (min-width: 600px) {
+  .App-header {
+    min-height: 10vh;
+    justify-content: space-between;
+  }
+
+  .App-header h1 {
+    flex: 1;
+    margin-left: 40px;
+    margin-bottom: 0;
+  }
+
+  .main-content {
+    height: 50vh;
+  }
+
+  .card-container {
+    width: 70vw;
+  }
+
+  .edit-options {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .safe-options {
+    flex-direction: row;
+  }
+
+  .btn {
+    margin-right: 20px;
+  }
+
+  .btn-edit {
+    margin-right: 0px;
+  }
+
+  .btn-cancel {
+    margin-top: 0px;
+  }
+
+  .btn-delete {
+    margin-top: 0px;
+  }
 }
