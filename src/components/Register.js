@@ -27,7 +27,7 @@ const Register = () => {
 
   const onSubmit = event => {
     event.preventDefault();
-    fetch("http://localhost:8000/api/auth/register", {
+    fetch("https://floating-woodland-24825.herokuapp.com/api/auth/register", {
       method: "POST",
       body: JSON.stringify({ username, email, password }),
       headers: {
@@ -45,7 +45,7 @@ const Register = () => {
       })
       .catch(err => {
         console.error(err);
-        alert("Error logging in please try again");
+        alert("Error registering please try again");
       });
   };
 

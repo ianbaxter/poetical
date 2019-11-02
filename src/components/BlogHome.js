@@ -16,7 +16,7 @@ const BlogHome = () => {
   const getBlogPosts = () => {
     console.log("Getting blog posts");
     axios
-      .get("http://localhost:8000/api/blogHome")
+      .get("https://floating-woodland-24825.herokuapp.com/api/blogHome")
       .then(res => {
         setBlogPosts(res.data);
       })
@@ -56,7 +56,7 @@ const BlogHome = () => {
       <div className="blog-posts">
         <form
           className="card-container new-blog-post"
-          action="http://localhost:8000/api/blogHome"
+          action="https://floating-woodland-24825.herokuapp.com/api/blogHome"
           method="POST"
           encType="multipart/form-data"
         >

@@ -23,7 +23,7 @@ const Login = () => {
 
   const onSubmit = event => {
     event.preventDefault();
-    fetch("http://localhost:8000/api/auth/login", {
+    fetch("https://floating-woodland-24825.herokuapp.com/api/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
       headers: {
@@ -83,7 +83,6 @@ const Login = () => {
           Register
         </Link>
       </div>
-      <Link to="/secret">Secret</Link>
     </div>
   );
 };

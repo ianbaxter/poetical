@@ -8,10 +8,12 @@ const Secret = () => {
 
   useEffect(() => {
     console.log("getting secret");
-    axios.get("http://localhost:8000/api/secret").then(res => {
-      console.log("Recieved secret" + res);
-      setMessage(res.data.text);
-    });
+    axios
+      .get("https://floating-woodland-24825.herokuapp.com/api/secret")
+      .then(res => {
+        console.log("Recieved secret" + res);
+        setMessage(res.data.text);
+      });
   }, []);
 
   return (
