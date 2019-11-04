@@ -1,74 +1,129 @@
-import React, { useEffect, useState } from "react";
+import React, { Component } from "react";
 import "../App.css";
 import BlogPost from "./BlogPost";
 import { Link } from "react-router-dom";
 import Textarea from "react-textarea-autosize";
 const axios = require("axios");
 
-const BlogHome = () => {
-  const [blogPosts, setBlogPosts] = useState([]);
+class BlogHome extends Component {
+  _isMounted = false;
 
-  useEffect(() => {
-    getBlogPosts();
-  }, []);
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: "",
+      textBody: "",
+      blogPosts: []
+    };
+  }
 
-  // Get all blog posts
-  const getBlogPosts = () => {
-    console.log("Getting blog posts");
+  componentDidMount() {
+    this._isMounted = true;
+    this.getBlogPosts();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  getBlogPosts() {
     axios
       .get("https://floating-woodland-24825.herokuapp.com/api/blogHome")
       .then(res => {
-        setBlogPosts(res.data);
+        if (this._isMounted) {
+          this.setState({ blogPosts: res.data });
+        }
       })
       .catch(err => {
         console.log("Error from blogPosts:SS " + err);
       });
-  };
-
-  let blogPostList;
-  if (!blogPosts) {
-    blogPostList = "There are no blog posts.";
-  } else {
-    let blogPostsReversed = [...blogPosts].reverse();
-    blogPostList = blogPostsReversed.map(blogPost => (
-      <BlogPost
-        key={blogPost._id}
-        id={blogPost._id}
-        title={blogPost.title}
-        blog={blogPost.body}
-        date={blogPost.dateEdited}
-      />
-    ));
   }
 
-  return (
-    <div>
-      <div className="App-header">
-        <Link to="/">
-          <h1>My Blog</h1>
-        </Link>
-        <div className="navigation">
-          <Link to="/login" className="btn">
-            Login
+  onSaveClick() {
+    const data = {
+      title: this.state.title,
+      body: this.state.textBody
+    };
+
+    axios
+      .post("https://floating-woodland-24825.herokuapp.com/api/blogHome", data)
+      .then(res => {
+        this.getBlogPosts();
+      })
+      .catch(err => {
+        console.log("Error updating blog post: " + err);
+      });
+  }
+
+  handleTextEdit = event => {
+    switch (event.target.name) {
+      case "title":
+        this.setState({ title: event.target.value });
+        break;
+      case "textBody":
+        this.setState({ textBody: event.target.value });
+        break;
+      default:
+        break;
+    }
+  };
+
+  render() {
+    let blogPostList;
+    if (!this.state.blogPosts) {
+      blogPostList = "There are no blog posts.";
+    } else {
+      let blogPostsReversed = [...this.state.blogPosts].reverse();
+      blogPostList = blogPostsReversed.map(blogPost => (
+        <BlogPost
+          key={blogPost._id}
+          id={blogPost._id}
+          title={blogPost.title}
+          blog={blogPost.body}
+          date={blogPost.dateEdited}
+        />
+      ));
+    }
+
+    return (
+      <div>
+        <div className="App-header">
+          <Link to="/">
+            <h1>Blog</h1>
           </Link>
+          <div className="navigation">
+            <Link to="/login" className="btn">
+              Login
+            </Link>
+          </div>
         </div>
+        <div className="blog-posts">
+          <div className="card-container new-blog-post">
+            <Textarea
+              name="title"
+              cols="50"
+              rows="1"
+              placeholder="Enter Title"
+              value={this.state.title}
+              onChange={this.handleTextEdit}
+            />
+            <Textarea
+              name="textBody"
+              cols="50"
+              rows="1"
+              placeholder="Enter New Content"
+              value={this.state.textBody}
+              onChange={this.handleTextEdit}
+            />
+            <button className="btn" onClick={() => this.onSaveClick()}>
+              Save
+            </button>
+          </div>
+        </div>
+        <article className="blog-posts">{blogPostList}</article>
       </div>
-      <div className="blog-posts">
-        <form
-          className="card-container new-blog-post"
-          action="https://floating-woodland-24825.herokuapp.com/api/blogHome"
-          method="POST"
-          encType="multipart/form-data"
-        >
-          <h3>New post</h3>
-          <Textarea name="title" cols="50" rows="1" placeholder="Title" />
-          <Textarea name="body" cols="50" rows="1" placeholder="Content" />
-          <input type="submit" className="btn" value="Save" />
-        </form>
-      </div>
-      <article className="blog-posts">{blogPostList}</article>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default BlogHome;

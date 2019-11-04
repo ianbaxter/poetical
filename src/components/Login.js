@@ -32,7 +32,6 @@ const Login = () => {
     })
       .then(res => {
         if (res.status === 200) {
-          console.log(res);
           history.push("/");
         } else {
           const error = new Error(res.error);
@@ -49,7 +48,7 @@ const Login = () => {
     <div>
       <div className="App-header">
         <Link to="/">
-          <h1>My Blog</h1>
+          <h1>Blog</h1>
         </Link>
         <div className="navigation">
           <Link to="/" className="btn">

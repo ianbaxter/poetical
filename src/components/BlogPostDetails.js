@@ -6,6 +6,8 @@ import axios from "axios";
 import Textarea from "react-textarea-autosize";
 
 class BlogPostDetails extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -18,18 +20,28 @@ class BlogPostDetails extends Component {
   }
 
   componentDidMount() {
-    console.log("Mounted with ID: " + this.state.id);
+    this._isMounted = true;
+    this.getBlogPostDetails();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  getBlogPostDetails() {
     axios
       .get(
         "https://floating-woodland-24825.herokuapp.com/api/blogHome/" +
           this.state.id
       )
       .then(res => {
-        this.setState({
-          title: res.data.title,
-          textBody: res.data.body,
-          date: res.data.date
-        });
+        if (this._isMounted) {
+          this.setState({
+            title: res.data.title,
+            textBody: res.data.body,
+            date: res.data.date
+          });
+        }
       })
       .catch(err => console.log("Error from BlogPostDetails" + err));
   }
@@ -101,7 +113,7 @@ class BlogPostDetails extends Component {
         <div>
           <div className="App-header">
             <Link to="/">
-              <h1>My Blog</h1>
+              <h1>Blog</h1>
             </Link>
             <div className="navigation">
               <Link to="/login" className="btn">
@@ -134,7 +146,9 @@ class BlogPostDetails extends Component {
       return (
         <div>
           <div className="App-header">
-            <h1>My Blog</h1>
+            <Link to="/">
+              <h1>Blog</h1>
+            </Link>
             <div className="navigation">
               <Link to="/login" className="btn">
                 Login

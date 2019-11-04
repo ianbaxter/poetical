@@ -53,7 +53,7 @@ const Register = () => {
     <div>
       <div className="App-header">
         <Link to="/">
-          <h1>My Blog</h1>
+          <h1>Blog</h1>
         </Link>
         <div className="navigation">
           <Link to="/" className="btn">
