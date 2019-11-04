@@ -1,4 +1,4 @@
-Front end for my blog application.
+Front end for my blog application (WIP).
 
 Tasks:
   - enable login/user system functionality
