@@ -2,7 +2,7 @@
 
 Front end for my blog application (WIP).
 
-##Tasks:
+## Tasks:
 
   - enable login/user system functionality
 
