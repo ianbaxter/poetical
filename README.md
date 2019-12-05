@@ -19,6 +19,11 @@ Start the site with:
 npm start
 ```
 
+## Deploy
+
+
+
+
 ## Tasks:
 
   - enable login/user system functionality
