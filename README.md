@@ -9,6 +9,12 @@ Clone the project:
 git clone https://github.com/ianbaxter/blog-app
 ```
 
+
+Navigate to the project directory:
+```
+cd blog-app
+```
+
 Install dependencies:
 ```
 npm install
