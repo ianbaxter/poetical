@@ -20,15 +20,17 @@ Install dependencies:
 npm install
 ```
 
-Start the site with:
+Start a development build of the site with:
 ```
-npm start
+npm run dev
 ```
 
 ## Deploy
 
-
-
+To create a production build with Heroku:
+```
+npm start
+```
 
 ## Tasks:
 
