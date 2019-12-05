@@ -30,6 +30,8 @@ Then go to http://localhost:3000 in the browser to view the application.
 
 ## Deploy
 
+Replace all instances of https://floating-woodland-24825.herokuapp.com in HTML verbs with your own Heroku app URL. 
+
 To create a production build with Heroku:
 ```
 npm start
