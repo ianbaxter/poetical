@@ -2,8 +2,7 @@
 
 The front-end (client) for a simple blogging web application.
 
-The source code for the back-end (server) of the application can be found here:
-https://github.com/ianbaxter/my-blog-server
+[Back-end (server) source code](https://github.com/ianbaxter/my-blog-server).
 
 ## Setup
 
