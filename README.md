@@ -1,6 +1,8 @@
 # Blog
 
-The front end for a simple blogging web application.
+The front-end (client) for a simple blogging web application.
+The source code for the back-end (server) of the application can be found here:
+https://github.com/ianbaxter/my-blog-server
 
 ## Setup
 
@@ -33,6 +35,6 @@ To create a production build with Heroku:
 npm start
 ```
 
-## Tasks:
+### Tasks:
 
   - enable login/user system functionality
