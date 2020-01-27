@@ -30,10 +30,7 @@ class BlogPostDetails extends Component {
 
   getBlogPostDetails() {
     axios
-      .get(
-        "https://floating-woodland-24825.herokuapp.com/api/blogHome/" +
-          this.state.id
-      )
+      .get(process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.state.id)
       .then(res => {
         if (this._isMounted) {
           this.setState({
@@ -48,10 +45,7 @@ class BlogPostDetails extends Component {
 
   onDeleteClick() {
     axios
-      .delete(
-        "https://floating-woodland-24825.herokuapp.com/api/blogHome/" +
-          this.state.id
-      )
+      .delete(process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.state.id)
       .then(res => {
         history.push("/");
       })
@@ -77,8 +71,7 @@ class BlogPostDetails extends Component {
 
     axios
       .put(
-        "https://floating-woodland-24825.herokuapp.com/api/blogHome/" +
-          this.state.id,
+        process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.state.id,
         data
       )
       .then(res => {

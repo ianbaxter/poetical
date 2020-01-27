@@ -27,7 +27,7 @@ const Register = () => {
 
   const onSubmit = event => {
     event.preventDefault();
-    fetch("https://floating-woodland-24825.herokuapp.com/api/auth/register", {
+    fetch(process.env.REACT_APP_BASE_URL + "/api/auth/register", {
       method: "POST",
       body: JSON.stringify({ username, email, password }),
       headers: {

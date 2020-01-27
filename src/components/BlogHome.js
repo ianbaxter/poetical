@@ -28,7 +28,7 @@ class BlogHome extends Component {
 
   getBlogPosts() {
     axios
-      .get("https://floating-woodland-24825.herokuapp.com/api/blogHome")
+      .get(process.env.REACT_APP_BASE_URL + "/api/blogHome")
       .then(res => {
         if (this._isMounted) {
           this.setState({ blogPosts: res.data });
@@ -46,7 +46,7 @@ class BlogHome extends Component {
     };
 
     axios
-      .post("https://floating-woodland-24825.herokuapp.com/api/blogHome", data)
+      .post(process.env.REACT_APP_BASE_URL + "/api/blogHome", data)
       .then(res => {
         this.getBlogPosts();
       })

@@ -9,7 +9,9 @@ const Secret = () => {
   useEffect(() => {
     console.log("getting secret");
     axios
-      .get("https://floating-woodland-24825.herokuapp.com/api/secret")
+      .get(process.env.REACT_APP_BASE_URL + "/api/secret", {
+        withCredentials: true
+      })
       .then(res => {
         console.log("Recieved secret" + res);
         setMessage(res.data.text);

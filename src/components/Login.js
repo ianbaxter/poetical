@@ -23,12 +23,13 @@ const Login = () => {
 
   const onSubmit = event => {
     event.preventDefault();
-    fetch("https://floating-woodland-24825.herokuapp.com/api/auth/login", {
+    fetch(process.env.REACT_APP_BASE_URL + "/api/auth/login", {
       method: "POST",
-      body: JSON.stringify({ email, password }),
       headers: {
         "Content-Type": "application/json"
-      }
+      },
+      credentials: "include",
+      body: JSON.stringify({ email, password })
     })
       .then(res => {
         if (res.status === 200) {
