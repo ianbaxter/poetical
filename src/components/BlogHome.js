@@ -7,6 +7,7 @@ const axios = require("axios");
 
 class BlogHome extends Component {
   _isMounted = false;
+  _isLoggedIn = false;
 
   constructor(props) {
     super(props);
@@ -19,6 +20,9 @@ class BlogHome extends Component {
 
   componentDidMount() {
     this._isMounted = true;
+    sessionStorage.getItem("username")
+      ? (this._isLoggedIn = true)
+      : (this._isLoggedIn = false);
     this.getBlogPosts();
   }
 
@@ -42,7 +46,10 @@ class BlogHome extends Component {
   onSaveClick() {
     const data = {
       title: this.state.title,
-      body: this.state.textBody
+      body: this.state.textBody,
+      username: this._isLoggedIn
+        ? sessionStorage.getItem("username")
+        : "Anonymous"
     };
 
     axios
@@ -53,6 +60,11 @@ class BlogHome extends Component {
       .catch(err => {
         console.log("Error updating blog post: " + err);
       });
+  }
+
+  onLogoutClick() {
+    sessionStorage.removeItem("username");
+    window.location.reload();
   }
 
   handleTextEdit = event => {
@@ -81,6 +93,7 @@ class BlogHome extends Component {
           title={blogPost.title}
           blog={blogPost.body}
           date={blogPost.dateEdited}
+          username={blogPost.username}
         />
       ));
     }
@@ -91,10 +104,22 @@ class BlogHome extends Component {
           <Link to="/">
             <h1>Blog</h1>
           </Link>
+
+          {this._isLoggedIn ? (
+            <span>Hi {sessionStorage.getItem("username")}</span>
+          ) : (
+            <div></div>
+          )}
           <div className="navigation">
-            <Link to="/login" className="btn">
-              Login
-            </Link>
+            {this._isLoggedIn ? (
+              <button className="btn" onClick={this.onLogoutClick}>
+                Logout
+              </button>
+            ) : (
+              <Link to="/login" className="btn">
+                Login
+              </Link>
+            )}
           </div>
         </div>
         <div className="blog-posts">

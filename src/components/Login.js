@@ -33,6 +33,8 @@ const Login = () => {
     })
       .then(res => {
         if (res.status === 200) {
+          // Add username to sessionStorage
+          sessionStorage.setItem("username", email);
           history.push("/");
         } else {
           const error = new Error(res.error);
