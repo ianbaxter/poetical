@@ -7,6 +7,7 @@ import Textarea from "react-textarea-autosize";
 
 class BlogPostDetails extends Component {
   _isMounted = false;
+  _isLoggedIn = false;
 
   constructor(props) {
     super(props);
@@ -15,12 +16,16 @@ class BlogPostDetails extends Component {
       textBody: "",
       date: "",
       editMode: false,
-      id: this.props.match.params.id
+      id: this.props.match.params.id,
+      username: ""
     };
   }
 
   componentDidMount() {
     this._isMounted = true;
+    sessionStorage.getItem("username")
+      ? (this._isLoggedIn = true)
+      : (this._isLoggedIn = false);
     this.getBlogPostDetails();
   }
 
@@ -36,7 +41,8 @@ class BlogPostDetails extends Component {
           this.setState({
             title: res.data.title,
             textBody: res.data.body,
-            date: res.data.date
+            date: res.data.date,
+            username: res.data.username
           });
         }
       })
@@ -100,6 +106,8 @@ class BlogPostDetails extends Component {
     const textBody = this.state.textBody;
     const editMode = this.state.editMode;
     const date = this.state.date;
+    const username = this.state.username;
+    const id = this.state.id;
 
     if (!editMode) {
       return (
@@ -108,6 +116,11 @@ class BlogPostDetails extends Component {
             <Link to="/">
               <h1>Blog</h1>
             </Link>
+            {this._isLoggedIn ? (
+              <span>Hi {sessionStorage.getItem("username")}</span>
+            ) : (
+              <div></div>
+            )}
             <div className="navigation">
               <Link to="/login" className="btn">
                 Login
@@ -127,8 +140,13 @@ class BlogPostDetails extends Component {
                     Edit
                   </button>
                 </div>
-                <div id="post-date">
-                  <span>{"Posted: " + new Date(date).toLocaleString()}</span>
+                <div>
+                  <div className="blog-post-detail">
+                    <span>{"Posted: " + new Date(date).toLocaleString()}</span>
+                  </div>
+                  <div className="blog-post-detail">
+                    <span>Author: {username ? username : "Anonymous"}</span>
+                  </div>
                 </div>
               </div>
             </div>

@@ -146,7 +146,7 @@ textarea {
   align-items: flex-end;
 }
 
-#post-date {
+.blog-post-detail {
   align-content: flex-end;
   align-items: flex-end;
   font-size: 14px;
