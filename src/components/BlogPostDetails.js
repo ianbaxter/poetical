@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import history from "../history";
-import "../App.css";
 import axios from "axios";
 import Textarea from "react-textarea-autosize";
 

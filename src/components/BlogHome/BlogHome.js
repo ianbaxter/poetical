@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import "../App.css";
-import BlogPost from "./BlogPost";
+import BlogPost from "../BlogPost";
 import { Link } from "react-router-dom";
 import Textarea from "react-textarea-autosize";
 const axios = require("axios");
