@@ -2,7 +2,6 @@ import React from "react";
 import { Router, Route } from "react-router-dom";
 import "./App.css";
 import history from "./history";
-
 import BlogHome from "./components/BlogHome";
 import BlogPostDetails from "./components/BlogPostDetails";
 import Login from "./components/Login";

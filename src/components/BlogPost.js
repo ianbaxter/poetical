@@ -4,7 +4,7 @@ import "../App.css";
 
 const BlogPost = ({ id, title, blog, date, username }) => {
   return (
-    <div className="card-container">
+    <article className="card-container">
       <Link to={`/blog-post-details/${id}`}>
         <h3>{title}</h3>
       </Link>
@@ -17,7 +17,7 @@ const BlogPost = ({ id, title, blog, date, username }) => {
           <span>Author: {username ? username : "Anonymous"}</span>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 

@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import "../App.css";
 import BlogPost from "./BlogPost";
-import { Link } from "react-router-dom";
 import Textarea from "react-textarea-autosize";
-const axios = require("axios");
+import Header from "./Header";
+import axios from "axios";
 
 class BlogHome extends Component {
-  _isMounted = false;
-  _isLoggedIn = false;
-
   constructor(props) {
     super(props);
+    this._isLoggedIn = false;
     this.state = {
       title: "",
       textBody: "",
@@ -19,24 +17,18 @@ class BlogHome extends Component {
   }
 
   componentDidMount() {
-    this._isMounted = true;
     sessionStorage.getItem("username")
       ? (this._isLoggedIn = true)
       : (this._isLoggedIn = false);
     this.getBlogPosts();
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
   getBlogPosts() {
     axios
       .get(process.env.REACT_APP_BASE_URL + "/api/blogHome")
       .then(res => {
-        if (this._isMounted) {
-          this.setState({ blogPosts: res.data });
-        }
+        let blogPostsReversed = res.data.reverse();
+        this.setState({ blogPosts: blogPostsReversed });
       })
       .catch(err => {
         console.log("Error from blogPosts:SS " + err);
@@ -51,7 +43,6 @@ class BlogHome extends Component {
         ? sessionStorage.getItem("username")
         : "Anonymous"
     };
-
     axios
       .post(process.env.REACT_APP_BASE_URL + "/api/blogHome", data)
       .then(res => {
@@ -62,66 +53,16 @@ class BlogHome extends Component {
       });
   }
 
-  onLogoutClick() {
-    sessionStorage.removeItem("username");
-    window.location.reload();
-  }
-
-  handleTextEdit = event => {
-    switch (event.target.name) {
-      case "title":
-        this.setState({ title: event.target.value });
-        break;
-      case "textBody":
-        this.setState({ textBody: event.target.value });
-        break;
-      default:
-        break;
-    }
+  handleInputChange = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({ [name]: value });
   };
 
   render() {
-    let blogPostList;
-    if (!this.state.blogPosts) {
-      blogPostList = "There are no blog posts.";
-    } else {
-      let blogPostsReversed = [...this.state.blogPosts].reverse();
-      blogPostList = blogPostsReversed.map(blogPost => (
-        <BlogPost
-          key={blogPost._id}
-          id={blogPost._id}
-          title={blogPost.title}
-          blog={blogPost.body}
-          date={blogPost.dateEdited}
-          username={blogPost.username}
-        />
-      ));
-    }
-
     return (
       <div>
-        <div className="App-header">
-          <Link to="/">
-            <h1>Blog</h1>
-          </Link>
-
-          {this._isLoggedIn ? (
-            <span>Hi {sessionStorage.getItem("username")}</span>
-          ) : (
-            <div></div>
-          )}
-          <div className="navigation">
-            {this._isLoggedIn ? (
-              <button className="btn" onClick={this.onLogoutClick}>
-                Logout
-              </button>
-            ) : (
-              <Link to="/login" className="btn">
-                Login
-              </Link>
-            )}
-          </div>
-        </div>
+        <Header isLoggedIn={this._isLoggedIn} />
         <div className="blog-posts">
           <div className="card-container new-blog-post">
             <Textarea
@@ -130,7 +71,7 @@ class BlogHome extends Component {
               rows="1"
               placeholder="Enter Title"
               value={this.state.title}
-              onChange={this.handleTextEdit}
+              onChange={this.handleInputChange}
             />
             <Textarea
               name="textBody"
@@ -138,14 +79,27 @@ class BlogHome extends Component {
               rows="1"
               placeholder="Enter New Content"
               value={this.state.textBody}
-              onChange={this.handleTextEdit}
+              onChange={this.handleInputChange}
             />
             <button className="btn" onClick={() => this.onSaveClick()}>
               Save
             </button>
           </div>
         </div>
-        <article className="blog-posts">{blogPostList}</article>
+        <div className="blog-posts">
+          {this.state.blogPosts
+            ? this.state.blogPosts.map(blogPost => (
+                <BlogPost
+                  key={blogPost._id}
+                  id={blogPost._id}
+                  title={blogPost.title}
+                  blog={blogPost.body}
+                  date={blogPost.dateEdited}
+                  username={blogPost.username}
+                />
+              ))
+            : "There are no blog posts."}
+        </div>
       </div>
     );
   }

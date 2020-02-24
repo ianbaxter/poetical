@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import history from "../history";
 import "../App.css";
 import axios from "axios";
+import Header from "./Header";
 import Textarea from "react-textarea-autosize";
 
 class BlogPostDetails extends Component {
-  _isMounted = false;
-  _isLoggedIn = false;
-
   constructor(props) {
     super(props);
+    this._isLoggedIn = false;
     this.state = {
       title: "",
       textBody: "",
+      newTitle: "",
+      newTextBody: "",
       date: "",
       editMode: false,
       id: this.props.match.params.id,
@@ -22,29 +22,24 @@ class BlogPostDetails extends Component {
   }
 
   componentDidMount() {
-    this._isMounted = true;
     sessionStorage.getItem("username")
       ? (this._isLoggedIn = true)
       : (this._isLoggedIn = false);
     this.getBlogPostDetails();
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
   getBlogPostDetails() {
     axios
       .get(process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.state.id)
       .then(res => {
-        if (this._isMounted) {
-          this.setState({
-            title: res.data.title,
-            textBody: res.data.body,
-            date: res.data.date,
-            username: res.data.username
-          });
-        }
+        this.setState({
+          title: res.data.title,
+          textBody: res.data.body,
+          newTitle: res.data.title,
+          newTextBody: res.data.body,
+          date: res.data.date,
+          username: res.data.username
+        });
       })
       .catch(err => console.log("Error from BlogPostDetails" + err));
   }
@@ -65,13 +60,17 @@ class BlogPostDetails extends Component {
   }
 
   onCancelClick() {
-    this.setState({ editMode: false });
+    this.setState({
+      editMode: false,
+      newTitle: this.state.title,
+      newTextBody: this.state.textBody
+    });
   }
 
   onSaveEditClick(dateEdited) {
     const data = {
-      title: this.state.title,
-      body: this.state.textBody,
+      title: this.state.newTitle,
+      body: this.state.newTextBody,
       dateEdited: dateEdited
     };
 
@@ -81,24 +80,21 @@ class BlogPostDetails extends Component {
         data
       )
       .then(res => {
-        this.setState({ editMode: false });
+        this.setState({
+          editMode: false,
+          title: this.state.newTitle,
+          textBody: this.state.newTextBody
+        });
       })
       .catch(err => {
         console.log("Error updating blog post: " + err);
       });
   }
 
-  handleTextEdit = event => {
-    switch (event.target.name) {
-      case "title":
-        this.setState({ title: event.target.value });
-        break;
-      case "textBody":
-        this.setState({ textBody: event.target.value });
-        break;
-      default:
-        break;
-    }
+  handleInputChange = event => {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({ [name]: value });
   };
 
   render() {
@@ -107,27 +103,12 @@ class BlogPostDetails extends Component {
     const editMode = this.state.editMode;
     const date = this.state.date;
     const username = this.state.username;
-    const id = this.state.id;
 
-    if (!editMode) {
-      return (
-        <div>
-          <div className="App-header">
-            <Link to="/">
-              <h1>Blog</h1>
-            </Link>
-            {this._isLoggedIn ? (
-              <span>Hi {sessionStorage.getItem("username")}</span>
-            ) : (
-              <div></div>
-            )}
-            <div className="navigation">
-              <Link to="/login" className="btn">
-                Login
-              </Link>
-            </div>
-          </div>
-          <div className="blog-posts">
+    return (
+      <div>
+        <Header isLoggedIn={this._isLoggedIn} />
+        <div className="blog-posts">
+          {!editMode && (
             <div className="card-container">
               <h3>{title}</h3>
               <p>{textBody}</p>
@@ -150,37 +131,22 @@ class BlogPostDetails extends Component {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <div className="App-header">
-            <Link to="/">
-              <h1>Blog</h1>
-            </Link>
-            <div className="navigation">
-              <Link to="/login" className="btn">
-                Login
-              </Link>
-            </div>
-          </div>
-          <div className="blog-posts">
+          )}
+          {editMode && (
             <div className="card-container">
               <Textarea
-                name="title"
+                name="newTitle"
                 cols="50"
                 rows="1"
-                value={this.state.title}
-                onChange={this.handleTextEdit}
+                value={this.state.newTitle}
+                onChange={this.handleInputChange}
               />
               <Textarea
-                name="textBody"
+                name="newTextBody"
                 cols="50"
                 rows="1"
-                value={this.state.textBody}
-                onChange={this.handleTextEdit}
+                value={this.state.newTextBody}
+                onChange={this.handleInputChange}
               />
               <div className="edit-options">
                 <div className="safe-options">
@@ -207,10 +173,10 @@ class BlogPostDetails extends Component {
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
-      );
-    }
+      </div>
+    );
   }
 }
 
