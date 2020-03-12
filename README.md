@@ -1,6 +1,6 @@
-# Blog
+# Chat Wall
 
-The front-end (client) for a simple blogging web application.
+The front-end for a simple online forum application.
 
 [Back-end (server) source code](https://github.com/ianbaxter/my-blog-server).
 
