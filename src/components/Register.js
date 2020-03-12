@@ -53,7 +53,7 @@ const Register = () => {
     <div>
       <div className="App-header">
         <Link to="/">
-          <h1>Blog</h1>
+          <h1>Chat Wall</h1>
         </Link>
         <div className="navigation">
           <Link to="/" className="btn">
@@ -85,7 +85,9 @@ const Register = () => {
             value={password}
             onChange={handleInputChange}
           />
-          <input className="btn-primary" type="submit" value="Submit" />
+          <button className="btn btn-submit" type="submit">
+            Submit
+          </button>
         </form>
       </div>
       <div className="auth-navigation">

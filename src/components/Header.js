@@ -10,7 +10,7 @@ const Header = ({ isLoggedIn }) => {
   return (
     <div className="App-header">
       <Link to="/">
-        <h1>Blog</h1>
+        <h1>Chat Wall</h1>
       </Link>
       {isLoggedIn && <span>Hi {sessionStorage.getItem("username")}</span>}
       <div className="navigation">

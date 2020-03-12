@@ -21,7 +21,7 @@ const Secret = () => {
   return (
     <div>
       <div className="App-header">
-        <h1>Secret Blog</h1>
+        <h1>Secret Chat Wall</h1>
         <div className="navigation">
           <Link to="/" className="btn">
             Home
