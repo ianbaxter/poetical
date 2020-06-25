@@ -94,29 +94,31 @@ class Home extends Component {
             </section>
           )}
           <section className="cards">
-            {this.state.posts
-              ? this.state.posts.map((post) => (
-                  <Link
-                    to={{
-                      pathname: `/blog-post-details/${post._id}`,
-                      state: {
-                        post,
-                      },
-                    }}
-                    className="card post--summary"
-                    key={post._id}
-                  >
-                    <Post
-                      id={post._id}
-                      title={post.title}
-                      body={post.body}
-                      date={post.dateEdited}
-                      username={post.username}
-                      favs={post.meta.favs}
-                    />
-                  </Link>
-                ))
-              : "There are no posts."}
+            {this.state.posts ? (
+              this.state.posts.map((post) => (
+                <Link
+                  to={{
+                    pathname: `/blog-post-details/${post._id}`,
+                    state: {
+                      post,
+                    },
+                  }}
+                  className="card post--summary"
+                  key={post._id}
+                >
+                  <Post
+                    id={post._id}
+                    title={post.title}
+                    body={post.body}
+                    date={post.dateEdited}
+                    username={post.username}
+                    favs={post.meta.favs}
+                  />
+                </Link>
+              ))
+            ) : (
+              <p>There are no posts</p>
+            )}
           </section>
           <section className="bottom">
             <a href="#top">
