@@ -10,10 +10,10 @@ const BlogPost = ({ id, title, blog, date, username }) => {
         <p>{blog}</p>
         <div className="post__details">
           <div>
-            <span>{"Posted: " + new Date(date).toLocaleString()}</span>
+            <p>{"Posted: " + new Date(date).toLocaleString()}</p>
           </div>
           <div>
-            <span>Author: {username ? username : "Anonymous"}</span>
+            <p>Author: {username ? username : "Anonymous"}</p>
           </div>
         </div>
       </article>

@@ -78,7 +78,7 @@ const Register = () => {
               value={password}
               onChange={handleInputChange}
             />
-            <button className="btn btn-submit" type="submit">
+            <button className="btn btn--submit" type="submit">
               Submit
             </button>
           </form>

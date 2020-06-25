@@ -1,6 +1,4 @@
 h1 {
-  flex: 1;
-  margin-left: 25px;
   margin-bottom: 0;
 }
 
@@ -12,21 +10,21 @@ h1 {
   color: white;
 }
 
-.header-app {
-  background-color: #282c34;
-  min-height: 12vh;
+header {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  a {
-    color: white;
-    text-decoration: none;
+  justify-content: center;
+  height: 12vh;
+  background-color: #282c34;
+  .header__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    a {
+      color: white;
+      text-decoration: none;
+    }
   }
-}
-
-nav {
-  margin-right: 40px;
 }
 
 .cards {
@@ -48,7 +46,7 @@ nav {
 }
 
 .card {
-  width: 90vw;
+  width: 90%;
   background: transparent;
   border: 1px solid rgba(0, 0, 0, 0.125);
   margin: 20px 0px;
@@ -100,11 +98,12 @@ textarea {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  span {
+  p {
     align-content: flex-end;
     align-items: flex-end;
     font-size: 14px;
     color: rgba(255, 255, 255, 0.589);
+    margin: 0;
   }
 }
 
@@ -113,39 +112,6 @@ textarea {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.btn {
-  color: white;
-  width: 80px;
-  background: transparent;
-  border: 1px solid #007bff;
-  &:hover {
-    color: #007bff;
-  }
-}
-
-.btn-submit {
-  width: 100%;
-  margin-top: 20px;
-  height: 28px;
-  padding: 0;
-}
-
-.btn-edit {
-  margin-right: 20px;
-}
-
-.btn-cancel {
-  margin-top: 20px;
-}
-
-.btn-delete {
-  border: 1px solid rgb(148, 0, 0);
-  margin-top: 20px;
-  &:hover {
-    color: rgb(148, 0, 0);
-  }
 }
 
 .post-options__safe {
@@ -158,6 +124,39 @@ textarea {
   align-items: flex-end;
 }
 
+.btn {
+  color: white;
+  width: 80px;
+  background: transparent;
+  border: 1px solid #007bff;
+  &:hover {
+    color: #007bff;
+  }
+}
+
+.btn--submit {
+  width: 100%;
+  margin-top: 20px;
+  height: 28px;
+  padding: 0;
+}
+
+.btn--edit {
+  margin-right: 20px;
+}
+
+.btn--cancel {
+  margin-top: 20px;
+}
+
+.btn--delete {
+  border: 1px solid rgb(148, 0, 0);
+  margin-top: 20px;
+  &:hover {
+    color: rgb(148, 0, 0);
+  }
+}
+
 .entry {
   display: flex;
   flex-direction: column;
@@ -165,6 +164,7 @@ textarea {
   align-items: center;
   height: 60vh;
   form {
+    width: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -176,7 +176,6 @@ textarea {
   }
   input {
     margin-top: 20px;
-    width: 30vw;
     height: 28px;
     border-radius: 3px;
   }
@@ -187,22 +186,13 @@ textarea {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  span {
-    margin-bottom: 20px;
-  }
-  a {
-    margin: 0 auto;
-  }
 }
 
 @media only screen and (min-width: 600px) {
-  .header-app {
+  header {
     min-height: 10vh;
-    justify-content: space-between;
-    h1 {
-      flex: 1;
-      margin-left: 40px;
-      margin-bottom: 0;
+    .header__top {
+      width: 60%;
     }
   }
 
@@ -211,7 +201,7 @@ textarea {
   }
 
   .card {
-    width: 60vw;
+    width: 60%;
   }
 
   .post-options {
@@ -223,16 +213,17 @@ textarea {
     flex-direction: row;
   }
 
-  .btn {
-    margin-right: 20px;
-  }
-
-  .btn-cancel {
+  .btn--cancel {
     margin-top: 0px;
+    margin-left: 20px;
   }
 
-  .btn-delete {
+  .btn--delete {
     margin-top: 0px;
     margin-right: 0px;
+  }
+
+  .entry form {
+    width: 30%;
   }
 }

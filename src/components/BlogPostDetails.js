@@ -115,7 +115,7 @@ class BlogPostDetails extends Component {
               <div className="post__details">
                 <div>
                   <button
-                    className="btn btn-edit"
+                    className="btn btn--edit"
                     onClick={() => this.onEditClick()}
                   >
                     Edit
@@ -123,10 +123,10 @@ class BlogPostDetails extends Component {
                 </div>
                 <div>
                   <div>
-                    <span>{"Posted: " + new Date(date).toLocaleString()}</span>
+                    <p>{"Posted: " + new Date(date).toLocaleString()}</p>
                   </div>
                   <div>
-                    <span>Author: {username ? username : "Anonymous"}</span>
+                    <p>Author: {username ? username : "Anonymous"}</p>
                   </div>
                 </div>
               </div>
@@ -157,7 +157,7 @@ class BlogPostDetails extends Component {
                     Save
                   </button>
                   <button
-                    className="btn btn-cancel"
+                    className="btn btn--cancel"
                     onClick={() => this.onCancelClick()}
                   >
                     Cancel
@@ -165,7 +165,7 @@ class BlogPostDetails extends Component {
                 </div>
                 <div className="post-options__danger">
                   <button
-                    className="btn btn-delete"
+                    className="btn btn--delete"
                     onClick={() => this.onDeleteClick()}
                   >
                     Delete
