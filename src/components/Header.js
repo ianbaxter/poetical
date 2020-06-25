@@ -9,7 +9,7 @@ const Header = ({ isLoggedIn }) => {
 
   return (
     <header>
-      <div className="header__top">
+      <div id="top">
         <Link to="/">
           <h1>Chat Wall</h1>
         </Link>

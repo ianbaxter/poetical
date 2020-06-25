@@ -20,7 +20,7 @@ const Secret = () => {
 
   return (
     <div>
-      <div className="header__top">
+      <div id="top">
         <h1>Secret Chat Wall</h1>
         <div className="navigation">
           <Link to="/" className="btn">

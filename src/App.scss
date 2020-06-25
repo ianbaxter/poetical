@@ -1,4 +1,9 @@
+html {
+  scroll-behavior: smooth;
+}
+
 h1 {
+  font-size: 1.5rem;
   margin-bottom: 0;
 }
 
@@ -10,39 +15,46 @@ h1 {
   color: white;
 }
 
-header {
+.wrapper {
+  min-height: 100vh;
   display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
+}
+
+header,
+footer {
+  display: flex;
+  flex-shrink: 0;
   justify-content: center;
   height: 12vh;
   background-color: #282c34;
-  .header__top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 90%;
-    a {
-      color: white;
-      text-decoration: none;
-    }
+}
+
+#top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  a {
+    color: white;
+    text-decoration: none;
+  }
+  .btn:hover {
+    color: #007bff;
   }
 }
 
 .cards {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   a {
     text-decoration: none;
   }
-}
-
-.list {
-  display: grid;
-  margin: 20px 0 50px 0;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 1fr;
-  grid-gap: 2em;
 }
 
 .card {
@@ -65,15 +77,15 @@ header {
   }
 }
 
-.card--summary {
-  padding: 0;
-}
-
 .post {
-  padding: 10px;
   p {
     color: white;
     overflow: hidden;
+  }
+}
+
+.post--summary {
+  p {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -107,11 +119,30 @@ textarea {
   }
 }
 
+.post__stats {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  p {
+    margin: 0 0 0 16px;
+    color: rgba(255, 255, 255, 0.589);
+  }
+  svg {
+    cursor: pointer;
+    &:hover {
+      border: 1px solid rgba(255, 255, 255, 0.589);
+      border-radius: 5px;
+    }
+  }
+}
+
 .post-options {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 90%;
+  margin-bottom: 20px;
 }
 
 .post-options__safe {
@@ -188,10 +219,20 @@ textarea {
   align-items: center;
 }
 
+.bottom {
+  display: flex;
+  justify-content: center;
+}
+
 @media only screen and (min-width: 600px) {
-  header {
-    min-height: 10vh;
-    .header__top {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  header,
+  footer {
+    height: 10vh;
+    #top {
       width: 60%;
     }
   }
@@ -207,6 +248,7 @@ textarea {
   .post-options {
     flex-direction: row;
     justify-content: flex-start;
+    width: 60%;
   }
 
   .post-options__safe {
