@@ -3,7 +3,6 @@ import history from "../history";
 import "../App.css";
 import axios from "axios";
 import Header from "./Header";
-import Footer from "./Footer";
 import Post from "./Post";
 import Textarea from "react-textarea-autosize";
 
@@ -177,7 +176,6 @@ class PostPage extends Component {
             </div>
           </main>
         )}
-        <Footer />
       </div>
     );
   }

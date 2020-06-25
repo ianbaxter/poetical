@@ -7,6 +7,14 @@ h1 {
   margin-bottom: 0;
 }
 
+a:link {
+  text-decoration: none;
+}
+
+a:hover {
+  color: white;
+}
+
 .app {
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -44,8 +52,16 @@ footer {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   height: 12vh;
   background-color: #282c34;
+}
+
+header a,
+footer a {
+  color: rgba(255, 255, 255, 0.589);
 }
 
 #top {
@@ -63,7 +79,6 @@ footer {
 
 #top a {
   color: white;
-  text-decoration: none;
 }
 
 #top .btn:hover {
@@ -81,10 +96,6 @@ footer {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-}
-
-.cards a {
-  text-decoration: none;
 }
 
 .card {

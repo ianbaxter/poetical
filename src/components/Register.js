@@ -51,7 +51,7 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className="wrapper">
       <Header />
       <main>
         <section className="entry">

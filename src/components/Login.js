@@ -49,7 +49,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="wrapper">
       <Header />
       <main>
         <section className="entry">
