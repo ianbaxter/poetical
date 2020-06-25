@@ -33,7 +33,7 @@ class Home extends Component {
         this.setState({ posts: postsReversed });
       })
       .catch((err) => {
-        console.log("Error from posts:SS " + err);
+        console.log("Error from posts: " + err);
       });
   }
 
@@ -49,6 +49,8 @@ class Home extends Component {
       .post(process.env.REACT_APP_BASE_URL + "/api/blogHome", data)
       .then((res) => {
         this.getPosts();
+        this.setState({ title: "" });
+        this.setState({ textBody: "" });
       })
       .catch((err) => {
         console.log("Error updating post: " + err);
@@ -95,15 +97,22 @@ class Home extends Component {
             {this.state.posts
               ? this.state.posts.map((post) => (
                   <Link
-                    to={`/blog-post-details/${post._id}`}
+                    to={{
+                      pathname: `/blog-post-details/${post._id}`,
+                      state: {
+                        post,
+                      },
+                    }}
                     className="card post--summary"
                     key={post._id}
                   >
                     <Post
+                      id={post._id}
                       title={post.title}
-                      post={post.body}
+                      body={post.body}
                       date={post.dateEdited}
                       username={post.username}
+                      favs={post.meta.favs}
                     />
                   </Link>
                 ))

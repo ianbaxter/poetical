@@ -12,37 +12,29 @@ class PostPage extends Component {
     this._isLoggedIn = false;
     this.state = {
       title: "",
-      textBody: "",
+      body: "",
       newTitle: "",
-      newTextBody: "",
-      date: "",
+      newBody: "",
       editMode: false,
       id: this.props.match.params.id,
-      username: "",
+      post: null,
     };
+  }
+
+  UNSAFE_componentWillMount() {
+    const { post } = this.props.location.state;
+
+    this.setState({
+      title: post.title,
+      body: post.body,
+      post,
+    });
   }
 
   componentDidMount() {
     sessionStorage.getItem("username")
       ? (this._isLoggedIn = true)
       : (this._isLoggedIn = false);
-    this.getBlogPostDetails();
-  }
-
-  getBlogPostDetails() {
-    axios
-      .get(process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.state.id)
-      .then((res) => {
-        this.setState({
-          title: res.data.title,
-          textBody: res.data.body,
-          newTitle: res.data.title,
-          newTextBody: res.data.body,
-          date: res.data.date,
-          username: res.data.username,
-        });
-      })
-      .catch((err) => console.log("Error from BlogPostDetails" + err));
   }
 
   onDeleteClick() {
@@ -64,14 +56,14 @@ class PostPage extends Component {
     this.setState({
       editMode: false,
       newTitle: this.state.title,
-      newTextBody: this.state.textBody,
+      newTextBody: this.state.body,
     });
   }
 
   onSaveEditClick(dateEdited) {
     const data = {
       title: this.state.newTitle,
-      body: this.state.newTextBody,
+      body: this.state.newBody,
       dateEdited: dateEdited,
     };
 
@@ -84,7 +76,7 @@ class PostPage extends Component {
         this.setState({
           editMode: false,
           title: this.state.newTitle,
-          textBody: this.state.newTextBody,
+          textBody: this.state.newBody,
         });
       })
       .catch((err) => {
@@ -99,12 +91,8 @@ class PostPage extends Component {
   };
 
   render() {
-    const id = this.state.id;
-    const title = this.state.title;
-    const textBody = this.state.textBody;
     const editMode = this.state.editMode;
-    const date = this.state.date;
-    const username = this.state.username;
+    const date = this.state.post.date;
 
     return (
       <div className="wrapper">
@@ -113,11 +101,12 @@ class PostPage extends Component {
           <main className="cards">
             <div className="card">
               <Post
-                id={id}
-                title={title}
-                post={textBody}
-                date={date}
-                username={username}
+                id={this.state.id}
+                title={this.state.title}
+                body={this.state.body}
+                date={this.state.post.date}
+                username={this.state.post.username}
+                favs={this.state.post.meta.favs}
               />
             </div>
             {this._isLoggedIn && (
@@ -146,7 +135,7 @@ class PostPage extends Component {
                 name="newTextBody"
                 cols="50"
                 rows="1"
-                value={this.state.newTextBody}
+                value={this.state.newBody}
                 onChange={this.handleInputChange}
               />
             </div>
