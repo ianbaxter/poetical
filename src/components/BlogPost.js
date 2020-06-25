@@ -4,18 +4,15 @@ import "../App.css";
 
 const BlogPost = ({ id, title, blog, date, username }) => {
   return (
-    <Link
-      to={`/blog-post-details/${id}`}
-      className="card-container card-container-summary"
-    >
+    <Link to={`/blog-post-details/${id}`} className="card card--summary">
       <article className="post">
         <h3>{title}</h3>
-        <p className="preview-post">{blog}</p>
-        <div className="blog-post-options">
-          <div className="blog-post-detail">
+        <p>{blog}</p>
+        <div className="post__details">
+          <div>
             <span>{"Posted: " + new Date(date).toLocaleString()}</span>
           </div>
-          <div className="blog-post-detail">
+          <div>
             <span>Author: {username ? username : "Anonymous"}</span>
           </div>
         </div>

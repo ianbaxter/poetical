@@ -10,9 +10,9 @@ const Secret = () => {
     console.log("getting secret");
     axios
       .get(process.env.REACT_APP_BASE_URL + "/api/secret", {
-        withCredentials: true
+        withCredentials: true,
       })
-      .then(res => {
+      .then((res) => {
         console.log("Recieved secret" + res);
         setMessage(res.data.text);
       });
@@ -20,7 +20,7 @@ const Secret = () => {
 
   return (
     <div>
-      <div className="App-header">
+      <div className="header-app">
         <h1>Secret Chat Wall</h1>
         <div className="navigation">
           <Link to="/" className="btn">
@@ -28,7 +28,7 @@ const Secret = () => {
           </Link>
         </div>
       </div>
-      <div className="main-content">
+      <div className="entry">
         <h2>Secret</h2>
         <p>{message}</p>
       </div>

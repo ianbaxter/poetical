@@ -12,7 +12,7 @@ class BlogHome extends Component {
     this.state = {
       title: "",
       textBody: "",
-      blogPosts: []
+      blogPosts: [],
     };
   }
 
@@ -26,11 +26,11 @@ class BlogHome extends Component {
   getBlogPosts() {
     axios
       .get(process.env.REACT_APP_BASE_URL + "/api/blogHome")
-      .then(res => {
+      .then((res) => {
         let blogPostsReversed = res.data.reverse();
         this.setState({ blogPosts: blogPostsReversed });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Error from blogPosts:SS " + err);
       });
   }
@@ -41,19 +41,19 @@ class BlogHome extends Component {
       body: this.state.textBody,
       username: this._isLoggedIn
         ? sessionStorage.getItem("username")
-        : "Anonymous"
+        : "Anonymous",
     };
     axios
       .post(process.env.REACT_APP_BASE_URL + "/api/blogHome", data)
-      .then(res => {
+      .then((res) => {
         this.getBlogPosts();
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Error updating blog post: " + err);
       });
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({ [name]: value });
@@ -63,43 +63,47 @@ class BlogHome extends Component {
     return (
       <div>
         <Header isLoggedIn={this._isLoggedIn} />
-        <div className="blog-posts">
-          <div className="card-container new-blog-post">
-            <Textarea
-              name="title"
-              cols="50"
-              rows="1"
-              placeholder="Enter Title"
-              value={this.state.title}
-              onChange={this.handleInputChange}
-            />
-            <Textarea
-              name="textBody"
-              cols="50"
-              rows="1"
-              placeholder="Enter New Content"
-              value={this.state.textBody}
-              onChange={this.handleInputChange}
-            />
-            <button className="btn" onClick={() => this.onSaveClick()}>
-              Save
-            </button>
-          </div>
-        </div>
-        <div className="blog-posts">
-          {this.state.blogPosts
-            ? this.state.blogPosts.map(blogPost => (
-                <BlogPost
-                  key={blogPost._id}
-                  id={blogPost._id}
-                  title={blogPost.title}
-                  blog={blogPost.body}
-                  date={blogPost.dateEdited}
-                  username={blogPost.username}
+        <main>
+          {this._isLoggedIn ? (
+            <section className="cards">
+              <div className="card">
+                <Textarea
+                  name="title"
+                  cols="50"
+                  rows="1"
+                  placeholder="Enter Title"
+                  value={this.state.title}
+                  onChange={this.handleInputChange}
                 />
-              ))
-            : "There are no blog posts."}
-        </div>
+                <Textarea
+                  name="textBody"
+                  cols="50"
+                  rows="1"
+                  placeholder="Enter New Content"
+                  value={this.state.textBody}
+                  onChange={this.handleInputChange}
+                />
+                <button className="btn" onClick={() => this.onSaveClick()}>
+                  Save
+                </button>
+              </div>
+            </section>
+          ) : null}
+          <section className="cards">
+            {this.state.blogPosts
+              ? this.state.blogPosts.map((blogPost) => (
+                  <BlogPost
+                    key={blogPost._id}
+                    id={blogPost._id}
+                    title={blogPost.title}
+                    blog={blogPost.body}
+                    date={blogPost.dateEdited}
+                    username={blogPost.username}
+                  />
+                ))
+              : "There are no blog posts."}
+          </section>
+        </main>
       </div>
     );
   }

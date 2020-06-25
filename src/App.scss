@@ -1,4 +1,10 @@
-.App {
+h1 {
+  flex: 1;
+  margin-left: 25px;
+  margin-bottom: 0;
+}
+
+.app {
   align-items: center;
   background-color: #2c3e50;
   min-height: 100vh;
@@ -6,29 +12,24 @@
   color: white;
 }
 
-.App-header {
+.header-app {
   background-color: #282c34;
   min-height: 12vh;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  color: white;
-  h1 {
-    flex: 1;
-    margin-left: 25px;
-  }
   a {
     color: white;
     text-decoration: none;
   }
 }
 
-.navigation {
+nav {
   margin-right: 40px;
 }
 
-.blog-posts {
+.cards {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -46,8 +47,9 @@
   grid-gap: 2em;
 }
 
-.card-container {
+.card {
   width: 90vw;
+  background: transparent;
   border: 1px solid rgba(0, 0, 0, 0.125);
   margin: 20px 0px;
   padding: 10px;
@@ -65,30 +67,23 @@
   }
 }
 
-.card-container-summary {
+.card--summary {
   padding: 0;
 }
+
 .post {
   padding: 10px;
-}
-
-.post:hover {
-  background: #2e323a;
-  transition: 0.2s;
-}
-
-.new-blog-post {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.preview-post {
-  color: white;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+  p {
+    color: white;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  &:hover {
+    background: #2e323a;
+    transition: 0.2s;
+  }
 }
 
 textarea {
@@ -100,14 +95,20 @@ textarea {
   color: white;
 }
 
-.blog-post-options {
+.post__details {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  span {
+    align-content: flex-end;
+    align-items: flex-end;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.589);
+  }
 }
 
-.edit-options {
+.post-options {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -147,24 +148,17 @@ textarea {
   }
 }
 
-.safe-options {
+.post-options__safe {
   display: flex;
   flex: 1;
   flex-direction: column;
 }
 
-.danger-options {
+.post-options__danger {
   align-items: flex-end;
 }
 
-.blog-post-detail {
-  align-content: flex-end;
-  align-items: flex-end;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.589);
-}
-
-.main-content {
+.entry {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -188,7 +182,7 @@ textarea {
   }
 }
 
-.auth-navigation {
+.entry-nav {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -202,7 +196,7 @@ textarea {
 }
 
 @media only screen and (min-width: 600px) {
-  .App-header {
+  .header-app {
     min-height: 10vh;
     justify-content: space-between;
     h1 {
@@ -212,20 +206,20 @@ textarea {
     }
   }
 
-  .main-content {
+  .entry {
     height: 50vh;
   }
 
-  .card-container {
+  .card {
     width: 60vw;
   }
 
-  .edit-options {
+  .post-options {
     flex-direction: row;
     justify-content: flex-start;
   }
 
-  .safe-options {
+  .post-options__safe {
     flex-direction: row;
   }
 

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import history from "../history";
+import Header from "./Header";
 import "../App.css";
 
 const Login = () => {
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
 
-  const handleInputChange = event => {
+  const handleInputChange = (event) => {
     const { value, name } = event.target;
     switch (name) {
       case "email":
@@ -21,17 +22,17 @@ const Login = () => {
     }
   };
 
-  const onSubmit = event => {
+  const onSubmit = (event) => {
     event.preventDefault();
     fetch(process.env.REACT_APP_BASE_URL + "/api/auth/login", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password }),
     })
-      .then(res => {
+      .then((res) => {
         if (res.status === 200) {
           // Add username to sessionStorage
           sessionStorage.setItem("username", email);
@@ -41,7 +42,7 @@ const Login = () => {
           throw error;
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
         alert("Error logging in please try again");
       });
@@ -49,44 +50,37 @@ const Login = () => {
 
   return (
     <div>
-      <div className="App-header">
-        <Link to="/">
-          <h1>Chat Wall</h1>
-        </Link>
-        <div className="navigation">
-          <Link to="/" className="btn">
-            Home
+      <Header />
+      <main>
+        <section className="entry">
+          <h2>Login</h2>
+          <form onSubmit={onSubmit}>
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              value={email}
+              onChange={handleInputChange}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={password}
+              onChange={handleInputChange}
+            />
+            <button className="btn btn-submit" type="submit">
+              Submit
+            </button>
+          </form>
+        </section>
+        <section className="entry-nav">
+          <p>Not yet registered?</p>
+          <Link to="/register" className="btn">
+            Register
           </Link>
-        </div>
-      </div>
-      <div className="main-content">
-        <h2>Login</h2>
-        <form onSubmit={onSubmit}>
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            value={email}
-            onChange={handleInputChange}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={password}
-            onChange={handleInputChange}
-          />
-          <button className="btn btn-submit" type="submit">
-            Submit
-          </button>
-        </form>
-      </div>
-      <div className="auth-navigation">
-        <span>Not yet registered?</span>
-        <Link to="/register" className="btn">
-          Register
-        </Link>
-      </div>
+        </section>
+      </main>
     </div>
   );
 };

@@ -17,7 +17,7 @@ class BlogPostDetails extends Component {
       date: "",
       editMode: false,
       id: this.props.match.params.id,
-      username: ""
+      username: "",
     };
   }
 
@@ -31,26 +31,26 @@ class BlogPostDetails extends Component {
   getBlogPostDetails() {
     axios
       .get(process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.state.id)
-      .then(res => {
+      .then((res) => {
         this.setState({
           title: res.data.title,
           textBody: res.data.body,
           newTitle: res.data.title,
           newTextBody: res.data.body,
           date: res.data.date,
-          username: res.data.username
+          username: res.data.username,
         });
       })
-      .catch(err => console.log("Error from BlogPostDetails" + err));
+      .catch((err) => console.log("Error from BlogPostDetails" + err));
   }
 
   onDeleteClick() {
     axios
       .delete(process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.state.id)
-      .then(res => {
+      .then((res) => {
         history.push("/");
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Error deleting blog post: " + err);
       });
   }
@@ -63,7 +63,7 @@ class BlogPostDetails extends Component {
     this.setState({
       editMode: false,
       newTitle: this.state.title,
-      newTextBody: this.state.textBody
+      newTextBody: this.state.textBody,
     });
   }
 
@@ -71,7 +71,7 @@ class BlogPostDetails extends Component {
     const data = {
       title: this.state.newTitle,
       body: this.state.newTextBody,
-      dateEdited: dateEdited
+      dateEdited: dateEdited,
     };
 
     axios
@@ -79,19 +79,19 @@ class BlogPostDetails extends Component {
         process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.state.id,
         data
       )
-      .then(res => {
+      .then((res) => {
         this.setState({
           editMode: false,
           title: this.state.newTitle,
-          textBody: this.state.newTextBody
+          textBody: this.state.newTextBody,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Error updating blog post: " + err);
       });
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     this.setState({ [name]: value });
@@ -107,12 +107,12 @@ class BlogPostDetails extends Component {
     return (
       <div>
         <Header isLoggedIn={this._isLoggedIn} />
-        <div className="blog-posts">
+        <main className="cards">
           {!editMode && (
-            <div className="card-container">
+            <article className="card">
               <h3>{title}</h3>
               <p>{textBody}</p>
-              <div className="blog-post-options">
+              <div className="post__details">
                 <div>
                   <button
                     className="btn btn-edit"
@@ -122,18 +122,18 @@ class BlogPostDetails extends Component {
                   </button>
                 </div>
                 <div>
-                  <div className="blog-post-detail">
+                  <div>
                     <span>{"Posted: " + new Date(date).toLocaleString()}</span>
                   </div>
-                  <div className="blog-post-detail">
+                  <div>
                     <span>Author: {username ? username : "Anonymous"}</span>
                   </div>
                 </div>
               </div>
-            </div>
+            </article>
           )}
           {editMode && (
-            <div className="card-container">
+            <div className="card">
               <Textarea
                 name="newTitle"
                 cols="50"
@@ -148,8 +148,8 @@ class BlogPostDetails extends Component {
                 value={this.state.newTextBody}
                 onChange={this.handleInputChange}
               />
-              <div className="edit-options">
-                <div className="safe-options">
+              <div className="post-options">
+                <div className="post-options__safe">
                   <button
                     className="btn btn-save"
                     onClick={() => this.onSaveEditClick(date)}
@@ -163,7 +163,7 @@ class BlogPostDetails extends Component {
                     Cancel
                   </button>
                 </div>
-                <div className="danger-options">
+                <div className="post-options__danger">
                   <button
                     className="btn btn-delete"
                     onClick={() => this.onDeleteClick()}
@@ -174,7 +174,7 @@ class BlogPostDetails extends Component {
               </div>
             </div>
           )}
-        </div>
+        </main>
       </div>
     );
   }

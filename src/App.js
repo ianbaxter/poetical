@@ -11,7 +11,7 @@ import Secret from "./components/Secret";
 function App() {
   return (
     <Router history={history}>
-      <div className="App">
+      <div className="app">
         <Route exact path="/" component={BlogHome} />
         <Route path="/blog-post-details/:id" component={BlogPostDetails} />
         <Route exact path="/login" component={Login} />

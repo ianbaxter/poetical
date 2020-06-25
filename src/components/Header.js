@@ -8,12 +8,12 @@ const Header = ({ isLoggedIn }) => {
   }
 
   return (
-    <div className="App-header">
+    <header className="header-app">
       <Link to="/">
         <h1>Chat Wall</h1>
       </Link>
       {isLoggedIn && <span>Hi {sessionStorage.getItem("username")}</span>}
-      <div className="navigation">
+      <nav>
         {isLoggedIn ? (
           <button className="btn" onClick={onLogoutClick}>
             Logout
@@ -23,8 +23,8 @@ const Header = ({ isLoggedIn }) => {
             Login
           </Link>
         )}
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 };
 
