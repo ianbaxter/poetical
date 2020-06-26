@@ -34,13 +34,16 @@ const Login = () => {
     })
       .then((res) => {
         if (res.status === 200) {
-          // Add username to sessionStorage
-          sessionStorage.setItem("username", email);
-          history.push("/");
+          return res.json();
         } else {
           const error = new Error(res.error);
           throw error;
         }
+      })
+      .then((data) => {
+        // Add username to sessionStorage
+        sessionStorage.setItem("username", data.username);
+        history.push("/");
       })
       .catch((err) => {
         console.error(err);

@@ -73,7 +73,9 @@ class Home extends Component {
         <Header isLoggedIn={this._isLoggedIn} />
         <main
           className={
-            typeof this.state.posts !== Object ? "main--loading" : undefined
+            this.state.posts === null || this.state.posts === "Empty"
+              ? "main--loading"
+              : undefined
           }
         >
           {this._isLoggedIn && (
