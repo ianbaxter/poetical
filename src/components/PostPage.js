@@ -27,14 +27,15 @@ class PostPage extends Component {
     this.setState({
       title: post.title,
       body: post.body,
+      newTitle: post.title,
+      newBody: post.body,
       post,
     });
   }
 
   componentDidMount() {
-    sessionStorage.getItem("username")
-      ? (this._isLoggedIn = true)
-      : (this._isLoggedIn = false);
+    if (sessionStorage.getItem("username"))
+      this.setState({ _isLoggedIn: true });
   }
 
   onDeleteClick() {
@@ -56,7 +57,7 @@ class PostPage extends Component {
     this.setState({
       editMode: false,
       newTitle: this.state.title,
-      newTextBody: this.state.body,
+      newBody: this.state.body,
     });
   }
 
@@ -76,7 +77,7 @@ class PostPage extends Component {
         this.setState({
           editMode: false,
           title: this.state.newTitle,
-          textBody: this.state.newBody,
+          body: this.state.newBody,
         });
       })
       .catch((err) => {
@@ -96,7 +97,7 @@ class PostPage extends Component {
 
     return (
       <div className="wrapper">
-        <Header isLoggedIn={this._isLoggedIn} />
+        <Header isLoggedIn={this.state._isLoggedIn} />
         {!editMode && (
           <main className="cards">
             <div className="card">
@@ -109,7 +110,7 @@ class PostPage extends Component {
                 favs={this.state.post.meta.favs}
               />
             </div>
-            {this._isLoggedIn && (
+            {this.state._isLoggedIn && (
               <div className="post-options">
                 <button
                   className="btn btn--edit"
@@ -132,7 +133,7 @@ class PostPage extends Component {
                 onChange={this.handleInputChange}
               />
               <Textarea
-                name="newTextBody"
+                name="newBody"
                 cols="50"
                 rows="1"
                 value={this.state.newBody}
