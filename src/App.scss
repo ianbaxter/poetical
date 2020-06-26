@@ -33,6 +33,12 @@ main {
   flex-grow: 1;
 }
 
+.main--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 header,
 footer {
   display: flex;
@@ -57,6 +63,13 @@ footer {
   .btn:hover {
     color: #007bff;
   }
+}
+
+.post-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
 }
 
 .cards {

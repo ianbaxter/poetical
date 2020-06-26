@@ -5,6 +5,7 @@ import Post from "./Post";
 import Textarea from "react-textarea-autosize";
 import Header from "./Header";
 import Footer from "./Footer";
+import PostStatus from "./PostStatus";
 import axios from "axios";
 
 class Home extends Component {
@@ -14,7 +15,7 @@ class Home extends Component {
     this.state = {
       title: "",
       textBody: "",
-      posts: [],
+      posts: null,
     };
   }
 
@@ -30,7 +31,10 @@ class Home extends Component {
       .get(process.env.REACT_APP_BASE_URL + "/api/blogHome")
       .then((res) => {
         let postsReversed = res.data.reverse();
-        this.setState({ posts: postsReversed });
+        let numPosts = Object.keys(postsReversed).length;
+        numPosts > 0
+          ? this.setState({ posts: postsReversed })
+          : this.setState({ posts: "Empty" });
       })
       .catch((err) => {
         console.log("Error from posts: " + err);
@@ -67,7 +71,11 @@ class Home extends Component {
     return (
       <div className="wrapper">
         <Header isLoggedIn={this._isLoggedIn} />
-        <main>
+        <main
+          className={
+            typeof this.state.posts !== Object ? "main--loading" : undefined
+          }
+        >
           {this._isLoggedIn && (
             <section className="cards">
               <div className="card">
@@ -93,47 +101,51 @@ class Home extends Component {
               </div>
             </section>
           )}
-          <section className="cards">
-            {this.state.posts ? (
-              this.state.posts.map((post) => (
-                <Link
-                  to={{
-                    pathname: `/blog-post-details/${post._id}`,
-                    state: {
-                      post,
-                    },
-                  }}
-                  className="card post--summary"
-                  key={post._id}
-                >
-                  <Post
-                    id={post._id}
-                    title={post.title}
-                    body={post.body}
-                    date={post.dateEdited}
-                    username={post.username}
-                    favs={post.meta.favs}
-                  />
-                </Link>
-              ))
-            ) : (
-              <p>There are no posts</p>
-            )}
-          </section>
-          <section className="bottom">
-            <a href="#top">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="white"
-                width="36px"
-                height="36px"
-              >
-                <path d="M0 0h24v24H0z" fill="none" />
-                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
-              </svg>
-            </a>
-          </section>
+          {this.state.posts === null ? (
+            <PostStatus message={"Loading Posts . . ."} />
+          ) : this.state.posts === "Empty" ? (
+            <PostStatus message={"There are no posts"} />
+          ) : (
+            <div>
+              <section className="cards">
+                {this.state.posts.map((post) => (
+                  <Link
+                    to={{
+                      pathname: `/blog-post-details/${post._id}`,
+                      state: {
+                        post,
+                      },
+                    }}
+                    className="card post--summary"
+                    key={post._id}
+                  >
+                    <Post
+                      id={post._id}
+                      title={post.title}
+                      body={post.body}
+                      date={post.dateEdited}
+                      username={post.username}
+                      favs={post.meta.favs}
+                    />
+                  </Link>
+                ))}
+              </section>
+              <section className="bottom">
+                <a href="#top">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="white"
+                    width="36px"
+                    height="36px"
+                  >
+                    <path d="M0 0h24v24H0z" fill="none" />
+                    <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
+                  </svg>
+                </a>
+              </section>
+            </div>
+          )}
         </main>
         <Footer />
       </div>
