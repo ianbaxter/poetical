@@ -101,14 +101,7 @@ class PostPage extends Component {
         {!editMode && (
           <main className="cards">
             <div className="card">
-              <Post
-                id={this.state.id}
-                title={this.state.title}
-                body={this.state.body}
-                date={this.state.post.date}
-                username={this.state.post.username}
-                favs={this.state.post.meta.favs}
-              />
+              <Post post={this.state.post} />
             </div>
             {this.state._isLoggedIn && (
               <div className="post-options">

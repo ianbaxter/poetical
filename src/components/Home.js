@@ -14,7 +14,7 @@ class Home extends Component {
     this._isLoggedIn = false;
     this.state = {
       title: "",
-      textBody: "",
+      body: "",
       posts: null,
     };
   }
@@ -44,7 +44,7 @@ class Home extends Component {
   onSaveClick() {
     const data = {
       title: this.state.title,
-      body: this.state.textBody,
+      body: this.state.body,
       username: this._isLoggedIn
         ? sessionStorage.getItem("username")
         : "Anonymous",
@@ -53,8 +53,7 @@ class Home extends Component {
       .post(process.env.REACT_APP_BASE_URL + "/api/blogHome", data)
       .then((res) => {
         this.getPosts();
-        this.setState({ title: "" });
-        this.setState({ textBody: "" });
+        this.setState({ title: "", body: "" });
       })
       .catch((err) => {
         console.log("Error updating post: " + err);
@@ -90,11 +89,11 @@ class Home extends Component {
                   onChange={this.handleInputChange}
                 />
                 <Textarea
-                  name="textBody"
+                  name="body"
                   cols="50"
                   rows="1"
                   placeholder="Enter New Content"
-                  value={this.state.textBody}
+                  value={this.state.body}
                   onChange={this.handleInputChange}
                 />
                 <button className="btn" onClick={() => this.onSaveClick()}>
@@ -121,14 +120,7 @@ class Home extends Component {
                     className="card post--summary"
                     key={post._id}
                   >
-                    <Post
-                      id={post._id}
-                      title={post.title}
-                      body={post.body}
-                      date={post.dateEdited}
-                      username={post.username}
-                      favs={post.meta.favs}
-                    />
+                    <Post post={post} />
                   </Link>
                 ))}
               </section>

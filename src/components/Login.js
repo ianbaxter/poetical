@@ -41,8 +41,9 @@ const Login = () => {
         }
       })
       .then((data) => {
-        // Add username to sessionStorage
+        // Add data to sessionStorage
         sessionStorage.setItem("username", data.username);
+        sessionStorage.setItem("userId", data.userId);
         history.push("/");
       })
       .catch((err) => {

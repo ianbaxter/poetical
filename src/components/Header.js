@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const Header = ({ isLoggedIn }) => {
   function onLogoutClick() {
     sessionStorage.removeItem("username");
+    sessionStorage.removeItem("userId");
     window.location.reload();
   }
 
