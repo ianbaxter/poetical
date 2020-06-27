@@ -16,6 +16,7 @@ class PostPage extends Component {
       newTitle: "",
       newBody: "",
       editMode: false,
+      addCollabMode: false,
       id: this.props.match.params.id,
       post: null,
     };
@@ -38,7 +39,16 @@ class PostPage extends Component {
       this.setState({ _isLoggedIn: true });
   }
 
-  onDeleteClick() {
+  edit() {
+    this.setState({ editMode: true });
+  }
+
+  addCollaborator() {
+    console.log("Add collaborator");
+    this.setState({ addCollabMode: true });
+  }
+
+  delete() {
     axios
       .delete(process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.state.id)
       .then((res) => {
@@ -49,19 +59,21 @@ class PostPage extends Component {
       });
   }
 
-  onEditClick() {
-    this.setState({ editMode: true });
+  cancel(mode) {
+    switch (mode) {
+      case "edit":
+        this.setState({
+          editMode: false,
+          newTitle: this.state.title,
+          newBody: this.state.body,
+        });
+        break;
+      case "addCollab":
+        this.setState({ addCollabMode: false });
+    }
   }
 
-  onCancelClick() {
-    this.setState({
-      editMode: false,
-      newTitle: this.state.title,
-      newBody: this.state.body,
-    });
-  }
-
-  onSaveEditClick(dateEdited) {
+  save(dateEdited) {
     const data = {
       title: this.state.newTitle,
       body: this.state.newBody,
@@ -74,10 +86,14 @@ class PostPage extends Component {
         data
       )
       .then((res) => {
+        let updatedPost = this.state.post;
+        updatedPost.title = this.state.newTitle;
+        updatedPost.body = this.state.newBody;
         this.setState({
           editMode: false,
           title: this.state.newTitle,
           body: this.state.newBody,
+          post: updatedPost,
         });
       })
       .catch((err) => {
@@ -85,34 +101,44 @@ class PostPage extends Component {
       });
   }
 
-  handleInputChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
+  handleInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
     this.setState({ [name]: value });
   };
 
   render() {
     const editMode = this.state.editMode;
-    const date = this.state.post.date;
+    const addCollabMode = this.state.addCollabMode;
+
+    let userId = sessionStorage.getItem("userId");
 
     return (
       <div className="wrapper">
         <Header isLoggedIn={this.state._isLoggedIn} />
-        {!editMode && (
+        {!editMode && !addCollabMode && (
           <main className="cards">
             <div className="card">
               <Post post={this.state.post} />
             </div>
-            {this.state._isLoggedIn && (
+            {this.state.post.userId === userId ||
+            this.state.post.collaborators.ids.includes(userId) ? (
               <div className="post-options">
-                <button
-                  className="btn btn--edit"
-                  onClick={() => this.onEditClick()}
-                >
-                  Edit
-                </button>
+                <div className="post-options__safe">
+                  <button className="btn btn--edit" onClick={() => this.edit()}>
+                    Edit
+                  </button>
+                </div>
+                <div className="post-options__danger">
+                  <button
+                    className="btn btn--collaborate"
+                    onClick={() => this.addCollaborator()}
+                  >
+                    Manage Collaborators
+                  </button>
+                </div>
               </div>
-            )}
+            ) : null}
           </main>
         )}
         {editMode && (
@@ -137,13 +163,13 @@ class PostPage extends Component {
               <div className="post-options__safe">
                 <button
                   className="btn btn-save"
-                  onClick={() => this.onSaveEditClick(date)}
+                  onClick={() => this.save(this.state.post.date)}
                 >
                   Save
                 </button>
                 <button
                   className="btn btn--cancel"
-                  onClick={() => this.onCancelClick()}
+                  onClick={() => this.cancel("edit")}
                 >
                   Cancel
                 </button>
@@ -151,9 +177,32 @@ class PostPage extends Component {
               <div className="post-options__danger">
                 <button
                   className="btn btn--delete"
-                  onClick={() => this.onDeleteClick()}
+                  onClick={() => this.delete()}
                 >
                   Delete
+                </button>
+              </div>
+            </div>
+          </main>
+        )}
+        {addCollabMode && (
+          <main className="cards">
+            <div className="card"></div>
+            <div className="post-options">
+              <div className="post-options__safe">
+                <button
+                  className="btn btn-save"
+                  onClick={() => this.save(this.state.post.date)}
+                >
+                  Save
+                </button>
+              </div>
+              <div className="post-options__danger">
+                <button
+                  className="btn btn--cancel"
+                  onClick={() => this.cancel("addCollab")}
+                >
+                  Cancel
                 </button>
               </div>
             </div>

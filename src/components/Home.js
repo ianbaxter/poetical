@@ -45,9 +45,8 @@ class Home extends Component {
     const data = {
       title: this.state.title,
       body: this.state.body,
-      username: this._isLoggedIn
-        ? sessionStorage.getItem("username")
-        : "Anonymous",
+      username: sessionStorage.getItem("username"),
+      userId: sessionStorage.getItem("userId"),
     };
     axios
       .post(process.env.REACT_APP_BASE_URL + "/api/blogHome", data)

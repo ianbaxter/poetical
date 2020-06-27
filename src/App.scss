@@ -193,10 +193,6 @@ textarea {
   padding: 0;
 }
 
-.btn--edit {
-  margin-right: 20px;
-}
-
 .btn--cancel {
   margin-top: 20px;
 }
@@ -207,6 +203,11 @@ textarea {
   &:hover {
     color: rgb(148, 0, 0);
   }
+}
+
+.btn--collaborate {
+  width: 200px;
+  margin-top: 20px;
 }
 
 .entry {
@@ -281,9 +282,17 @@ textarea {
     margin-left: 20px;
   }
 
+  .btn--edit {
+    margin-right: 20px;
+  }
+
   .btn--delete {
     margin-top: 0px;
     margin-right: 0px;
+  }
+
+  .btn--collaborate {
+    margin-top: 0;
   }
 
   .entry form {
