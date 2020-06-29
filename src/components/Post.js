@@ -49,10 +49,10 @@ const Post = ({ post }) => {
       <p>{post.body}</p>
       <div className="post__details">
         <div>
-          <p>{"Posted: " + new Date(post.date).toLocaleString()}</p>
+          <p>Author: {post.username ? post.username : "Anonymous"}</p>
         </div>
         <div>
-          <p>Author: {post.username ? post.username : "Anonymous"}</p>
+          <p>{"Posted: " + new Date(post.date).toLocaleString()}</p>
         </div>
       </div>
       <div className="post__stats">

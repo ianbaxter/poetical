@@ -15,6 +15,10 @@ a:hover {
   color: white;
 }
 
+.p--secondary {
+  color: rgba(255, 255, 255, 0.589);
+}
+
 .app {
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -177,16 +181,10 @@ textarea {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
+  -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .post__details p {
@@ -224,7 +222,7 @@ textarea {
   border-radius: 5px;
 }
 
-.post-options {
+.options {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -232,17 +230,18 @@ textarea {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   width: 90%;
-  margin-bottom: 20px;
 }
 
-.post-options__safe {
+.options--collab {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 100%;
+}
+
+.options__safe {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -255,7 +254,7 @@ textarea {
           flex-direction: column;
 }
 
-.post-options__danger {
+.options__danger {
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
@@ -283,18 +282,29 @@ textarea {
   margin-top: 20px;
 }
 
-.btn--delete {
+.btn--danger {
   border: 1px solid #940000;
   margin-top: 20px;
 }
 
-.btn--delete:hover {
+.btn--danger:hover {
   color: #940000;
 }
 
 .btn--collaborate {
   width: 200px;
   margin-top: 20px;
+}
+
+.btn--remove {
+  margin-top: 0;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.divider {
+  margin-top: 0;
 }
 
 .entry {
@@ -383,17 +393,17 @@ textarea {
   .card {
     width: 60%;
   }
-  .post-options {
+  .options {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
             flex-direction: row;
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
     width: 60%;
   }
-  .post-options__safe {
+  .options--collab {
+    width: 100%;
+  }
+  .options__safe {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
@@ -406,7 +416,7 @@ textarea {
   .btn--edit {
     margin-right: 20px;
   }
-  .btn--delete {
+  .btn--danger {
     margin-top: 0px;
     margin-right: 0px;
   }

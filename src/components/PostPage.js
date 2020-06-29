@@ -17,8 +17,8 @@ class PostPage extends Component {
       newBody: "",
       editMode: false,
       addCollabMode: false,
-      id: this.props.match.params.id,
       post: null,
+      collaborator: "",
     };
   }
 
@@ -43,14 +43,15 @@ class PostPage extends Component {
     this.setState({ editMode: true });
   }
 
-  addCollaborator() {
-    console.log("Add collaborator");
+  toggleColabMode() {
     this.setState({ addCollabMode: true });
   }
 
   delete() {
     axios
-      .delete(process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.state.id)
+      .delete(
+        process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.state.post._id
+      )
       .then((res) => {
         history.push("/");
       })
@@ -70,6 +71,9 @@ class PostPage extends Component {
         break;
       case "addCollab":
         this.setState({ addCollabMode: false });
+        break;
+      default:
+        return;
     }
   }
 
@@ -82,7 +86,7 @@ class PostPage extends Component {
 
     axios
       .put(
-        process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.state.id,
+        process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.state.post._id,
         data
       )
       .then((res) => {
@@ -99,6 +103,101 @@ class PostPage extends Component {
       .catch((err) => {
         console.log("Error updating blog post: " + err);
       });
+  }
+
+  addCollaborator() {
+    if (this.state.collaborator === "") return;
+
+    let collaborators = this.state.post.collaborators;
+    if (collaborators.usernames.includes(this.state.collaborator)) {
+      console.log("User is already a collaborator");
+      return;
+    }
+
+    console.log("Adding new collaborator");
+    // Get new collaborator's id
+    // collaborators.ids.push();
+    collaborators.usernames.push(this.state.collaborator);
+
+    const data = { collaborators };
+    axios
+      .put(
+        process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.state.post._id,
+        data
+      )
+      .then((res) => {
+        this.setState({ collaborator: "" });
+      })
+      .catch((err) => {
+        console.log("Error updating blog post: " + err);
+      });
+  }
+
+  // addCollaborator() {
+  //   if (this.state.collaborator === "") return;
+  //   // Check if collaborator is a user
+  //   const params = { params: this.state.collaborator };
+  //   axios
+  //     .get(process.env.REACT_APP_BASE_URL + "/api/users", {
+  //       params: this.state.collaborator,
+  //     })
+  //     .then(() => {
+  //       let collaborators = this.state.post.collaborators;
+  //       if (collaborators.usernames.includes(this.state.collaborator)) {
+  //         console.log("User is already a collaborator");
+  //         return;
+  //       }
+
+  //       console.log("Adding new collaborator");
+  //       // Get new collaborator's id
+  //       // collaborators.ids.push();
+  //       collaborators.usernames.push(this.state.collaborator);
+
+  //       const data = { collaborators };
+  //       axios
+  //         .put(
+  //           process.env.REACT_APP_BASE_URL +
+  //             "/api/blogHome/" +
+  //             this.state.post._id,
+  //           data
+  //         )
+  //         .then((res) => {
+  //           this.setState({ collaborator: "" });
+  //         })
+  //         .catch((err) => {
+  //           console.log("Error updating blog post: " + err);
+  //         });
+  //     })
+  //     .catch((err) => console.log("Error checking user: " + err));
+  // }
+
+  removeCollaborator() {
+    if (this.state.collaborator === "") return;
+    let collaborators = this.state.post.collaborators;
+    let collaboratorIndex = collaborators.usernames.indexOf(
+      this.state.collaborator
+    );
+    if (collaboratorIndex >= 0) {
+      console.log("Remove collaborator");
+
+      collaborators.usernames.splice(collaboratorIndex, 1);
+
+      const data = { collaborators };
+      axios
+        .put(
+          process.env.REACT_APP_BASE_URL +
+            "/api/blogHome/" +
+            this.state.post._id,
+          data
+        )
+        .then((res) => {
+          this.setState({ collaborator: "" });
+        })
+        .catch((err) => {
+          console.log("Error updating blog post: " + err);
+        });
+    }
+    return;
   }
 
   handleInputChange = (e) => {
@@ -123,16 +222,16 @@ class PostPage extends Component {
             </div>
             {this.state.post.userId === userId ||
             this.state.post.collaborators.ids.includes(userId) ? (
-              <div className="post-options">
-                <div className="post-options__safe">
+              <div className="options">
+                <div className="options__safe">
                   <button className="btn btn--edit" onClick={() => this.edit()}>
                     Edit
                   </button>
                 </div>
-                <div className="post-options__danger">
+                <div className="options__danger">
                   <button
                     className="btn btn--collaborate"
-                    onClick={() => this.addCollaborator()}
+                    onClick={() => this.toggleColabMode()}
                   >
                     Manage Collaborators
                   </button>
@@ -159,10 +258,10 @@ class PostPage extends Component {
                 onChange={this.handleInputChange}
               />
             </div>
-            <div className="post-options">
-              <div className="post-options__safe">
+            <div className="options">
+              <div className="options__safe">
                 <button
-                  className="btn btn-save"
+                  className="btn"
                   onClick={() => this.save(this.state.post.date)}
                 >
                   Save
@@ -174,9 +273,9 @@ class PostPage extends Component {
                   Cancel
                 </button>
               </div>
-              <div className="post-options__danger">
+              <div className="options__danger">
                 <button
-                  className="btn btn--delete"
+                  className="btn btn--danger"
                   onClick={() => this.delete()}
                 >
                   Delete
@@ -187,22 +286,56 @@ class PostPage extends Component {
         )}
         {addCollabMode && (
           <main className="cards">
-            <div className="card"></div>
-            <div className="post-options">
-              <div className="post-options__safe">
-                <button
-                  className="btn btn-save"
-                  onClick={() => this.save(this.state.post.date)}
-                >
-                  Save
-                </button>
+            <div className="card">
+              <div>
+                <h6>Collaborators:</h6>
+                <div>
+                  {this.state.post.collaborators.usernames.length > 0 ? (
+                    this.state.post.collaborators.usernames.map((username) => (
+                      <p>{username}</p>
+                    ))
+                  ) : (
+                    <p className="p--secondary">No Collaborators</p>
+                  )}
+                </div>
               </div>
-              <div className="post-options__danger">
+              <hr className="divider" />
+              <div>
+                <Textarea
+                  name="collaborator"
+                  cols="50"
+                  rows="1"
+                  placeholder="Enter Username"
+                  value={this.state.collaborator}
+                  onChange={this.handleInputChange}
+                />
+                <div className="options options--collab">
+                  <div className="options__safe">
+                    <button
+                      className="btn"
+                      onClick={() => this.addCollaborator()}
+                    >
+                      Add
+                    </button>
+                  </div>
+                  <div className="options__danger">
+                    <button
+                      className="btn btn--danger btn--remove"
+                      onClick={() => this.removeCollaborator()}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="options">
+              <div className="options__safe">
                 <button
-                  className="btn btn--cancel"
+                  className="btn "
                   onClick={() => this.cancel("addCollab")}
                 >
-                  Cancel
+                  Back
                 </button>
               </div>
             </div>
