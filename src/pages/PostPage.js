@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import history from "../history";
 import "../App.css";
 import axios from "axios";
-import Header from "./Header";
-import Post from "./Post";
+import Header from "../components/Header";
+import Post from "../components/Post";
 import Textarea from "react-textarea-autosize";
 
 class PostPage extends Component {

@@ -1,20 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import history from "../history";
-import Header from "./Header";
+import Header from "../components/Header";
 import "../App.css";
 
-const Register = () => {
-  const [username, setUsername] = useState([]);
+const Login = () => {
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
 
   const handleInputChange = (event) => {
     const { value, name } = event.target;
     switch (name) {
-      case "username":
-        setUsername(value);
-        break;
       case "email":
         setEmail(value);
         break;
@@ -28,25 +24,31 @@ const Register = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    fetch(process.env.REACT_APP_BASE_URL + "/api/auth/register", {
+    fetch(process.env.REACT_APP_BASE_URL + "/api/auth/login", {
       method: "POST",
-      body: JSON.stringify({ username, email, password }),
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
+      body: JSON.stringify({ email, password }),
     })
       .then((res) => {
         if (res.status === 200) {
-          console.log(res);
-          history.push("/login");
+          return res.json();
         } else {
           const error = new Error(res.error);
           throw error;
         }
       })
+      .then((data) => {
+        // Add data to sessionStorage
+        sessionStorage.setItem("username", data.username);
+        sessionStorage.setItem("userId", data.userId);
+        history.push("/");
+      })
       .catch((err) => {
         console.error(err);
-        alert("Error registering please try again");
+        alert("Error logging in please try again");
       });
   };
 
@@ -55,15 +57,8 @@ const Register = () => {
       <Header />
       <main>
         <section className="entry">
-          <h2>Register</h2>
+          <h2>Login</h2>
           <form onSubmit={onSubmit}>
-            <input
-              type="text"
-              placeholder="Username"
-              name="username"
-              value={username}
-              onChange={handleInputChange}
-            />
             <input
               type="email"
               placeholder="Email"
@@ -84,9 +79,9 @@ const Register = () => {
           </form>
         </section>
         <section className="entry-nav">
-          <p>Already registered?</p>
-          <Link to="/login" className="btn">
-            Login
+          <p>Not yet registered?</p>
+          <Link to="/register" className="btn">
+            Register
           </Link>
         </section>
       </main>
@@ -94,4 +89,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

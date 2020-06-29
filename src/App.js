@@ -2,11 +2,11 @@ import React from "react";
 import { Router, Route } from "react-router-dom";
 import "./App.css";
 import history from "./history";
-import Home from "./components/Home";
-import PostPage from "./components/PostPage";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Secret from "./components/Secret";
+import Home from "./pages/Home";
+import PostPage from "./pages/PostPage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Secret from "./pages/Secret";
 
 function App() {
   return (

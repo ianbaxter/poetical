@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "../App.css";
-import Post from "./Post";
+import Post from "../components/Post";
 import Textarea from "react-textarea-autosize";
-import Header from "./Header";
-import Footer from "./Footer";
-import PostStatus from "./PostStatus";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import PostStatus from "../components/PostStatus";
 import axios from "axios";
 
 class Home extends Component {
