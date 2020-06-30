@@ -102,7 +102,10 @@ class Home extends Component {
             </section>
           )}
           {this.state.posts === null ? (
-            <PostStatus message={"Loading Posts . . ."} />
+            <PostStatus
+              message={"Loading Posts . . ."}
+              animation={"animate-flicker"}
+            />
           ) : this.state.posts === "Empty" ? (
             <PostStatus message={"There are no posts"} />
           ) : (
