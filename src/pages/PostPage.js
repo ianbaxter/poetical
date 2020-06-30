@@ -4,39 +4,43 @@ import "../App.css";
 import axios from "axios";
 import Header from "../components/Header";
 import Post from "../components/Post";
+import PostStatus from "../components/PostStatus";
 import Textarea from "react-textarea-autosize";
 
 class PostPage extends Component {
   constructor(props) {
     super(props);
-    this._isLoggedIn = false;
+    this._isLoggedIn = sessionStorage.getItem("username");
+    this.postId = this.props.location.state.postId;
     this.state = {
+      post: null,
       title: "",
       body: "",
       newTitle: "",
       newBody: "",
       editMode: false,
       addCollabMode: false,
-      post: null,
       collaborator: "",
     };
   }
 
-  UNSAFE_componentWillMount() {
-    const { post } = this.props.location.state;
-
-    this.setState({
-      title: post.title,
-      body: post.body,
-      newTitle: post.title,
-      newBody: post.body,
-      post,
-    });
+  componentDidMount() {
+    this.getPost();
   }
 
-  componentDidMount() {
-    if (sessionStorage.getItem("username"))
-      this.setState({ _isLoggedIn: true });
+  getPost() {
+    axios
+      .get(process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.postId)
+      .then((res) => {
+        this.setState({
+          post: res.data,
+          title: res.data.title,
+          body: res.data.body,
+          newTitle: res.data.title,
+          newBody: res.data.body,
+        });
+      })
+      .catch((err) => console.log("Error getting post: " + err));
   }
 
   edit() {
@@ -214,35 +218,48 @@ class PostPage extends Component {
 
     return (
       <div className="wrapper">
-        <Header isLoggedIn={this.state._isLoggedIn} />
-        {!editMode && !addCollabMode && (
-          <main className="cards">
-            <div className="card">
-              <Post post={this.state.post} />
-            </div>
-            {this.state.post.userId === userId ||
-            this.state.post.collaborators.ids.includes(userId) ? (
-              <div className="options">
-                <div className="options__safe">
-                  <button className="btn btn--edit" onClick={() => this.edit()}>
-                    Edit
-                  </button>
-                </div>
-                <div className="options__danger">
-                  <button
-                    className="btn btn--collaborate"
-                    onClick={() => this.toggleColabMode()}
-                  >
-                    Manage Collaborators
-                  </button>
-                </div>
+        <Header isLoggedIn={this._isLoggedIn} />
+        {!editMode &&
+          !addCollabMode &&
+          (this.state.post === null ? (
+            <main className="cards main--loading">
+              <PostStatus
+                message={"Loading Posts . . ."}
+                animation={"animate-flicker"}
+              />
+            </main>
+          ) : (
+            <main className="cards">
+              <div className="card">
+                <Post post={this.state.post} />
               </div>
-            ) : null}
-          </main>
-        )}
+              {this.state.post.userId === userId ||
+              this.state.post.collaborators.ids.includes(userId) ? (
+                <div className="options">
+                  <div className="options__safe">
+                    <button
+                      className="btn btn--edit"
+                      onClick={() => this.edit()}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                  <div className="options__danger">
+                    <button
+                      className="btn btn--collaborate"
+                      onClick={() => this.toggleColabMode()}
+                    >
+                      Manage Collaborators
+                    </button>
+                  </div>
+                </div>
+              ) : null}
+            </main>
+          ))}
         {editMode && (
           <main className="cards">
             <div className="card">
+              <label for="newTitle">Title:</label>
               <Textarea
                 name="newTitle"
                 cols="50"
@@ -250,6 +267,7 @@ class PostPage extends Component {
                 value={this.state.newTitle}
                 onChange={this.handleInputChange}
               />
+              <label for="newBody">Content:</label>
               <Textarea
                 name="newBody"
                 cols="50"

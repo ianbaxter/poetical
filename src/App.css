@@ -103,25 +103,25 @@ footer a {
 
 @-webkit-keyframes flickerAnimation {
   0% {
-    opacity: 1;
+    opacity: 0;
   }
   50% {
-    opacity: 0.33;
+    opacity: 1;
   }
   100% {
-    opacity: 1;
+    opacity: 0;
   }
 }
 
 @keyframes flickerAnimation {
   0% {
-    opacity: 1;
+    opacity: 0;
   }
   50% {
-    opacity: 0.33;
+    opacity: 1;
   }
   100% {
-    opacity: 1;
+    opacity: 0;
   }
 }
 

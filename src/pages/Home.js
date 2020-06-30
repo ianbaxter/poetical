@@ -11,7 +11,7 @@ import axios from "axios";
 class Home extends Component {
   constructor(props) {
     super(props);
-    this._isLoggedIn = false;
+    this._isLoggedIn = sessionStorage.getItem("username");
     this.state = {
       title: "",
       body: "",
@@ -20,9 +20,6 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    sessionStorage.getItem("username")
-      ? (this._isLoggedIn = true)
-      : (this._isLoggedIn = false);
     this.getPosts();
   }
 
@@ -76,31 +73,6 @@ class Home extends Component {
               : undefined
           }
         >
-          {this._isLoggedIn && (
-            <section className="cards">
-              <div className="card">
-                <Textarea
-                  name="title"
-                  cols="50"
-                  rows="1"
-                  placeholder="Enter Title"
-                  value={this.state.title}
-                  onChange={this.handleInputChange}
-                />
-                <Textarea
-                  name="body"
-                  cols="50"
-                  rows="1"
-                  placeholder="Enter New Content"
-                  value={this.state.body}
-                  onChange={this.handleInputChange}
-                />
-                <button className="btn" onClick={() => this.onSaveClick()}>
-                  Save
-                </button>
-              </div>
-            </section>
-          )}
           {this.state.posts === null ? (
             <PostStatus
               message={"Loading Posts . . ."}
@@ -110,13 +82,38 @@ class Home extends Component {
             <PostStatus message={"There are no posts"} />
           ) : (
             <div>
+              {this._isLoggedIn && (
+                <section className="cards">
+                  <div className="card">
+                    <Textarea
+                      name="title"
+                      cols="50"
+                      rows="1"
+                      placeholder="Enter Title"
+                      value={this.state.title}
+                      onChange={this.handleInputChange}
+                    />
+                    <Textarea
+                      name="body"
+                      cols="50"
+                      rows="1"
+                      placeholder="Enter New Content"
+                      value={this.state.body}
+                      onChange={this.handleInputChange}
+                    />
+                    <button className="btn" onClick={() => this.onSaveClick()}>
+                      Save
+                    </button>
+                  </div>
+                </section>
+              )}
               <section className="cards">
                 {this.state.posts.map((post) => (
                   <Link
                     to={{
                       pathname: `/blog-post-details/${post._id}`,
                       state: {
-                        post,
+                        postId: post._id,
                       },
                     }}
                     className="card post--summary"
