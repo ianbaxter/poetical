@@ -21,6 +21,7 @@ class PostPage extends Component {
       editMode: false,
       addCollabMode: false,
       collaborator: "",
+      userCanEdit: false,
     };
   }
 
@@ -32,15 +33,29 @@ class PostPage extends Component {
     axios
       .get(process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.postId)
       .then((res) => {
+        const post = res.data;
+        const userCanEdit = this.authUser(post);
+
         this.setState({
-          post: res.data,
+          post,
           title: res.data.title,
           body: res.data.body,
           newTitle: res.data.title,
           newBody: res.data.body,
+          userCanEdit,
         });
       })
       .catch((err) => console.log("Error getting post: " + err));
+  }
+
+  authUser(post) {
+    const userId = sessionStorage.getItem("userId");
+    let userCanEdit = false;
+    if (post.userId === userId) userCanEdit = true;
+    post.collaborators.forEach((collaborator) => {
+      if (collaborator.id === userId) userCanEdit = true;
+    });
+    return userCanEdit;
   }
 
   edit() {
@@ -113,78 +128,59 @@ class PostPage extends Component {
     if (this.state.collaborator === "") return;
 
     let collaborators = this.state.post.collaborators;
-    if (collaborators.usernames.includes(this.state.collaborator)) {
-      console.log("User is already a collaborator");
-      return;
-    }
+    collaborators.forEach((collaborator) => {
+      if (collaborator.username === this.state.collaborator) {
+        console.log("User is already a collaborator");
+        return;
+      } else {
+        // Check if new collaborator is a user and if so return their ID
+        const data = { username: this.state.collaborator };
+        axios
+          .get(process.env.REACT_APP_BASE_URL + "/api/users", {
+            params: data,
+          })
+          .then((res) => {
+            console.log("Adding new collaborator");
+            const collaboratorId = res.data;
+            const newCollaborator = {
+              id: collaboratorId,
+              username: this.state.collaborator,
+            };
+            collaborators.push(newCollaborator);
 
-    console.log("Adding new collaborator");
-    // Get new collaborator's id
-    // collaborators.ids.push();
-    collaborators.usernames.push(this.state.collaborator);
-
-    const data = { collaborators };
-    axios
-      .put(
-        process.env.REACT_APP_BASE_URL + "/api/blogHome/" + this.state.post._id,
-        data
-      )
-      .then((res) => {
-        this.setState({ collaborator: "" });
-      })
-      .catch((err) => {
-        console.log("Error updating blog post: " + err);
-      });
+            const data = { collaborators };
+            axios
+              .put(
+                process.env.REACT_APP_BASE_URL +
+                  "/api/blogHome/" +
+                  this.state.post._id,
+                data
+              )
+              .then((res) => {
+                this.setState({ collaborator: "" });
+              })
+              .catch((err) => {
+                console.log("Error updating blog post: " + err);
+              });
+          })
+          .catch((err) => console.log("This user does not exist: " + err));
+      }
+    });
   }
-
-  // addCollaborator() {
-  //   if (this.state.collaborator === "") return;
-  //   // Check if collaborator is a user
-  //   const params = { params: this.state.collaborator };
-  //   axios
-  //     .get(process.env.REACT_APP_BASE_URL + "/api/users", {
-  //       params: this.state.collaborator,
-  //     })
-  //     .then(() => {
-  //       let collaborators = this.state.post.collaborators;
-  //       if (collaborators.usernames.includes(this.state.collaborator)) {
-  //         console.log("User is already a collaborator");
-  //         return;
-  //       }
-
-  //       console.log("Adding new collaborator");
-  //       // Get new collaborator's id
-  //       // collaborators.ids.push();
-  //       collaborators.usernames.push(this.state.collaborator);
-
-  //       const data = { collaborators };
-  //       axios
-  //         .put(
-  //           process.env.REACT_APP_BASE_URL +
-  //             "/api/blogHome/" +
-  //             this.state.post._id,
-  //           data
-  //         )
-  //         .then((res) => {
-  //           this.setState({ collaborator: "" });
-  //         })
-  //         .catch((err) => {
-  //           console.log("Error updating blog post: " + err);
-  //         });
-  //     })
-  //     .catch((err) => console.log("Error checking user: " + err));
-  // }
 
   removeCollaborator() {
     if (this.state.collaborator === "") return;
     let collaborators = this.state.post.collaborators;
-    let collaboratorIndex = collaborators.usernames.indexOf(
-      this.state.collaborator
-    );
+    let collaboratorIndex = -1;
+    collaborators.forEach((collaborator, index) => {
+      if (collaborator.username === this.state.collaborator)
+        collaboratorIndex = index;
+    });
+
     if (collaboratorIndex >= 0) {
       console.log("Remove collaborator");
 
-      collaborators.usernames.splice(collaboratorIndex, 1);
+      collaborators.splice(collaboratorIndex, 1);
 
       const data = { collaborators };
       axios
@@ -214,8 +210,6 @@ class PostPage extends Component {
     const editMode = this.state.editMode;
     const addCollabMode = this.state.addCollabMode;
 
-    let userId = sessionStorage.getItem("userId");
-
     return (
       <div className="wrapper">
         <Header isLoggedIn={this._isLoggedIn} />
@@ -233,8 +227,7 @@ class PostPage extends Component {
               <div className="card">
                 <Post post={this.state.post} />
               </div>
-              {this.state.post.userId === userId ||
-              this.state.post.collaborators.ids.includes(userId) ? (
+              {this.state.userCanEdit && (
                 <div className="options">
                   <div className="options__safe">
                     <button
@@ -253,7 +246,7 @@ class PostPage extends Component {
                     </button>
                   </div>
                 </div>
-              ) : null}
+              )}
             </main>
           ))}
         {editMode && (
@@ -308,9 +301,9 @@ class PostPage extends Component {
               <div>
                 <h6>Collaborators:</h6>
                 <div>
-                  {this.state.post.collaborators.usernames.length > 0 ? (
-                    this.state.post.collaborators.usernames.map((username) => (
-                      <p>{username}</p>
+                  {this.state.post.collaborators.length > 0 ? (
+                    this.state.post.collaborators.map((collaborator) => (
+                      <p key={collaborator.id}>{collaborator.username}</p>
                     ))
                   ) : (
                     <p className="p--secondary">No Collaborators</p>
