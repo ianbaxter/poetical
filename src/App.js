@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import PostPage from "./pages/PostPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Secret from "./pages/Secret";
+import User from "./pages/User";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         <Route path="/post/:id" component={PostPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
-        <Route exact path="/secret" component={Secret} />
+        <Route path="/user/:id" component={User} />
       </div>
     </Router>
   );

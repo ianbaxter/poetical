@@ -1,9 +1,9 @@
 import React from "react";
 
-const Footer = () => {
+const Footer = ({ message, link }) => {
   return (
     <footer>
-      <a href="https://github.com/ianbaxter/chat-wall">View on GitHub</a>
+      <a href={link}>{message}</a>
     </footer>
   );
 };

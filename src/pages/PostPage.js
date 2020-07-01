@@ -3,6 +3,7 @@ import history from "../history";
 import "../App.css";
 import axios from "axios";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import Post from "../components/Post";
 import PostStatus from "../components/PostStatus";
 import Textarea from "react-textarea-autosize";
@@ -62,7 +63,7 @@ class PostPage extends Component {
     return userCanEdit;
   }
 
-  edit() {
+  editPost() {
     this.setState({ editMode: true });
   }
 
@@ -70,7 +71,7 @@ class PostPage extends Component {
     this.setState({ addCollabMode: true });
   }
 
-  delete() {
+  deletePost() {
     axios
       .delete(
         process.env.REACT_APP_BASE_URL + "/api/home/" + this.state.post._id
@@ -101,7 +102,7 @@ class PostPage extends Component {
     }
   }
 
-  save(dateEdited) {
+  saveEditedPost(dateEdited) {
     const data = {
       title: this.state.newTitle,
       body: this.state.newBody,
@@ -242,7 +243,7 @@ class PostPage extends Component {
                   <div className="options__left">
                     <button
                       className="btn btn--left"
-                      onClick={() => this.edit()}
+                      onClick={() => this.editPost()}
                     >
                       Edit
                     </button>
@@ -291,7 +292,7 @@ class PostPage extends Component {
                 <div className="options__left">
                   <button
                     className="btn btn--left"
-                    onClick={() => this.save(this.state.post.date)}
+                    onClick={() => this.saveEditedPost(this.state.post.date)}
                   >
                     Save
                   </button>
@@ -299,7 +300,7 @@ class PostPage extends Component {
                 <div className="options__right">
                   <button
                     className="btn btn--red"
-                    onClick={() => this.delete()}
+                    onClick={() => this.deletePost()}
                   >
                     Delete
                   </button>
@@ -368,6 +369,8 @@ class PostPage extends Component {
             </div>
           </main>
         )}
+
+        <Footer />
       </div>
     );
   }

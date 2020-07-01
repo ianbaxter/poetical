@@ -39,7 +39,7 @@ class Home extends Component {
       });
   }
 
-  onSaveClick() {
+  saveNewPost() {
     let tags = this.state.tags.split(",");
     const data = {
       title: this.state.title,
@@ -88,11 +88,16 @@ class Home extends Component {
               {this._isLoggedIn && (
                 <section className="cards">
                   <div className="card">
+                    <p>
+                      Hi <i>{sessionStorage.getItem("username")}</i>, add your
+                      new post here:
+                    </p>
+                    <hr className="divider" />
                     <Textarea
                       name="title"
                       cols="50"
                       rows="1"
-                      placeholder="Enter Title"
+                      placeholder="Title"
                       value={this.state.title}
                       onChange={this.handleInputChange}
                     />
@@ -100,7 +105,7 @@ class Home extends Component {
                       name="body"
                       cols="50"
                       rows="1"
-                      placeholder="Enter New Content"
+                      placeholder="Content"
                       value={this.state.body}
                       onChange={this.handleInputChange}
                     />
@@ -109,11 +114,11 @@ class Home extends Component {
                       name="tags"
                       cols="50"
                       rows="1"
-                      placeholder="Enter Tags"
+                      placeholder="Tags"
                       value={this.state.tags}
                       onChange={this.handleInputChange}
                     />
-                    <button className="btn" onClick={() => this.onSaveClick()}>
+                    <button className="btn" onClick={() => this.saveNewPost()}>
                       Save
                     </button>
                   </div>
@@ -152,7 +157,10 @@ class Home extends Component {
             </div>
           )}
         </main>
-        <Footer />
+        <Footer
+          message={"View on GitHub"}
+          link={"https://github.com/ianbaxter/chat-wall"}
+        />
       </div>
     );
   }

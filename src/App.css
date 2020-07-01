@@ -63,6 +63,10 @@ footer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -ms-flex-negative: 0;
       flex-shrink: 0;
   -webkit-box-pack: center;
@@ -99,6 +103,78 @@ footer a {
 
 #top .btn:hover {
   color: #007bff;
+}
+
+.menu {
+  cursor: pointer;
+}
+
+.menu div {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 30px;
+  height: 3px;
+  background-color: white;
+  margin: 7px 0;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+/* Navigation menu button animation */
+.menu--active .line1 {
+  -webkit-transform: rotate(-45deg) translate(-3.5px, 8.5px);
+          transform: rotate(-45deg) translate(-3.5px, 8.5px);
+}
+
+.menu--active .line2 {
+  opacity: 0;
+}
+
+.menu--active .line3 {
+  -webkit-transform: rotate(45deg) translate(-6px, -10px);
+          transform: rotate(45deg) translate(-6px, -10px);
+}
+
+.top-options-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+.user-options {
+  top: 12vh;
+  display: none;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  background: #282c34;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.user-options .btn {
+  text-align: left;
+  margin: 10px 5vw 10px 0;
+  border-color: white;
+}
+
+.user-options .btn:last-child {
+  margin-bottom: 20px;
+}
+
+.user-options--active {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .cards {
@@ -187,13 +263,30 @@ footer a {
   border: solid 1px white;
 }
 
-textarea {
+textarea,
+input {
   margin-bottom: 16px;
   width: 100%;
   border-radius: 3px;
   border-color: black;
   background: #3c5168;
   color: white;
+}
+
+::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+::-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+::placeholder {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .post__details {
@@ -249,6 +342,10 @@ textarea {
   width: 100%;
 }
 
+.options--margin-bot {
+  margin-bottom: 20px;
+}
+
 .options--nav {
   width: 90%;
   margin-bottom: 20px;
@@ -283,6 +380,11 @@ textarea {
 
 .btn--red:hover {
   color: #940000;
+}
+
+.btn--white {
+  border-color: white;
+  color: #007bff;
 }
 
 .btn--submit {
@@ -331,16 +433,10 @@ textarea {
           justify-content: center;
   border: 1px solid rgba(0, 0, 0, 0.125);
   margin: 20px 0px;
-  padding: 0px 20px 20px 20px;
+  padding: 10px;
   border-radius: 5px;
   -webkit-box-shadow: 0 4px 8px 0 #282c34, 0 6px 20px 0 #282c34f6;
           box-shadow: 0 4px 8px 0 #282c34, 0 6px 20px 0 #282c34f6;
-}
-
-.entry input {
-  margin-top: 20px;
-  height: 28px;
-  border-radius: 3px;
 }
 
 .entry-nav {
@@ -409,6 +505,13 @@ textarea {
   footer #top {
     width: 60%;
   }
+  .user-options {
+    top: 10vh;
+  }
+  .user-options .btn {
+    text-align: left;
+    margin: 10px 20vw 10px 0;
+  }
   .card {
     width: 60%;
   }
@@ -427,6 +530,9 @@ textarea {
   header #top,
   footer #top {
     width: 33%;
+  }
+  .user-options .btn {
+    margin: 10px 33vw 10px 0;
   }
   .card {
     width: 33%;

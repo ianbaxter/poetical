@@ -50,6 +50,7 @@ main {
 header,
 footer {
   display: flex;
+  flex-direction: column;
   flex-shrink: 0;
   justify-content: center;
   align-items: center;
@@ -71,6 +72,60 @@ footer {
   .btn:hover {
     color: $highlightColor;
   }
+}
+
+.menu {
+  cursor: pointer;
+  div {
+    box-sizing: border-box;
+    width: 30px;
+    height: 3px;
+    background-color: $primaryColor;
+    margin: 7px 0;
+    transition: all 0.3s ease;
+  }
+}
+
+/* Navigation menu button animation */
+.menu--active {
+  .line1 {
+    transform: rotate(-45deg) translate(-3.5px, 8.5px);
+  }
+  .line2 {
+    opacity: 0;
+  }
+  .line3 {
+    transform: rotate(45deg) translate(-6px, -10px);
+  }
+}
+
+.top-options-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.user-options {
+  top: 12vh;
+  display: none;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  background: #282c34;
+  align-items: flex-end;
+  .btn {
+    text-align: left;
+    margin: 10px 5vw 10px 0;
+    border-color: $primaryColor;
+    &:last-child {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.user-options--active {
+  display: flex;
+  flex-direction: column;
 }
 
 .cards {
@@ -142,13 +197,18 @@ footer {
   }
 }
 
-textarea {
+textarea,
+input {
   margin-bottom: 16px;
   width: 100%;
   border-radius: 3px;
   border-color: black;
   background: #3c5168;
   color: $primaryColor;
+}
+
+::placeholder {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .post__details {
@@ -186,6 +246,10 @@ textarea {
   width: 100%;
 }
 
+.options--margin-bot {
+  margin-bottom: 20px;
+}
+
 .options--nav {
   width: 90%;
   margin-bottom: 20px;
@@ -216,6 +280,11 @@ textarea {
   }
 }
 
+.btn--white {
+  border-color: $primaryColor;
+  color: #007bff;
+}
+
 .btn--submit {
   width: 100%;
   margin-top: 20px;
@@ -244,14 +313,9 @@ textarea {
     justify-content: center;
     border: 1px solid rgba(0, 0, 0, 0.125);
     margin: 20px 0px;
-    padding: 0px 20px 20px 20px;
+    padding: 10px;
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 #282c34, 0 6px 20px 0 #282c34f6;
-  }
-  input {
-    margin-top: 20px;
-    height: 28px;
-    border-radius: 3px;
   }
 }
 
@@ -298,6 +362,14 @@ textarea {
     }
   }
 
+  .user-options {
+    top: 10vh;
+    .btn {
+      text-align: left;
+      margin: 10px 20vw 10px 0;
+    }
+  }
+
   .card {
     width: 60%;
   }
@@ -319,6 +391,12 @@ textarea {
   footer {
     #top {
       width: 33%;
+    }
+  }
+
+  .user-options {
+    .btn {
+      margin: 10px 33vw 10px 0;
     }
   }
 
