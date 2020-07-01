@@ -15,6 +15,7 @@ class Home extends Component {
     this.state = {
       title: "",
       body: "",
+      tags: "",
       posts: null,
     };
   }
@@ -25,7 +26,7 @@ class Home extends Component {
 
   getPosts() {
     axios
-      .get(process.env.REACT_APP_BASE_URL + "/api/blogHome")
+      .get(process.env.REACT_APP_BASE_URL + "/api/home")
       .then((res) => {
         let postsReversed = res.data.reverse();
         let numPosts = Object.keys(postsReversed).length;
@@ -39,17 +40,19 @@ class Home extends Component {
   }
 
   onSaveClick() {
+    let tags = this.state.tags.split(",");
     const data = {
       title: this.state.title,
       body: this.state.body,
       username: sessionStorage.getItem("username"),
       userId: sessionStorage.getItem("userId"),
+      tags,
     };
     axios
-      .post(process.env.REACT_APP_BASE_URL + "/api/blogHome", data)
+      .post(process.env.REACT_APP_BASE_URL + "/api/home", data)
       .then((res) => {
         this.getPosts();
-        this.setState({ title: "", body: "" });
+        this.setState({ title: "", body: "", tags: "" });
       })
       .catch((err) => {
         console.log("Error updating post: " + err);
@@ -101,6 +104,15 @@ class Home extends Component {
                       value={this.state.body}
                       onChange={this.handleInputChange}
                     />
+                    <hr className="divider" />
+                    <Textarea
+                      name="tags"
+                      cols="50"
+                      rows="1"
+                      placeholder="Enter Tags"
+                      value={this.state.tags}
+                      onChange={this.handleInputChange}
+                    />
                     <button className="btn" onClick={() => this.onSaveClick()}>
                       Save
                     </button>
@@ -111,7 +123,7 @@ class Home extends Component {
                 {this.state.posts.map((post) => (
                   <Link
                     to={{
-                      pathname: `/blog-post-details/${post._id}`,
+                      pathname: `/post/${post._id}`,
                       state: {
                         postId: post._id,
                       },

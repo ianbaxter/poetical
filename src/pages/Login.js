@@ -67,7 +67,7 @@ const Login = () => {
               onChange={handleInputChange}
             />
             <input
-              type="password"
+              type="current-password"
               placeholder="Password"
               name="password"
               value={password}

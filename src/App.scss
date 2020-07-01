@@ -73,24 +73,6 @@ footer {
   }
 }
 
-@keyframes flickerAnimation {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.animate-flicker {
-  h1 {
-    animation: flickerAnimation 1.5s infinite;
-  }
-}
-
 .cards {
   display: flex;
   flex-direction: column;
@@ -136,6 +118,30 @@ footer {
   }
 }
 
+.collaborators {
+  display: flex;
+  .metaLabel {
+    min-width: 56px;
+  }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  p {
+    color: $secondaryColor;
+    font-size: 14px;
+    padding: 2px 4px;
+    border: solid 1px $secondaryColor;
+    border-radius: 5px;
+    margin-right: 8px;
+    &:hover {
+      color: $primaryColor;
+      border: solid 1px $primaryColor;
+    }
+  }
+}
+
 textarea {
   margin-bottom: 16px;
   width: 100%;
@@ -162,6 +168,7 @@ textarea {
   align-items: center;
   margin-top: 8px;
   p {
+    font-size: 14px;
     margin: 0 0 0 16px;
     color: $secondaryColor;
   }
@@ -176,22 +183,19 @@ textarea {
 
 .options {
   display: flex;
-  flex-direction: column;
-  width: 90%;
-}
-
-.options--collab {
-  flex-direction: row;
   width: 100%;
 }
 
-.options__safe {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
+.options--nav {
+  width: 90%;
+  margin-bottom: 20px;
 }
 
-.options__danger {
+.options__left {
+  flex: 1;
+}
+
+.options__right {
   align-items: flex-end;
 }
 
@@ -205,6 +209,13 @@ textarea {
   }
 }
 
+.btn--red {
+  border: 1px solid rgb(148, 0, 0);
+  &:hover {
+    color: rgb(148, 0, 0);
+  }
+}
+
 .btn--submit {
   width: 100%;
   margin-top: 20px;
@@ -212,26 +223,8 @@ textarea {
   padding: 0;
 }
 
-.btn--cancel {
-  margin-top: 20px;
-}
-
-.btn--danger {
-  border: 1px solid rgb(148, 0, 0);
-  margin-top: 20px;
-  &:hover {
-    color: rgb(148, 0, 0);
-  }
-}
-
 .btn--collaborate {
   width: 200px;
-  margin-top: 20px;
-}
-
-.btn--remove {
-  margin-top: 0;
-  justify-content: flex-end;
 }
 
 .divider {
@@ -274,6 +267,24 @@ textarea {
   justify-content: center;
 }
 
+@keyframes flickerAnimation {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-flicker {
+  h1 {
+    animation: flickerAnimation 1.5s infinite;
+  }
+}
+
 @media only screen and (min-width: 600px) {
   h1 {
     font-size: 2.5rem;
@@ -287,46 +298,39 @@ textarea {
     }
   }
 
-  .entry {
-    height: 50vh;
-  }
-
   .card {
     width: 60%;
   }
 
-  .options {
-    flex-direction: row;
+  .options--nav {
     width: 60%;
   }
 
-  .options--collab {
-    width: 100%;
+  .entry {
+    height: 50vh;
+    form {
+      width: 33%;
+    }
+  }
+}
+
+@media only screen and (min-width: 1050px) {
+  header,
+  footer {
+    #top {
+      width: 33%;
+    }
   }
 
-  .options__safe {
-    flex-direction: row;
+  .card {
+    width: 33%;
   }
 
-  .btn--cancel {
-    margin-top: 0px;
-    margin-left: 20px;
-  }
-
-  .btn--edit {
-    margin-right: 20px;
-  }
-
-  .btn--danger {
-    margin-top: 0px;
-    margin-right: 0px;
-  }
-
-  .btn--collaborate {
-    margin-top: 0;
+  .options--nav {
+    width: 33%;
   }
 
   .entry form {
-    width: 30%;
+    width: 20%;
   }
 }

@@ -13,7 +13,7 @@ function App() {
     <Router history={history}>
       <div className="app">
         <Route exact path="/" component={Home} />
-        <Route path="/blog-post-details/:id" component={PostPage} />
+        <Route path="/post/:id" component={PostPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/secret" component={Secret} />

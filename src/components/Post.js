@@ -7,6 +7,11 @@ const Post = ({ post }) => {
   const [postFavsUserIds, setPostFavsUserIds] = useState(post.meta.favsUserIds);
 
   let userId = sessionStorage.getItem("userId");
+  let collaboratorList = ", ";
+  post.collaborators.forEach((collaborator, index) => {
+    collaboratorList += collaborator.username;
+    if (index < post.collaborators.length - 1) collaboratorList += ", ";
+  });
 
   const toggleFavourite = (e) => {
     e.preventDefault();
@@ -33,13 +38,13 @@ const Post = ({ post }) => {
       meta: { favs, favsUserIds },
     };
     axios
-      .put(process.env.REACT_APP_BASE_URL + "/api/blogHome/" + post._id, data)
+      .put(process.env.REACT_APP_BASE_URL + "/api/home/" + post._id, data)
       .then((res) => {
         setPostFavs(favs);
         setPostFavsUserIds(favsUserIds);
       })
       .catch((err) => {
-        console.log("Error updating blog post: " + err);
+        console.log("Error updating post: " + err);
       });
   };
 
@@ -47,10 +52,24 @@ const Post = ({ post }) => {
     <article className="post">
       <h3>{post.title}</h3>
       <p>{post.body}</p>
+      <hr className="divider" />
+      <div className="tags">
+        {post.tags.map((tag, index) => (
+          <p key={index}>{"# " + tag}</p>
+        ))}
+      </div>
       <div className="post__details">
-        <div>
-          <p>Author: {post.username ? post.username : "Anonymous"}</p>
-        </div>
+        {post.collaborators.length > 0 ? (
+          <div className="collaborators">
+            <p className="metaLabel">Authors:</p>
+            <p>{post.username + collaboratorList}</p>
+          </div>
+        ) : (
+          <div>
+            <p>Author: {post.username}</p>
+          </div>
+        )}
+
         <div>
           <p>{"Posted: " + new Date(post.date).toLocaleString()}</p>
         </div>
