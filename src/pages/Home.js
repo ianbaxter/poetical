@@ -16,6 +16,7 @@ class Home extends Component {
       title: "",
       body: "",
       tags: "",
+      isPrivate: false,
       posts: null,
     };
   }
@@ -40,32 +41,36 @@ class Home extends Component {
   }
 
   saveNewPost() {
-    let tags = this.state.tags.split(",");
+    let tags = [];
+    if (this.state.tags !== "") tags = this.state.tags.split(",");
     const data = {
       title: this.state.title,
       body: this.state.body,
       username: sessionStorage.getItem("username"),
       userId: sessionStorage.getItem("userId"),
       tags,
+      isPrivate: this.state.isPrivate,
     };
     axios
       .post(process.env.REACT_APP_BASE_URL + "/api/home", data)
       .then((res) => {
         this.getPosts();
-        this.setState({ title: "", body: "", tags: "" });
+        this.setState({ title: "", body: "", tags: "", isPrivate: false });
       })
       .catch((err) => {
         console.log("Error updating post: " + err);
       });
   }
 
-  handleInputChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    this.setState({ [name]: value });
+  handleInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    if (name === "isPrivate") this.setState({ [name]: e.target.checked });
+    else this.setState({ [name]: value });
   };
 
   render() {
+    const userId = sessionStorage.getItem("userId");
     return (
       <div className="wrapper">
         <Header isLoggedIn={this._isLoggedIn} />
@@ -114,31 +119,53 @@ class Home extends Component {
                       name="tags"
                       cols="50"
                       rows="1"
-                      placeholder="Tags"
+                      placeholder="Tags: Song, Rap, Poem..."
                       value={this.state.tags}
                       onChange={this.handleInputChange}
                     />
-                    <button className="btn" onClick={() => this.saveNewPost()}>
-                      Save
-                    </button>
+                    <div className="options">
+                      <div className="options__left">
+                        <button
+                          className="btn"
+                          onClick={() => this.saveNewPost()}
+                        >
+                          Save
+                        </button>
+                      </div>
+                      <div className="options__right">
+                        <label>Private: </label>
+                        <input
+                          type="checkbox"
+                          name="isPrivate"
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </section>
               )}
               <section className="cards">
-                {this.state.posts.map((post) => (
-                  <Link
-                    to={{
-                      pathname: `/post/${post._id}`,
-                      state: {
-                        postId: post._id,
-                      },
-                    }}
-                    className="card post--summary"
-                    key={post._id}
-                  >
-                    <Post post={post} />
-                  </Link>
-                ))}
+                {this.state.posts.map(
+                  (post) =>
+                    (!post.isPrivate ||
+                      post.userId === userId ||
+                      post.collaborators.filter(
+                        (collaborator) => collaborator.id === userId
+                      ).length > 0) && (
+                      <Link
+                        to={{
+                          pathname: `/post/${post._id}`,
+                          state: {
+                            postId: post._id,
+                          },
+                        }}
+                        className="card post--summary"
+                        key={post._id}
+                      >
+                        <Post post={post} />
+                      </Link>
+                    )
+                )}
               </section>
               <section className="bottom">
                 <a href="#top">

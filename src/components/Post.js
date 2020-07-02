@@ -53,11 +53,13 @@ const Post = ({ post }) => {
       <h3>{post.title}</h3>
       <p>{post.body}</p>
       <hr className="divider" />
-      <div className="tags">
-        {post.tags.map((tag, index) => (
-          <p key={index}>{"# " + tag}</p>
-        ))}
-      </div>
+      {post.tags.length > 0 && (
+        <div className="tags">
+          {post.tags.map((tag, index) => (
+            <p key={index}>{"# " + tag}</p>
+          ))}
+        </div>
+      )}
       <div className="post__details">
         {post.collaborators.length > 0 ? (
           <div className="collaborators">
@@ -101,6 +103,7 @@ const Post = ({ post }) => {
           </svg>
         )}
         <p>{postFavs}</p>
+        {post.isPrivate && <p>Private</p>}
       </div>
     </article>
   );

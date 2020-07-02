@@ -25,10 +25,8 @@ const Header = ({ isLoggedIn }) => {
     <header>
       <div id="top">
         <Link to="/">
-          <h1>Chat Wall</h1>
+          <h1>Poetic.al</h1>
         </Link>
-        {/* {isLoggedIn && <span>Hi {sessionStorage.getItem("username")}</span>} */}
-        {/* <nav> */}
         {isLoggedIn ? (
           <div>
             <div
@@ -45,10 +43,9 @@ const Header = ({ isLoggedIn }) => {
             Login
           </Link>
         )}
-        {/* </nav> */}
       </div>
       <div className="top-options-wrapper">
-        <div
+        <nav
           className={"user-options " + (menuVisible && "user-options--active")}
         >
           <button className="btn" onClick={onLogoutClick}>
@@ -60,7 +57,7 @@ const Header = ({ isLoggedIn }) => {
           >
             Settings
           </Link>
-        </div>
+        </nav>
       </div>
     </header>
   );

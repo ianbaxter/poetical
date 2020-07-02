@@ -18,12 +18,14 @@ class PostPage extends Component {
       title: "",
       body: "",
       tags: [],
+      isPrivate: false,
       newTitle: "",
       newBody: "",
       newTags: "",
+      newIsPrivate: false,
       collaborator: "",
       editMode: false,
-      addCollabMode: false,
+      collabMode: false,
       userCanEdit: false,
     };
   }
@@ -44,9 +46,11 @@ class PostPage extends Component {
           title: res.data.title,
           body: res.data.body,
           tags: res.data.tags,
+          isPrivate: res.data.isPrivate,
           newTitle: res.data.title,
           newBody: res.data.body,
           newTags: res.data.tags.toString(),
+          newIsPrivate: res.data.isPrivate,
           userCanEdit,
         });
       })
@@ -92,6 +96,7 @@ class PostPage extends Component {
           newTitle: this.state.title,
           newBody: this.state.body,
           newTags: this.state.tags.toString(),
+          newIsPrivate: this.state.isPrivate,
         });
         break;
       case "addCollab":
@@ -103,11 +108,15 @@ class PostPage extends Component {
   }
 
   saveEditedPost(dateEdited) {
+    // Check if tags input field is empty
+    let newTags =
+      this.state.newTags === "" ? [] : this.state.newTags.split(",");
     const data = {
       title: this.state.newTitle,
       body: this.state.newBody,
-      tags: this.state.newTags.split(","),
+      tags: newTags,
       dateEdited: dateEdited,
+      isPrivate: this.state.newIsPrivate,
     };
 
     axios
@@ -119,12 +128,14 @@ class PostPage extends Component {
         let updatedPost = this.state.post;
         updatedPost.title = this.state.newTitle;
         updatedPost.body = this.state.newBody;
-        updatedPost.tags = this.state.newTags.split(",");
+        updatedPost.tags = newTags;
+        updatedPost.isPrivate = this.state.newIsPrivate;
         this.setState({
           editMode: false,
           title: this.state.newTitle,
           body: this.state.newBody,
           tags: this.state.newTags.split(","),
+          isPrivate: this.state.newIsPrivate,
           post: updatedPost,
         });
       })
@@ -214,12 +225,13 @@ class PostPage extends Component {
   handleInputChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    this.setState({ [name]: value });
+    if (name === "newIsPrivate") this.setState({ [name]: e.target.checked });
+    else this.setState({ [name]: value });
   };
 
   render() {
     const editMode = this.state.editMode;
-    const addCollabMode = this.state.addCollabMode;
+    const addCollabMode = this.state.collabMode;
 
     return (
       <div className="wrapper">
@@ -280,6 +292,7 @@ class PostPage extends Component {
                 onChange={this.handleInputChange}
               />
               <hr className="divider" />
+              <label htmlFor="newTags">Tags:</label>
               <Textarea
                 name="newTags"
                 cols="50"
@@ -288,6 +301,15 @@ class PostPage extends Component {
                 value={this.state.newTags}
                 onChange={this.handleInputChange}
               />
+              <div className="options__right options--margin-bot">
+                <label> Private: </label>
+                <input
+                  type="checkbox"
+                  name="newIsPrivate"
+                  checked={this.state.newIsPrivate}
+                  onChange={this.handleInputChange}
+                />
+              </div>
               <div className="options">
                 <div className="options__left">
                   <button
@@ -325,7 +347,7 @@ class PostPage extends Component {
                 <div>
                   {this.state.post.collaborators.length > 0 ? (
                     this.state.post.collaborators.map((collaborator) => (
-                      <p key={collaborator.id}>{collaborator.username}</p>
+                      <li key={collaborator.id}>{collaborator.username}</li>
                     ))
                   ) : (
                     <p className="p--secondary">No Collaborators</p>
@@ -338,7 +360,7 @@ class PostPage extends Component {
                   name="collaborator"
                   cols="50"
                   rows="1"
-                  placeholder="Enter Username"
+                  placeholder="Enter Username (Case Sensitive)"
                   value={this.state.collaborator}
                   onChange={this.handleInputChange}
                 />

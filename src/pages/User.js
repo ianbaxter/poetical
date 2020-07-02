@@ -242,7 +242,7 @@ const User = () => {
           {passwordEditMode ? (
             <div>
               <input
-                type="new-password"
+                type="password"
                 placeholder="New Password"
                 name="password"
                 value={password}
