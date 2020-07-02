@@ -3,7 +3,7 @@ import React from "react";
 const PostStatus = ({ message, animation }) => {
   return (
     <section className={animation}>
-      <h1>{message}</h1>
+      <h2>{message}</h2>
     </section>
   );
 };

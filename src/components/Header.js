@@ -25,7 +25,7 @@ const Header = ({ isLoggedIn }) => {
     <header>
       <div id="top">
         <Link to="/">
-          <h1>Poetic.al</h1>
+          <h1>Poetical</h1>
         </Link>
         {isLoggedIn ? (
           <div>
