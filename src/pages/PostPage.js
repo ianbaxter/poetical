@@ -72,7 +72,7 @@ class PostPage extends Component {
   }
 
   toggleColabMode() {
-    this.setState({ addCollabMode: true });
+    this.setState({ collabMode: true });
   }
 
   deletePost() {
@@ -99,8 +99,8 @@ class PostPage extends Component {
           newIsPrivate: this.state.isPrivate,
         });
         break;
-      case "addCollab":
-        this.setState({ addCollabMode: false, collaborator: "" });
+      case "collab":
+        this.setState({ collabMode: false, collaborator: "" });
         break;
       default:
         return;
@@ -151,14 +151,15 @@ class PostPage extends Component {
 
     let collaborators = this.state.post.collaborators;
 
-    if (collaborators.length > 0) {
-      // Check if already a collaborator
-      collaborators.forEach((collaborator) => {
-        if (collaborator.username === this.state.collaborator) {
-          console.log("User is already a collaborator");
-          return;
-        }
-      });
+    // Check if already a collaborator
+    if (
+      collaborators.length > 0 &&
+      collaborators.filter(
+        (collaborator) => collaborator.username === this.state.collaborator
+      ).length > 0
+    ) {
+      console.log("User is already a collaborator");
+      return;
     }
 
     // Check if new collaborator is a user and if so return their ID
@@ -231,13 +232,13 @@ class PostPage extends Component {
 
   render() {
     const editMode = this.state.editMode;
-    const addCollabMode = this.state.collabMode;
+    const collabMode = this.state.collabMode;
 
     return (
       <div className="wrapper">
         <Header isLoggedIn={this._isLoggedIn} />
         {!editMode &&
-          !addCollabMode &&
+          !collabMode &&
           (this.state.post === null ? (
             <main className="cards main--loading">
               <PostStatus
@@ -339,7 +340,7 @@ class PostPage extends Component {
             </div>
           </main>
         )}
-        {addCollabMode && (
+        {collabMode && (
           <main className="cards">
             <div className="card">
               <div>
@@ -385,7 +386,7 @@ class PostPage extends Component {
               </div>
             </div>
             <div className="options options--nav">
-              <button className="btn " onClick={() => this.cancel("addCollab")}>
+              <button className="btn " onClick={() => this.cancel("collab")}>
                 Back
               </button>
             </div>

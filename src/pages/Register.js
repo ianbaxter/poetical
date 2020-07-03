@@ -64,6 +64,7 @@ const Register = () => {
               name="username"
               value={username}
               onChange={handleInputChange}
+              autoComplete="username"
             />
             <input
               type="email"
@@ -71,6 +72,7 @@ const Register = () => {
               name="email"
               value={email}
               onChange={handleInputChange}
+              autoComplete="email"
             />
             <input
               type="password"
@@ -78,6 +80,7 @@ const Register = () => {
               name="password"
               value={password}
               onChange={handleInputChange}
+              autoComplete="new-password"
             />
             <button className="btn btn--submit" type="submit">
               Submit

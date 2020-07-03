@@ -66,6 +66,7 @@ const Login = () => {
               name="email"
               value={email}
               onChange={handleInputChange}
+              autoComplete="email"
             />
             <input
               type="password"
@@ -73,6 +74,7 @@ const Login = () => {
               name="password"
               value={password}
               onChange={handleInputChange}
+              autoComplete="current-password"
             />
             <button className="btn btn--submit" type="submit">
               Submit
