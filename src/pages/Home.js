@@ -90,7 +90,7 @@ class Home extends Component {
             <PostStatus message={"There are no posts"} />
           ) : (
             <div>
-              {this._isLoggedIn && (
+              {this._isLoggedIn ? (
                 <section className="cards">
                   <div className="card">
                     <p>
@@ -141,6 +141,22 @@ class Home extends Component {
                         />
                       </div>
                     </div>
+                  </div>
+                </section>
+              ) : (
+                <section className="cards">
+                  <div className="card card--intro">
+                    <h1>P</h1>
+                    <h6>
+                      Poetical is a platform for collaborating on creative prose
+                    </h6>
+                    <p>
+                      Register to start posting or browse others creations
+                      below.
+                    </p>
+                    <Link to="/register" className="btn">
+                      Register
+                    </Link>
                   </div>
                 </section>
               )}
