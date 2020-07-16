@@ -96,6 +96,10 @@ footer a {
   color: rgba(255, 255, 255, 0.589);
 }
 
+footer {
+  margin-top: 20px;
+}
+
 #top {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -365,12 +369,7 @@ input[type="password"] {
   width: 100%;
 }
 
-.options--margin-bot {
-  margin-bottom: 20px;
-}
-
-.options--nav {
-  width: 90%;
+.margin-bottom {
   margin-bottom: 20px;
 }
 
@@ -389,7 +388,20 @@ input[type="password"] {
           align-items: center;
 }
 
-.options__right label {
+.options-nav-wrapper {
+  width: 90%;
+}
+
+.privacy {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.privacy label {
   margin: 0 8px 3px 0;
 }
 
@@ -397,10 +409,19 @@ input[type="password"] {
   color: white;
   width: 80px;
   background: transparent;
-  border: 1px solid #007bff;
+  border: 1px solid white;
 }
 
 .btn:hover {
+  color: #007bff;
+  border: 1px solid #007bff;
+}
+
+.btn--blue {
+  border: 1px solid #007bff;
+}
+
+.btn--blue:hover {
   color: #007bff;
 }
 
@@ -410,11 +431,7 @@ input[type="password"] {
 
 .btn--red:hover {
   color: #940000;
-}
-
-.btn--white {
-  border-color: white;
-  color: #007bff;
+  border: 1px solid #940000;
 }
 
 .btn--submit {
@@ -546,7 +563,7 @@ input[type="password"] {
   .card {
     width: 60%;
   }
-  .options--nav {
+  .options-nav-wrapper {
     width: 60%;
   }
   .entry {
@@ -568,7 +585,7 @@ input[type="password"] {
   .card {
     width: 33%;
   }
-  .options--nav {
+  .options-nav-wrapper {
     width: 33%;
   }
   .entry form {

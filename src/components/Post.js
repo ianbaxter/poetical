@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "../App.css";
 
 const Post = ({ post }) => {
   const [postFavs, setPostFavs] = useState(post.meta.favs);

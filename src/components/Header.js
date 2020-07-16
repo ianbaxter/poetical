@@ -39,7 +39,7 @@ const Header = ({ isLoggedIn }) => {
             </div>
           </div>
         ) : (
-          <Link to="/login" className="btn btn--white">
+          <Link to="/login" className="btn">
             Login
           </Link>
         )}

@@ -75,6 +75,10 @@ footer {
   }
 }
 
+footer {
+  margin-top: 20px;
+}
+
 #top {
   display: flex;
   align-items: center;
@@ -269,12 +273,7 @@ input[type="password"] {
   width: 100%;
 }
 
-.options--margin-bot {
-  margin-bottom: 20px;
-}
-
-.options--nav {
-  width: 90%;
+.margin-bottom {
   margin-bottom: 20px;
 }
 
@@ -283,6 +282,15 @@ input[type="password"] {
 }
 
 .options__right {
+  display: flex;
+  align-items: center;
+}
+
+.options-nav-wrapper {
+  width: 90%;
+}
+
+.privacy {
   display: flex;
   align-items: center;
   label {
@@ -294,6 +302,14 @@ input[type="password"] {
   color: $primaryColor;
   width: 80px;
   background: transparent;
+  border: 1px solid $primaryColor;
+  &:hover {
+    color: $highlightColor;
+    border: 1px solid $highlightColor;
+  }
+}
+
+.btn--blue {
   border: 1px solid $highlightColor;
   &:hover {
     color: $highlightColor;
@@ -304,12 +320,8 @@ input[type="password"] {
   border: 1px solid rgb(148, 0, 0);
   &:hover {
     color: rgb(148, 0, 0);
+    border: 1px solid rgb(148, 0, 0);
   }
-}
-
-.btn--white {
-  border-color: $primaryColor;
-  color: #007bff;
 }
 
 .btn--submit {
@@ -402,7 +414,7 @@ input[type="password"] {
     width: 60%;
   }
 
-  .options--nav {
+  .options-nav-wrapper {
     width: 60%;
   }
 
@@ -432,7 +444,7 @@ input[type="password"] {
     width: 33%;
   }
 
-  .options--nav {
+  .options-nav-wrapper {
     width: 33%;
   }
 

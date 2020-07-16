@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import "../App.css";
 import Post from "../components/Post";
 import Textarea from "react-textarea-autosize";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import PostStatus from "../components/PostStatus";
+import Options from "../components/Options";
+import OptionPrivate from "../components/OptionPrivate";
 import axios from "axios";
 
 class Home extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
     this._isLoggedIn = sessionStorage.getItem("username");
@@ -22,6 +25,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     this.getPosts();
   }
 
@@ -29,15 +33,21 @@ class Home extends Component {
     axios
       .get(process.env.REACT_APP_BASE_URL + "/api/home")
       .then((res) => {
-        let postsReversed = res.data.reverse();
-        let numPosts = Object.keys(postsReversed).length;
-        numPosts > 0
-          ? this.setState({ posts: postsReversed })
-          : this.setState({ posts: "Empty" });
+        if (this._isMounted) {
+          let postsReversed = res.data.reverse();
+          let numPosts = Object.keys(postsReversed).length;
+          numPosts > 0
+            ? this.setState({ posts: postsReversed })
+            : this.setState({ posts: "Empty" });
+        }
       })
       .catch((err) => {
         console.log("Error from posts: " + err);
       });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   saveNewPost() {
@@ -74,6 +84,20 @@ class Home extends Component {
     return (
       <div className="wrapper">
         <Header isLoggedIn={this._isLoggedIn} />
+        {!this._isLoggedIn && (
+          <section className="cards">
+            <div className="card card--intro">
+              <h1>P</h1>
+              <h6>
+                Poetical is a platform for collaborating on creative prose
+              </h6>
+              <p>Register to start posting or browse others creations below.</p>
+              <Link to="/register" className="btn">
+                Register
+              </Link>
+            </div>
+          </section>
+        )}
         <main
           className={
             this.state.posts === null || this.state.posts === "Empty"
@@ -90,7 +114,7 @@ class Home extends Component {
             <PostStatus message={"There are no posts"} />
           ) : (
             <div>
-              {this._isLoggedIn ? (
+              {this._isLoggedIn && (
                 <section className="cards">
                   <div className="card">
                     <p>
@@ -123,40 +147,21 @@ class Home extends Component {
                       value={this.state.tags}
                       onChange={this.handleInputChange}
                     />
-                    <div className="options">
+                    <Options>
                       <div className="options__left">
                         <button
-                          className="btn"
+                          className="btn btn--blue"
                           onClick={() => this.saveNewPost()}
                         >
                           Save
                         </button>
                       </div>
-                      <div className="options__right">
-                        <label>Private: </label>
-                        <input
-                          type="checkbox"
-                          name="isPrivate"
-                          onChange={this.handleInputChange}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              ) : (
-                <section className="cards">
-                  <div className="card card--intro">
-                    <h1>P</h1>
-                    <h6>
-                      Poetical is a platform for collaborating on creative prose
-                    </h6>
-                    <p>
-                      Register to start posting or browse others creations
-                      below.
-                    </p>
-                    <Link to="/register" className="btn">
-                      Register
-                    </Link>
+                      <OptionPrivate
+                        className="options__right"
+                        name="isPrivate"
+                        handleOnChange={this.handleInputChange}
+                      />
+                    </Options>
                   </div>
                 </section>
               )}

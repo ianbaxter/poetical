@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import history from "../history";
-import "../App.css";
 import axios from "axios";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Post from "../components/Post";
 import PostStatus from "../components/PostStatus";
+import Options from "../components/Options";
+import OptionPrivate from "../components/OptionPrivate";
 import Textarea from "react-textarea-autosize";
 
 class PostPage extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
     this._isLoggedIn = sessionStorage.getItem("username");
@@ -31,6 +34,7 @@ class PostPage extends Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     this.getPost();
   }
 
@@ -38,23 +42,29 @@ class PostPage extends Component {
     axios
       .get(process.env.REACT_APP_BASE_URL + "/api/home/" + this.postId)
       .then((res) => {
-        const post = res.data;
-        const userCanEdit = this.authUser(post);
+        if (this._isMounted) {
+          const post = res.data;
+          const userCanEdit = this.authUser(post);
 
-        this.setState({
-          post,
-          title: res.data.title,
-          body: res.data.body,
-          tags: res.data.tags,
-          isPrivate: res.data.isPrivate,
-          newTitle: res.data.title,
-          newBody: res.data.body,
-          newTags: res.data.tags.toString(),
-          newIsPrivate: res.data.isPrivate,
-          userCanEdit,
-        });
+          this.setState({
+            post,
+            title: res.data.title,
+            body: res.data.body,
+            tags: res.data.tags,
+            isPrivate: res.data.isPrivate,
+            newTitle: res.data.title,
+            newBody: res.data.body,
+            newTags: res.data.tags.toString(),
+            newIsPrivate: res.data.isPrivate,
+            userCanEdit,
+          });
+        }
       })
       .catch((err) => console.log("Error getting post: " + err));
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   authUser(post) {
@@ -67,7 +77,7 @@ class PostPage extends Component {
     return userCanEdit;
   }
 
-  editPost() {
+  toggleEditMode() {
     this.setState({ editMode: true });
   }
 
@@ -252,23 +262,25 @@ class PostPage extends Component {
                 <Post post={this.state.post} />
               </div>
               {this.state.userCanEdit && (
-                <div className="options options--nav">
-                  <div className="options__left">
-                    <button
-                      className="btn btn--left"
-                      onClick={() => this.editPost()}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                  <div className="options__right">
-                    <button
-                      className="btn btn--collaborate"
-                      onClick={() => this.toggleColabMode()}
-                    >
-                      Manage Collaborators
-                    </button>
-                  </div>
+                <div className="options-nav-wrapper">
+                  <Options>
+                    <div className="options__left">
+                      <button
+                        className="btn"
+                        onClick={() => this.toggleEditMode()}
+                      >
+                        Edit
+                      </button>
+                    </div>
+                    <div className="options__right">
+                      <button
+                        className="btn btn--collaborate"
+                        onClick={() => this.toggleColabMode()}
+                      >
+                        Manage Collaborators
+                      </button>
+                    </div>
+                  </Options>
                 </div>
               )}
             </main>
@@ -302,19 +314,17 @@ class PostPage extends Component {
                 value={this.state.newTags}
                 onChange={this.handleInputChange}
               />
-              <div className="options__right options--margin-bot">
-                <label> Private: </label>
-                <input
-                  type="checkbox"
+              <div className="margin-bottom">
+                <OptionPrivate
                   name="newIsPrivate"
-                  checked={this.state.newIsPrivate}
-                  onChange={this.handleInputChange}
+                  handleChecked={this.state.newIsPrivate}
+                  handleOnChange={this.handleInputChange}
                 />
               </div>
-              <div className="options">
+              <Options>
                 <div className="options__left">
                   <button
-                    className="btn btn--left"
+                    className="btn btn--blue"
                     onClick={() => this.saveEditedPost(this.state.post.date)}
                   >
                     Save
@@ -328,15 +338,14 @@ class PostPage extends Component {
                     Delete
                   </button>
                 </div>
-              </div>
+              </Options>
             </div>
-            <div className="options options--nav">
-              <button
-                className="btn btn--cancel"
-                onClick={() => this.cancel("edit")}
-              >
-                Cancel
-              </button>
+            <div className="options-nav-wrapper">
+              <Options>
+                <button className="btn" onClick={() => this.cancel("edit")}>
+                  Cancel
+                </button>
+              </Options>
             </div>
           </main>
         )}
@@ -365,10 +374,10 @@ class PostPage extends Component {
                   value={this.state.collaborator}
                   onChange={this.handleInputChange}
                 />
-                <div className="options">
+                <Options>
                   <div className="options__left">
                     <button
-                      className="btn"
+                      className="btn btn--blue"
                       onClick={() => this.addCollaborator()}
                     >
                       Add
@@ -382,13 +391,15 @@ class PostPage extends Component {
                       Remove
                     </button>
                   </div>
-                </div>
+                </Options>
               </div>
             </div>
-            <div className="options options--nav">
-              <button className="btn " onClick={() => this.cancel("collab")}>
-                Back
-              </button>
+            <div className="options-nav-wrapper">
+              <Options>
+                <button className="btn " onClick={() => this.cancel("collab")}>
+                  Back
+                </button>
+              </Options>
             </div>
           </main>
         )}
