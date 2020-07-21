@@ -1,25 +1,19 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Post from "../components/Post";
-import Textarea from "react-textarea-autosize";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import NewPost from "../components/NewPost";
 import PostStatus from "../components/PostStatus";
-import Options from "../components/Options";
-import OptionPrivate from "../components/OptionPrivate";
 import axios from "axios";
 
 class Home extends Component {
   _isMounted = false;
+  _isLoggedIn = sessionStorage.getItem("username");
 
   constructor(props) {
     super(props);
-    this._isLoggedIn = sessionStorage.getItem("username");
     this.state = {
-      title: "",
-      body: "",
-      tags: "",
-      isPrivate: false,
       posts: null,
     };
   }
@@ -49,35 +43,6 @@ class Home extends Component {
   componentWillUnmount() {
     this._isMounted = false;
   }
-
-  saveNewPost() {
-    let tags = [];
-    if (this.state.tags !== "") tags = this.state.tags.split(",");
-    const data = {
-      title: this.state.title,
-      body: this.state.body,
-      username: sessionStorage.getItem("username"),
-      userId: sessionStorage.getItem("userId"),
-      tags,
-      isPrivate: this.state.isPrivate,
-    };
-    axios
-      .post(process.env.REACT_APP_BASE_URL + "/api/home", data)
-      .then((res) => {
-        this.getPosts();
-        this.setState({ title: "", body: "", tags: "", isPrivate: false });
-      })
-      .catch((err) => {
-        console.log("Error updating post: " + err);
-      });
-  }
-
-  handleInputChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    if (name === "isPrivate") this.setState({ [name]: e.target.checked });
-    else this.setState({ [name]: value });
-  };
 
   render() {
     const userId = sessionStorage.getItem("userId");
@@ -116,53 +81,7 @@ class Home extends Component {
             <div>
               {this._isLoggedIn && (
                 <section className="cards">
-                  <div className="card">
-                    <p>
-                      Hi <i>{sessionStorage.getItem("username")}</i>, add your
-                      new post here:
-                    </p>
-                    <hr className="divider" />
-                    <Textarea
-                      name="title"
-                      cols="50"
-                      rows="1"
-                      placeholder="Title"
-                      value={this.state.title}
-                      onChange={this.handleInputChange}
-                    />
-                    <Textarea
-                      name="body"
-                      cols="50"
-                      rows="1"
-                      placeholder="Content"
-                      value={this.state.body}
-                      onChange={this.handleInputChange}
-                    />
-                    <hr className="divider" />
-                    <Textarea
-                      name="tags"
-                      cols="50"
-                      rows="1"
-                      placeholder="Tags: Song, Rap, Poem..."
-                      value={this.state.tags}
-                      onChange={this.handleInputChange}
-                    />
-                    <Options>
-                      <div className="options__left">
-                        <button
-                          className="btn btn--blue"
-                          onClick={() => this.saveNewPost()}
-                        >
-                          Save
-                        </button>
-                      </div>
-                      <OptionPrivate
-                        className="options__right"
-                        name="isPrivate"
-                        handleOnChange={this.handleInputChange}
-                      />
-                    </Options>
-                  </div>
+                  <NewPost getPosts={() => this.getPosts()} />
                 </section>
               )}
               <section className="cards">

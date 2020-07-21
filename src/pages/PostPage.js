@@ -1,31 +1,25 @@
 import React, { Component } from "react";
-import history from "../history";
 import axios from "axios";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Post from "../components/Post";
+import EditPost from "../components/EditPost";
 import PostStatus from "../components/PostStatus";
 import Options from "../components/Options";
-import OptionPrivate from "../components/OptionPrivate";
 import Textarea from "react-textarea-autosize";
 
 class PostPage extends Component {
   _isMounted = false;
+  _isLoggedIn = sessionStorage.getItem("username");
 
   constructor(props) {
     super(props);
-    this._isLoggedIn = sessionStorage.getItem("username");
-    this.postId = this.props.location.state.postId;
     this.state = {
       post: null,
       title: "",
       body: "",
       tags: [],
       isPrivate: false,
-      newTitle: "",
-      newBody: "",
-      newTags: "",
-      newIsPrivate: false,
       collaborator: "",
       editMode: false,
       collabMode: false,
@@ -40,7 +34,11 @@ class PostPage extends Component {
 
   getPost() {
     axios
-      .get(process.env.REACT_APP_BASE_URL + "/api/home/" + this.postId)
+      .get(
+        process.env.REACT_APP_BASE_URL +
+          "/api/home/" +
+          this.props.location.state.postId
+      )
       .then((res) => {
         if (this._isMounted) {
           const post = res.data;
@@ -52,10 +50,6 @@ class PostPage extends Component {
             body: res.data.body,
             tags: res.data.tags,
             isPrivate: res.data.isPrivate,
-            newTitle: res.data.title,
-            newBody: res.data.body,
-            newTags: res.data.tags.toString(),
-            newIsPrivate: res.data.isPrivate,
             userCanEdit,
           });
         }
@@ -85,29 +79,14 @@ class PostPage extends Component {
     this.setState({ collabMode: true });
   }
 
-  deletePost() {
-    axios
-      .delete(
-        process.env.REACT_APP_BASE_URL + "/api/home/" + this.state.post._id
-      )
-      .then((res) => {
-        history.push("/");
-      })
-      .catch((err) => {
-        console.log("Error deleting post: " + err);
-      });
-  }
+  updatePost = (updatedPost) => {
+    this.setState({ post: updatedPost, editMode: false });
+  };
 
   cancel(mode) {
     switch (mode) {
       case "edit":
-        this.setState({
-          editMode: false,
-          newTitle: this.state.title,
-          newBody: this.state.body,
-          newTags: this.state.tags.toString(),
-          newIsPrivate: this.state.isPrivate,
-        });
+        this.setState({ editMode: false });
         break;
       case "collab":
         this.setState({ collabMode: false, collaborator: "" });
@@ -115,43 +94,6 @@ class PostPage extends Component {
       default:
         return;
     }
-  }
-
-  saveEditedPost(dateEdited) {
-    // Check if tags input field is empty
-    let newTags =
-      this.state.newTags === "" ? [] : this.state.newTags.split(",");
-    const data = {
-      title: this.state.newTitle,
-      body: this.state.newBody,
-      tags: newTags,
-      dateEdited: dateEdited,
-      isPrivate: this.state.newIsPrivate,
-    };
-
-    axios
-      .put(
-        process.env.REACT_APP_BASE_URL + "/api/home/" + this.state.post._id,
-        data
-      )
-      .then((res) => {
-        let updatedPost = this.state.post;
-        updatedPost.title = this.state.newTitle;
-        updatedPost.body = this.state.newBody;
-        updatedPost.tags = newTags;
-        updatedPost.isPrivate = this.state.newIsPrivate;
-        this.setState({
-          editMode: false,
-          title: this.state.newTitle,
-          body: this.state.newBody,
-          tags: this.state.newTags.split(","),
-          isPrivate: this.state.newIsPrivate,
-          post: updatedPost,
-        });
-      })
-      .catch((err) => {
-        console.log("Error updating post: " + err);
-      });
   }
 
   addCollaborator() {
@@ -236,8 +178,7 @@ class PostPage extends Component {
   handleInputChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    if (name === "newIsPrivate") this.setState({ [name]: e.target.checked });
-    else this.setState({ [name]: value });
+    this.setState({ [name]: value });
   };
 
   render() {
@@ -287,59 +228,7 @@ class PostPage extends Component {
           ))}
         {editMode && (
           <main className="cards">
-            <div className="card">
-              <label htmlFor="newTitle">Title:</label>
-              <Textarea
-                name="newTitle"
-                cols="50"
-                rows="1"
-                value={this.state.newTitle}
-                onChange={this.handleInputChange}
-              />
-              <label htmlFor="newBody">Content:</label>
-              <Textarea
-                name="newBody"
-                cols="50"
-                rows="1"
-                value={this.state.newBody}
-                onChange={this.handleInputChange}
-              />
-              <hr className="divider" />
-              <label htmlFor="newTags">Tags:</label>
-              <Textarea
-                name="newTags"
-                cols="50"
-                rows="1"
-                placeholder="Enter Tags"
-                value={this.state.newTags}
-                onChange={this.handleInputChange}
-              />
-              <div className="margin-bottom">
-                <OptionPrivate
-                  name="newIsPrivate"
-                  handleChecked={this.state.newIsPrivate}
-                  handleOnChange={this.handleInputChange}
-                />
-              </div>
-              <Options>
-                <div className="options__left">
-                  <button
-                    className="btn btn--blue"
-                    onClick={() => this.saveEditedPost(this.state.post.date)}
-                  >
-                    Save
-                  </button>
-                </div>
-                <div className="options__right">
-                  <button
-                    className="btn btn--red"
-                    onClick={() => this.deletePost()}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </Options>
-            </div>
+            <EditPost post={this.state.post} updatePost={this.updatePost} />
             <div className="options-nav-wrapper">
               <Options>
                 <button className="btn" onClick={() => this.cancel("edit")}>

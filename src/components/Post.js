@@ -72,7 +72,10 @@ const Post = ({ post }) => {
         )}
 
         <div>
-          <p>{"Posted: " + new Date(post.date).toLocaleString()}</p>
+          <p>
+            {"Posted: " +
+              new Date(post.date).toLocaleString("en-GB", { timeZone: "UTC" })}
+          </p>
         </div>
       </div>
       <div className="post__stats">

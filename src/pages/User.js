@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Textarea from "react-textarea-autosize";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Options from "../components/Options";
 import axios from "axios";
 
 const User = () => {
@@ -165,34 +166,41 @@ const User = () => {
                 value={email}
                 onChange={handleInputChange}
               />
-              <div className="options options--margin-bot">
-                <div className="options__left">
-                  <button
-                    className="btn btn--left"
-                    onClick={() => saveEditedUser("email")}
-                  >
-                    Save
-                  </button>
-                </div>
-                <div className="options__right">
-                  <button
-                    className="btn btn--right"
-                    onClick={() => cancelEditUser("email")}
-                  >
-                    Cancel
-                  </button>
-                </div>
+              <div className="margin-bottom">
+                <Options>
+                  <div className="options__left">
+                    <button
+                      className="btn btn--blue"
+                      onClick={() => saveEditedUser("email")}
+                    >
+                      Save
+                    </button>
+                  </div>
+                  <div className="options__right">
+                    <button
+                      className="btn btn--red"
+                      onClick={() => cancelEditUser("email")}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </Options>
               </div>
             </div>
           ) : (
             <div>
               <p>{email}</p>
-              <div className="options options--nav">
-                <div className="options__left">
-                  <button className="btn" onClick={() => editUser("email")}>
-                    Edit
-                  </button>
-                </div>
+              <div className="margin-bottom">
+                <Options>
+                  <div className="options__left">
+                    <button
+                      className="btn btn--blue"
+                      onClick={() => editUser("email")}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </Options>
               </div>
             </div>
           )}
@@ -207,34 +215,41 @@ const User = () => {
                 value={username}
                 onChange={handleInputChange}
               />
-              <div className="options options--margin-bot">
-                <div className="options__left">
-                  <button
-                    className="btn btn--left"
-                    onClick={() => saveEditedUser("username")}
-                  >
-                    Save
-                  </button>
-                </div>
-                <div className="options__right">
-                  <button
-                    className="btn btn--right"
-                    onClick={() => cancelEditUser("username")}
-                  >
-                    Cancel
-                  </button>
-                </div>
+              <div className="margin-bottom">
+                <Options>
+                  <div className="options__left">
+                    <button
+                      className="btn btn--blue"
+                      onClick={() => saveEditedUser("username")}
+                    >
+                      Save
+                    </button>
+                  </div>
+                  <div className="options__right">
+                    <button
+                      className="btn btn--red"
+                      onClick={() => cancelEditUser("username")}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </Options>
               </div>
             </div>
           ) : (
             <div>
               <p>{username}</p>
-              <div className="options options--nav">
-                <div className="options__left">
-                  <button className="btn" onClick={() => editUser("username")}>
-                    Edit
-                  </button>
-                </div>
+              <div className="margin-bottom">
+                <Options>
+                  <div className="options__left">
+                    <button
+                      className="btn btn--blue"
+                      onClick={() => editUser("username")}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                </Options>
               </div>
             </div>
           )}
@@ -248,10 +263,10 @@ const User = () => {
                 value={password}
                 onChange={handleInputChange}
               />
-              <div className="options options--margin-bot">
+              <Options>
                 <div className="options__left">
                   <button
-                    className="btn btn--left"
+                    className="btn btn--blue"
                     onClick={() => saveEditedUser("password")}
                   >
                     Save
@@ -259,26 +274,26 @@ const User = () => {
                 </div>
                 <div className="options__right">
                   <button
-                    className="btn btn--right"
+                    className="btn btn--red"
                     onClick={() => cancelEditUser("password")}
                   >
                     Cancel
                   </button>
                 </div>
-              </div>
+              </Options>
             </div>
           ) : (
             <div>
-              <div name="password" className="options options--nav">
+              <Options name="password">
                 <div className="options__left">
                   <button
-                    className="btn btn--collaborate"
+                    className="btn btn--collaborate btn--blue"
                     onClick={() => editUser("password")}
                   >
                     Change Password
                   </button>
                 </div>
-              </div>
+              </Options>
             </div>
           )}
         </div>
