@@ -5,8 +5,8 @@ import Footer from "../components/Footer";
 import Post from "../components/Post";
 import EditPost from "../components/EditPost";
 import PostStatus from "../components/PostStatus";
+import PostCollabs from "../components/PostCollabs";
 import Options from "../components/Options";
-import Textarea from "react-textarea-autosize";
 
 class PostPage extends Component {
   _isMounted = false;
@@ -20,7 +20,6 @@ class PostPage extends Component {
       body: "",
       tags: [],
       isPrivate: false,
-      collaborator: "",
       editMode: false,
       collabMode: false,
       userCanEdit: false,
@@ -30,6 +29,10 @@ class PostPage extends Component {
   componentDidMount() {
     this._isMounted = true;
     this.getPost();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   getPost() {
@@ -55,10 +58,6 @@ class PostPage extends Component {
         }
       })
       .catch((err) => console.log("Error getting post: " + err));
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
   }
 
   authUser(post) {
@@ -89,97 +88,12 @@ class PostPage extends Component {
         this.setState({ editMode: false });
         break;
       case "collab":
-        this.setState({ collabMode: false, collaborator: "" });
+        this.setState({ collabMode: false });
         break;
       default:
         return;
     }
   }
-
-  addCollaborator() {
-    if (this.state.collaborator === "") return;
-    if (this.state.collaborator === sessionStorage.getItem("username"))
-      return console.log("Cannot add yourself as a collaborator");
-
-    let collaborators = this.state.post.collaborators;
-
-    // Check if already a collaborator
-    if (
-      collaborators.length > 0 &&
-      collaborators.filter(
-        (collaborator) => collaborator.username === this.state.collaborator
-      ).length > 0
-    ) {
-      console.log("User is already a collaborator");
-      return;
-    }
-
-    // Check if new collaborator is a user and if so return their ID
-    const data = { username: this.state.collaborator };
-    axios
-      .get(process.env.REACT_APP_BASE_URL + "/api/users", {
-        params: data,
-      })
-      .then((res) => {
-        const collaboratorId = res.data;
-        const newCollaborator = {
-          id: collaboratorId,
-          username: this.state.collaborator,
-        };
-        collaborators.push(newCollaborator);
-
-        const data = { collaborators };
-        axios
-          .put(
-            process.env.REACT_APP_BASE_URL + "/api/home/" + this.state.post._id,
-            data
-          )
-          .then((res) => {
-            console.log("Added new collaborator: " + this.state.collaborator);
-            this.setState({ collaborator: "" });
-          })
-          .catch((err) => {
-            console.log("Error updating post: " + err);
-          });
-      })
-      .catch((err) => console.log("This user does not exist: " + err));
-  }
-
-  removeCollaborator() {
-    if (this.state.collaborator === "") return;
-    let collaborators = this.state.post.collaborators;
-    let collaboratorIndex = -1;
-    collaborators.forEach((collaborator, index) => {
-      if (collaborator.username === this.state.collaborator)
-        collaboratorIndex = index;
-    });
-
-    if (collaboratorIndex >= 0) {
-      console.log("Remove collaborator");
-
-      collaborators.splice(collaboratorIndex, 1);
-
-      const data = { collaborators };
-      axios
-        .put(
-          process.env.REACT_APP_BASE_URL + "/api/home/" + this.state.post._id,
-          data
-        )
-        .then((res) => {
-          this.setState({ collaborator: "" });
-        })
-        .catch((err) => {
-          console.log("Error updating post: " + err);
-        });
-    }
-    return;
-  }
-
-  handleInputChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    this.setState({ [name]: value });
-  };
 
   render() {
     const editMode = this.state.editMode;
@@ -240,49 +154,7 @@ class PostPage extends Component {
         )}
         {collabMode && (
           <main className="cards">
-            <div className="card">
-              <div>
-                <h6>Collaborators:</h6>
-                <div>
-                  {this.state.post.collaborators.length > 0 ? (
-                    this.state.post.collaborators.map((collaborator) => (
-                      <li key={collaborator.id}>{collaborator.username}</li>
-                    ))
-                  ) : (
-                    <p className="p--secondary">No Collaborators</p>
-                  )}
-                </div>
-              </div>
-              <hr className="divider" />
-              <div>
-                <Textarea
-                  name="collaborator"
-                  cols="50"
-                  rows="1"
-                  placeholder="Enter Username (Case Sensitive)"
-                  value={this.state.collaborator}
-                  onChange={this.handleInputChange}
-                />
-                <Options>
-                  <div className="options__left">
-                    <button
-                      className="btn btn--blue"
-                      onClick={() => this.addCollaborator()}
-                    >
-                      Add
-                    </button>
-                  </div>
-                  <div className="options__right">
-                    <button
-                      className="btn btn--red"
-                      onClick={() => this.removeCollaborator()}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </Options>
-              </div>
-            </div>
+            <PostCollabs post={this.state.post} />
             <div className="options-nav-wrapper">
               <Options>
                 <button className="btn " onClick={() => this.cancel("collab")}>
@@ -292,7 +164,6 @@ class PostPage extends Component {
             </div>
           </main>
         )}
-
         <Footer />
       </div>
     );
