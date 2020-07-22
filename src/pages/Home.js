@@ -23,6 +23,10 @@ class Home extends Component {
     this.getPosts();
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   getPosts() {
     axios
       .get(process.env.REACT_APP_BASE_URL + "/api/home")
@@ -38,10 +42,6 @@ class Home extends Component {
       .catch((err) => {
         console.log("Error from posts: " + err);
       });
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
   }
 
   render() {

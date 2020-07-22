@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Textarea from "react-textarea-autosize";
 import history from "../history";
 import Options from "../components/Options";
 import OptionPrivate from "../components/OptionPrivate";
@@ -71,26 +70,35 @@ const EditPost = ({ post, updatePost }) => {
 
   return (
     <div className="card">
-      <label htmlFor="newTitle">Title:</label>
-      <Textarea
+      <label htmlFor="newTitle" id="newTitle-label">
+        Title:
+      </label>
+      <textarea
         name="newTitle"
+        aria-labelledby="newTitle-label"
         cols="50"
         rows="1"
         value={newTitle}
         onChange={handleInputChange}
       />
-      <label htmlFor="newBody">Content:</label>
-      <Textarea
+      <label htmlFor="newBody" id="newBody-label">
+        Content:
+      </label>
+      <textarea
         name="newBody"
+        aria-labelledby="newBody-label"
         cols="50"
         rows="1"
         value={newBody}
         onChange={handleInputChange}
       />
       <hr className="divider" />
-      <label htmlFor="newTags">Tags:</label>
-      <Textarea
+      <label htmlFor="newTags" id="newTags-label">
+        Tags:
+      </label>
+      <textarea
         name="newTags"
+        aria-labelledby="newTags-label"
         cols="50"
         rows="1"
         placeholder="Enter Tags"

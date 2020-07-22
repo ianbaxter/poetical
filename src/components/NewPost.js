@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Textarea from "react-textarea-autosize";
 import Options from "../components/Options";
 import OptionPrivate from "../components/OptionPrivate";
 import axios from "axios";
@@ -65,31 +64,37 @@ const NewPost = ({ getPosts }) => {
       <label htmlFor="title" id="title-label">
         Title:
       </label>
-      <Textarea
+      <textarea
         name="title"
         aria-labelledby="title-label"
         cols="50"
         rows="1"
-        placeholder="Title"
+        placeholder="Title..."
         value={title}
         onChange={handleInputChange}
       />
-      <label htmlFor="body">Content:</label>
-      <Textarea
+      <label htmlFor="body" id="body-label">
+        Content:
+      </label>
+      <textarea
         name="body"
+        aria-labelledby="body-label"
         cols="50"
-        rows="1"
-        placeholder="Content"
+        rows="3"
+        placeholder="Content..."
         value={body}
         onChange={handleInputChange}
       />
       <hr className="divider" />
-      <label htmlFor="tags">Tags:</label>
-      <Textarea
+      <label htmlFor="tags" id="tags-label">
+        Tags:
+      </label>
+      <textarea
         name="tags"
+        aria-labelledby="tags-label"
         cols="50"
         rows="1"
-        placeholder="Song, Rap, Poem..."
+        placeholder="Song, Rap, Poem, Haiku..."
         value={tags}
         onChange={handleInputChange}
       />
