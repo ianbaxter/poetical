@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import history from "../history";
 import Post from "../components/Post";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import NewPost from "../components/NewPost";
 import PostStatus from "../components/PostStatus";
+import Options from "../components/Options";
 import axios from "axios";
 
 class Home extends Component {
@@ -28,8 +30,16 @@ class Home extends Component {
   }
 
   getPosts() {
+    let data;
+    if (window.location.search) {
+      data = {
+        params: {
+          tag: new URL(window.location.href).searchParams.get("tag"),
+        },
+      };
+    }
     axios
-      .get(process.env.REACT_APP_BASE_URL + "/api/home")
+      .get(process.env.REACT_APP_BASE_URL + "/api/home", data)
       .then((res) => {
         if (this._isMounted) {
           let postsReversed = res.data.reverse();
@@ -44,7 +54,17 @@ class Home extends Component {
       });
   }
 
+  setPosts = (posts) => {
+    this.setState({ posts });
+  };
+
+  clearFilter() {
+    history.push("/");
+    this.getPosts();
+  }
+
   render() {
+    console.log("rendering");
     const userId = sessionStorage.getItem("userId");
     return (
       <div className="wrapper">
@@ -53,9 +73,9 @@ class Home extends Component {
           <section className="cards">
             <div className="card card--intro">
               <h1>P</h1>
-              <h6>
+              <h5>
                 Poetical is a platform for collaborating on creative prose
-              </h6>
+              </h5>
               <p>Register to start posting or browse others creations below.</p>
               <Link to="/register" className="btn">
                 Register
@@ -85,6 +105,29 @@ class Home extends Component {
                 </section>
               )}
               <section className="cards">
+                {window.location.search && (
+                  <div className="options-nav-wrapper">
+                    <hr className="divider" />
+                    <Options>
+                      <div className="options__left">
+                        <h6>
+                          {"Showing posts tagged as: " +
+                            new URL(window.location.href).searchParams.get(
+                              "tag"
+                            )}
+                        </h6>
+                      </div>
+                      <div className="options__right">
+                        <button
+                          className="btn btn--red"
+                          onClick={() => this.clearFilter()}
+                        >
+                          Clear
+                        </button>
+                      </div>
+                    </Options>
+                  </div>
+                )}
                 {this.state.posts.map(
                   (post) =>
                     (!post.isPrivate ||
@@ -102,7 +145,7 @@ class Home extends Component {
                         className="card post--summary"
                         key={post._id}
                       >
-                        <Post post={post} />
+                        <Post post={post} setPosts={this.setPosts} />
                       </Link>
                     )
                 )}

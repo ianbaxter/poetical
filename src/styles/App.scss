@@ -20,9 +20,15 @@ h3 {
   color: $highlightColor;
 }
 
+h5 {
+  font-size: 18px;
+  margin: 8px 0;
+}
+
 h6 {
   font-size: 18px;
   margin: 8px 0;
+  font-weight: 400;
 }
 
 a:link {
@@ -215,10 +221,13 @@ footer {
     border: solid 1px $secondaryColor;
     border-radius: 5px;
     margin-right: 8px;
-    &:hover {
-      color: $primaryColor;
-      border: solid 1px $primaryColor;
-    }
+  }
+}
+
+.tags--highlight {
+  p:hover {
+    color: $primaryColor;
+    border: solid 1px $primaryColor;
   }
 }
 
@@ -270,11 +279,8 @@ input[type="password"] {
 
 .options {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
-}
-
-.margin-bottom {
-  margin-bottom: 20px;
 }
 
 .options__left {
@@ -288,6 +294,10 @@ input[type="password"] {
 
 .options-nav-wrapper {
   width: 90%;
+}
+
+.margin-bottom {
+  margin-bottom: 20px;
 }
 
 .privacy {

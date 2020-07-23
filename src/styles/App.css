@@ -14,9 +14,15 @@ h3 {
   color: #007bff;
 }
 
+h5 {
+  font-size: 18px;
+  margin: 8px 0;
+}
+
 h6 {
   font-size: 18px;
   margin: 8px 0;
+  font-weight: 400;
 }
 
 a:link {
@@ -283,7 +289,7 @@ footer {
   margin-right: 8px;
 }
 
-.tags p:hover {
+.tags--highlight p:hover {
   color: white;
   border: solid 1px white;
 }
@@ -366,11 +372,9 @@ input[type="password"] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   width: 100%;
-}
-
-.margin-bottom {
-  margin-bottom: 20px;
 }
 
 .options__left {
@@ -390,6 +394,10 @@ input[type="password"] {
 
 .options-nav-wrapper {
   width: 90%;
+}
+
+.margin-bottom {
+  margin-bottom: 20px;
 }
 
 .privacy {

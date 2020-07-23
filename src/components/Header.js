@@ -21,10 +21,17 @@ const Header = ({ isLoggedIn }) => {
     else setMenuVisible(true);
   };
 
+  const navHome = (e) => {
+    if (history.location.pathname === "/") {
+      e.preventDefault();
+      window.location.reload();
+    }
+  };
+
   return (
     <header>
       <div id="top">
-        <Link to="/">
+        <Link to="/" onClick={(e) => navHome(e)}>
           <h1>Poetical</h1>
         </Link>
         {isLoggedIn ? (
