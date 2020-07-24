@@ -204,17 +204,8 @@ footer {
   }
 }
 
-.collaborators {
-  display: flex;
-  .metaLabel {
-    min-width: 56px;
-  }
-}
-
-.collaborators--highlight {
-  span:hover {
-    color: $primaryColor;
-  }
+.author-highlight:hover {
+  color: $primaryColor;
 }
 
 .tags {

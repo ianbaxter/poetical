@@ -94,55 +94,32 @@ const Post = ({ post, setPosts }) => {
         </div>
       )}
       <div className="post__details">
-        {post.collaborators.length > 0 ? (
-          <div
-            className={
-              "collaborators" + (setPosts ? " collaborators--highlight" : "")
-            }
+        <p>
+          <span>{post.collaborators.length > 0 ? "Authors:" : "Author:"}</span>
+          <span
+            className={setPosts && "author-highlight"}
+            onClick={(e) => handleFilterClick(e, post.username, "username")}
           >
-            <p className="metaLabel">Authors:</p>
-            <p>
+            {" " + post.username}
+          </span>
+          {post.collaborators.map((collaborator, index) => {
+            return (
               <span
-                onClick={(e) => handleFilterClick(e, post.username, "username")}
+                key={index}
+                className={setPosts && "author-highlight"}
+                onClick={(e) =>
+                  handleFilterClick(e, collaborator.username, "username")
+                }
               >
-                {post.username}
+                {" " + collaborator.username}
               </span>
-              {post.collaborators.map((collaborator, index) => {
-                return (
-                  <span
-                    key={index}
-                    onClick={(e) =>
-                      handleFilterClick(e, collaborator.username, "username")
-                    }
-                  >
-                    {" " + collaborator.username}
-                  </span>
-                );
-              })}
-            </p>
-          </div>
-        ) : (
-          <div
-            className={
-              "collaborators" + (setPosts ? " collaborators--highlight" : "")
-            }
-          >
-            <p>
-              Author:{" "}
-              <span
-                onClick={(e) => handleFilterClick(e, post.username, "username")}
-              >
-                {post.username}
-              </span>
-            </p>
-          </div>
-        )}
-        <div>
-          <p>
-            {"Posted: " +
-              new Date(post.date).toLocaleString("en-GB", { timeZone: "UTC" })}
-          </p>
-        </div>
+            );
+          })}
+        </p>
+        <p>
+          {"Posted: " +
+            new Date(post.date).toLocaleString("en-GB", { timeZone: "UTC" })}
+        </p>
       </div>
       <div className="post__stats">
         {postFavsUserIds.includes(userId) ? (

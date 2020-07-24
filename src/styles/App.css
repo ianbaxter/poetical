@@ -262,17 +262,7 @@ footer {
   transition: 0.2s;
 }
 
-.collaborators {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.collaborators .metaLabel {
-  min-width: 56px;
-}
-
-.collaborators--highlight span:hover {
+.author-highlight:hover {
   color: white;
 }
 

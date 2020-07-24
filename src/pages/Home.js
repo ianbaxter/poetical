@@ -75,7 +75,6 @@ class Home extends Component {
   }
 
   render() {
-    console.log("rendering");
     const userId = sessionStorage.getItem("userId");
     return (
       <div className="wrapper">
