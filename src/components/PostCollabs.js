@@ -85,7 +85,7 @@ const PostCollab = ({ post }) => {
   return (
     <div className="card">
       <div>
-        <h5>Collaborators:</h5>
+        <h2>Collaborators:</h2>
         <div>
           {post.collaborators.length > 0 ? (
             post.collaborators.map((collaborator) => (

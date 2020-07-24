@@ -87,35 +87,44 @@ const Post = ({ post, setPosts }) => {
       {post.tags.length > 0 && (
         <div className={"tags" + (setPosts ? " tags--highlight" : "")}>
           {post.tags.map((tag, index) => (
-            <p key={index} onClick={(e) => handleFilterClick(e, tag, "tag")}>
+            <button
+              key={index}
+              onClick={(e) => handleFilterClick(e, tag, "tag")}
+            >
               {"# " + tag}
-            </p>
+            </button>
           ))}
         </div>
       )}
       <div className="post__details">
-        <p>
-          <span>{post.collaborators.length > 0 ? "Authors:" : "Author:"}</span>
-          <span
-            className={setPosts && "author-highlight"}
-            onClick={(e) => handleFilterClick(e, post.username, "username")}
+        <div className="authors">
+          <label>
+            {post.collaborators.length > 0 ? "Authors: " : "Author: "}
+          </label>
+          <p
+            className={
+              "authors__names" + (setPosts ? " authors--highlight" : "")
+            }
           >
-            {" " + post.username}
-          </span>
-          {post.collaborators.map((collaborator, index) => {
-            return (
-              <span
-                key={index}
-                className={setPosts && "author-highlight"}
-                onClick={(e) =>
-                  handleFilterClick(e, collaborator.username, "username")
-                }
-              >
-                {" " + collaborator.username}
-              </span>
-            );
-          })}
-        </p>
+            <button
+              onClick={(e) => handleFilterClick(e, post.username, "username")}
+            >
+              {post.username}
+            </button>
+            {post.collaborators.map((collaborator, index) => {
+              return (
+                <button
+                  key={index}
+                  onClick={(e) =>
+                    handleFilterClick(e, collaborator.username, "username")
+                  }
+                >
+                  {", " + collaborator.username}
+                </button>
+              );
+            })}
+          </p>
+        </div>
         <p>
           {"Posted: " +
             new Date(post.date).toLocaleString("en-GB", { timeZone: "UTC" })}

@@ -83,9 +83,9 @@ class Home extends Component {
           <section className="cards">
             <div className="card card--intro">
               <h1>P</h1>
-              <h5>
+              <h2>
                 Poetical is a platform for collaborating on creative prose
-              </h5>
+              </h2>
               <p>Register to start posting or browse others creations below.</p>
               <Link to="/register" className="btn">
                 Register
@@ -120,7 +120,7 @@ class Home extends Component {
                     <hr className="divider" />
                     <Options>
                       <div className="options__left">
-                        <h6>
+                        <h5>
                           {window.location.search.includes("tag")
                             ? "Showing posts tagged as: " +
                               new URL(window.location.href).searchParams.get(
@@ -130,7 +130,7 @@ class Home extends Component {
                               new URL(window.location.href).searchParams.get(
                                 "username"
                               )}
-                        </h6>
+                        </h5>
                       </div>
                       <div className="options__right">
                         <button

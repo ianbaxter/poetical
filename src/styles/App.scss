@@ -16,16 +16,17 @@ h1 {
   line-height: 1;
 }
 
-h3 {
-  color: $highlightColor;
-}
-
-h5 {
+h2 {
   font-size: 18px;
   margin: 8px 0;
 }
 
-h6 {
+h3 {
+  color: white;
+  font-style: italic;
+}
+
+h5 {
   font-size: 18px;
   margin: 8px 0;
   font-weight: 400;
@@ -204,27 +205,69 @@ footer {
   }
 }
 
-.author-highlight:hover {
-  color: $primaryColor;
-}
-
 .tags {
   display: flex;
   flex-wrap: wrap;
-  p {
+  margin-bottom: 16px;
+  button {
     color: $secondaryColor;
     font-size: 14px;
     padding: 2px 4px;
     border: solid 1px $secondaryColor;
     border-radius: 5px;
     margin-right: 8px;
+    margin-bottom: 8px;
+    background: transparent;
+    &:focus {
+      outline: none;
+    }
   }
 }
 
-.tags--highlight {
-  p:hover {
+.tags--highlight button {
+  &:hover {
     color: $primaryColor;
-    border: solid 1px $primaryColor;
+    border-color: $primaryColor;
+    cursor: pointer;
+  }
+  &:focus {
+    box-shadow: 0 0 0.5px 0.5px $primaryColor;
+  }
+}
+
+.authors {
+  display: flex;
+  flex-direction: row;
+  label {
+    color: $secondaryColor;
+    font-size: 14px;
+    margin: 0;
+    margin-right: 4px;
+  }
+}
+
+.authors__names {
+  button {
+    box-sizing: border-box;
+    font-style: italic;
+    color: $secondaryColor;
+    padding: 0;
+    border: none;
+    margin-bottom: 4px;
+    background: transparent;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.authors--highlight button {
+  &:hover {
+    color: $primaryColor;
+    cursor: pointer;
+  }
+  &:focus {
+    color: $primaryColor;
   }
 }
 
