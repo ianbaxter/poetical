@@ -32,12 +32,23 @@ class Home extends Component {
   getPosts() {
     let data;
     if (window.location.search) {
-      data = {
-        params: {
-          tag: new URL(window.location.href).searchParams.get("tag"),
-        },
-      };
+      if (window.location.search.includes("tag")) {
+        data = {
+          params: {
+            tag: new URL(window.location.href).searchParams.get("tag"),
+          },
+        };
+      } else if (window.location.search.includes("username")) {
+        data = {
+          params: {
+            username: new URL(window.location.href).searchParams.get(
+              "username"
+            ),
+          },
+        };
+      }
     }
+
     axios
       .get(process.env.REACT_APP_BASE_URL + "/api/home", data)
       .then((res) => {
@@ -111,10 +122,15 @@ class Home extends Component {
                     <Options>
                       <div className="options__left">
                         <h6>
-                          {"Showing posts tagged as: " +
-                            new URL(window.location.href).searchParams.get(
-                              "tag"
-                            )}
+                          {window.location.search.includes("tag")
+                            ? "Showing posts tagged as: " +
+                              new URL(window.location.href).searchParams.get(
+                                "tag"
+                              )
+                            : "Showing posts by: " +
+                              new URL(window.location.href).searchParams.get(
+                                "username"
+                              )}
                         </h6>
                       </div>
                       <div className="options__right">

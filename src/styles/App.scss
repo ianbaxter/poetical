@@ -211,6 +211,12 @@ footer {
   }
 }
 
+.collaborators--highlight {
+  span:hover {
+    color: $primaryColor;
+  }
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;

@@ -272,6 +272,10 @@ footer {
   min-width: 56px;
 }
 
+.collaborators--highlight span:hover {
+  color: white;
+}
+
 .tags {
   display: -webkit-box;
   display: -ms-flexbox;

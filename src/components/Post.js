@@ -7,11 +7,6 @@ const Post = ({ post, setPosts }) => {
   const [postFavsUserIds, setPostFavsUserIds] = useState(post.meta.favsUserIds);
 
   let userId = sessionStorage.getItem("userId");
-  let collaboratorList = ", ";
-  post.collaborators.forEach((collaborator, index) => {
-    collaboratorList += collaborator.username;
-    if (index < post.collaborators.length - 1) collaboratorList += ", ";
-  });
 
   const toggleFavourite = (e) => {
     e.preventDefault();
@@ -48,19 +43,34 @@ const Post = ({ post, setPosts }) => {
       });
   };
 
-  const handleTagClick = (e, tag) => {
+  const handleFilterClick = (e, filter, filterType) => {
     e.preventDefault();
     if (!setPosts) return;
 
-    const data = {
-      params: {
-        tag,
-      },
-    };
+    let data;
+    switch (filterType) {
+      case "tag":
+        data = {
+          params: {
+            tag: filter,
+          },
+        };
+        break;
+      case "username":
+        data = {
+          params: {
+            username: filter,
+          },
+        };
+        break;
+      default:
+        break;
+    }
+
     axios
       .get(process.env.REACT_APP_BASE_URL + "/api/home/", data)
       .then((res) => {
-        history.push("/?tag=" + tag);
+        history.push("/?" + filterType + "=" + filter);
         let postsReversed = res.data.reverse();
         setPosts(postsReversed);
       })
@@ -77,7 +87,7 @@ const Post = ({ post, setPosts }) => {
       {post.tags.length > 0 && (
         <div className={"tags" + (setPosts ? " tags--highlight" : "")}>
           {post.tags.map((tag, index) => (
-            <p key={index} onClick={(e) => handleTagClick(e, tag)}>
+            <p key={index} onClick={(e) => handleFilterClick(e, tag, "tag")}>
               {"# " + tag}
             </p>
           ))}
@@ -85,13 +95,46 @@ const Post = ({ post, setPosts }) => {
       )}
       <div className="post__details">
         {post.collaborators.length > 0 ? (
-          <div className="collaborators">
+          <div
+            className={
+              "collaborators" + (setPosts ? " collaborators--highlight" : "")
+            }
+          >
             <p className="metaLabel">Authors:</p>
-            <p>{post.username + collaboratorList}</p>
+            <p>
+              <span
+                onClick={(e) => handleFilterClick(e, post.username, "username")}
+              >
+                {post.username}
+              </span>
+              {post.collaborators.map((collaborator, index) => {
+                return (
+                  <span
+                    key={index}
+                    onClick={(e) =>
+                      handleFilterClick(e, collaborator.username, "username")
+                    }
+                  >
+                    {" " + collaborator.username}
+                  </span>
+                );
+              })}
+            </p>
           </div>
         ) : (
-          <div>
-            <p>Author: {post.username}</p>
+          <div
+            className={
+              "collaborators" + (setPosts ? " collaborators--highlight" : "")
+            }
+          >
+            <p>
+              Author:{" "}
+              <span
+                onClick={(e) => handleFilterClick(e, post.username, "username")}
+              >
+                {post.username}
+              </span>
+            </p>
           </div>
         )}
         <div>
