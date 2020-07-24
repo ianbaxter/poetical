@@ -599,6 +599,7 @@ input[type="password"] {
 
 .animate-flicker h2 {
   font-family: "Cookie", serif;
+  font-size: 2em;
   -webkit-animation: flickerAnimation 1.5s infinite;
           animation: flickerAnimation 1.5s infinite;
 }
