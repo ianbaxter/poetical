@@ -159,6 +159,7 @@ class Home extends Component {
                         }}
                         className="card post--summary"
                         key={post._id}
+                        aria-label={post.title}
                       >
                         <Post post={post} setPosts={this.setPosts} />
                       </Link>
@@ -166,7 +167,7 @@ class Home extends Component {
                 )}
               </section>
               <section className="bottom">
-                <a href="#top">
+                <a href="#top" aria-label="Go to top of page">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"

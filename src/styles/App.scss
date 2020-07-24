@@ -235,9 +235,16 @@ footer {
   }
 }
 
-.authors {
+.post__details {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  p {
+    align-content: flex-end;
+    align-items: flex-end;
+    font-size: 14px;
+    color: $secondaryColor;
+    margin: 0;
+  }
   label {
     color: $secondaryColor;
     font-size: 14px;
@@ -246,7 +253,12 @@ footer {
   }
 }
 
-.authors__names {
+.post__details-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.authors {
   button {
     box-sizing: border-box;
     font-style: italic;
@@ -287,18 +299,6 @@ input[type="password"] {
   color: rgba(255, 255, 255, 0.8);
 }
 
-.post__details {
-  display: flex;
-  flex-direction: column;
-  p {
-    align-content: flex-end;
-    align-items: flex-end;
-    font-size: 14px;
-    color: $secondaryColor;
-    margin: 0;
-  }
-}
-
 .post__stats {
   display: flex;
   align-items: center;
@@ -307,6 +307,12 @@ input[type="password"] {
     font-size: 14px;
     margin: 0 0 0 16px;
     color: $secondaryColor;
+  }
+  button {
+    display: flex;
+    background: transparent;
+    border: none;
+    padding: 0;
   }
   svg {
     cursor: pointer;

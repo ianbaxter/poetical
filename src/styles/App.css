@@ -298,7 +298,35 @@ footer {
           box-shadow: 0 0 0.5px 0.5px white;
 }
 
-.authors {
+.post__details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.post__details p {
+  -ms-flex-line-pack: end;
+      align-content: flex-end;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.589);
+  margin: 0;
+}
+
+.post__details label {
+  color: rgba(255, 255, 255, 0.589);
+  font-size: 14px;
+  margin: 0;
+  margin-right: 4px;
+}
+
+.post__details-row {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -308,14 +336,7 @@ footer {
           flex-direction: row;
 }
 
-.authors label {
-  color: rgba(255, 255, 255, 0.589);
-  font-size: 14px;
-  margin: 0;
-  margin-right: 4px;
-}
-
-.authors__names button {
+.authors button {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   font-style: italic;
@@ -326,7 +347,7 @@ footer {
   background: transparent;
 }
 
-.authors__names button:focus {
+.authors button:focus {
   outline: none;
 }
 
@@ -367,27 +388,6 @@ input[type="password"] {
   color: rgba(255, 255, 255, 0.8);
 }
 
-.post__details {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-.post__details p {
-  -ms-flex-line-pack: end;
-      align-content: flex-end;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.589);
-  margin: 0;
-}
-
 .post__stats {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -402,6 +402,15 @@ input[type="password"] {
   font-size: 14px;
   margin: 0 0 0 16px;
   color: rgba(255, 255, 255, 0.589);
+}
+
+.post__stats button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background: transparent;
+  border: none;
+  padding: 0;
 }
 
 .post__stats svg {

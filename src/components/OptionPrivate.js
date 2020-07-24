@@ -3,8 +3,9 @@ import React from "react";
 const OptionPrivate = ({ name, checked, handleOnChange }) => {
   return (
     <div className="privacy">
-      <label> Private: </label>
+      <label htmlFor="privacy-checkbox"> Private: </label>
       <input
+        id="privacy-checkbox"
         type="checkbox"
         name={name}
         checked={checked}
