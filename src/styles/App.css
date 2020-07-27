@@ -26,6 +26,10 @@ h5 {
   font-weight: 400;
 }
 
+.font--secondary-color {
+  color: rgba(255, 255, 255, 0.589);
+}
+
 a:link {
   text-decoration: none;
 }
@@ -448,6 +452,7 @@ input[type="password"] {
 
 .options-nav-wrapper {
   width: 90%;
+  padding: 0 20px;
 }
 
 .margin-bottom {
@@ -503,7 +508,7 @@ input[type="password"] {
   padding: 0;
 }
 
-.btn--collaborate {
+.btn--wide {
   width: 200px;
 }
 

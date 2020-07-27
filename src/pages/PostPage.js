@@ -7,6 +7,7 @@ import EditPost from "../components/EditPost";
 import PostStatus from "../components/PostStatus";
 import PostCollabs from "../components/PostCollabs";
 import Options from "../components/Options";
+import Comment from "../components/Comment";
 
 class PostPage extends Component {
   _isMounted = false;
@@ -129,7 +130,7 @@ class PostPage extends Component {
                     </div>
                     <div className="options__right">
                       <button
-                        className="btn btn--collaborate"
+                        className="btn btn--wide"
                         onClick={() => this.toggleColabMode()}
                       >
                         Manage Collaborators
@@ -138,6 +139,11 @@ class PostPage extends Component {
                   </Options>
                 </div>
               )}
+              <Comment
+                post={this.state.post}
+                isLoggedIn={this._isLoggedIn}
+                getPost={() => this.getPost()}
+              />
             </main>
           ))}
         {editMode && (

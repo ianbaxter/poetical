@@ -287,7 +287,7 @@ const User = () => {
               <Options name="password">
                 <div className="options__left">
                   <button
-                    className="btn btn--collaborate btn--blue"
+                    className="btn btn--wide btn--blue"
                     onClick={() => editUser("password")}
                   >
                     Change Password
