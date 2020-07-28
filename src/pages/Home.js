@@ -116,7 +116,7 @@ class Home extends Component {
               )}
               <section className="cards">
                 {window.location.search && (
-                  <div className="options-nav-wrapper">
+                  <div className="card-width-wrapper">
                     <hr className="divider" />
                     <Options>
                       <div className="options__left">

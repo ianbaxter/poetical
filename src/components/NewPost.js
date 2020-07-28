@@ -64,7 +64,8 @@ const NewPost = ({ getPosts }) => {
       <label htmlFor="title" id="title-label">
         Title:
       </label>
-      <textarea
+      <input
+        type="text"
         name="title"
         aria-labelledby="title-label"
         cols="50"
@@ -89,7 +90,8 @@ const NewPost = ({ getPosts }) => {
       <label htmlFor="tags" id="tags-label">
         Tags:
       </label>
-      <textarea
+      <input
+        type="text"
         name="tags"
         aria-labelledby="tags-label"
         cols="50"
@@ -100,7 +102,7 @@ const NewPost = ({ getPosts }) => {
       />
       <Options>
         <div className="options__left">
-          <button className="btn btn--blue" onClick={() => saveNewPost()}>
+          <button className="btn" onClick={() => saveNewPost()}>
             Save
           </button>
         </div>

@@ -16,7 +16,6 @@ const Header = ({ isLoggedIn }) => {
   }
 
   const toggleMenu = () => {
-    console.log("toggle menu");
     if (menuVisible) setMenuVisible(false);
     else setMenuVisible(true);
   };

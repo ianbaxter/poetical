@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Textarea from "react-textarea-autosize";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Options from "../components/Options";
@@ -156,11 +155,14 @@ const User = () => {
       <Header isLoggedIn={sessionStorage.getItem("username")} />
       <main className="cards">
         <div className="card">
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="email" id="change-email">
+            Email:
+          </label>
           {emailEditMode ? (
             <div>
               <input
                 type="email"
+                aria-labelledby="change-email"
                 placeholder="New Email"
                 name="email"
                 value={email}
@@ -170,7 +172,7 @@ const User = () => {
                 <Options>
                   <div className="options__left">
                     <button
-                      className="btn btn--blue"
+                      className="btn"
                       onClick={() => saveEditedUser("email")}
                     >
                       Save
@@ -193,10 +195,7 @@ const User = () => {
               <div className="margin-bottom">
                 <Options>
                   <div className="options__left">
-                    <button
-                      className="btn btn--blue"
-                      onClick={() => editUser("email")}
-                    >
+                    <button className="btn" onClick={() => editUser("email")}>
                       Edit
                     </button>
                   </div>
@@ -205,11 +204,15 @@ const User = () => {
             </div>
           )}
           <hr className="divider" />
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="username" id="change-username">
+            Username:
+          </label>
           {usernameEditMode ? (
             <div>
-              <Textarea
+              <input
+                type="text"
                 name="username"
+                aria-labelledby="change-username"
                 cols="50"
                 rows="1"
                 value={username}
@@ -219,7 +222,7 @@ const User = () => {
                 <Options>
                   <div className="options__left">
                     <button
-                      className="btn btn--blue"
+                      className="btn"
                       onClick={() => saveEditedUser("username")}
                     >
                       Save
@@ -243,7 +246,7 @@ const User = () => {
                 <Options>
                   <div className="options__left">
                     <button
-                      className="btn btn--blue"
+                      className="btn"
                       onClick={() => editUser("username")}
                     >
                       Edit
@@ -256,8 +259,12 @@ const User = () => {
           <hr className="divider" />
           {passwordEditMode ? (
             <div>
+              <label htmlFor="password" id="change-password">
+                New Password:
+              </label>
               <input
                 type="password"
+                aria-labelledby="change-password"
                 placeholder="New Password"
                 name="password"
                 value={password}
@@ -266,7 +273,7 @@ const User = () => {
               <Options>
                 <div className="options__left">
                   <button
-                    className="btn btn--blue"
+                    className="btn"
                     onClick={() => saveEditedUser("password")}
                   >
                     Save
@@ -287,7 +294,7 @@ const User = () => {
               <Options name="password">
                 <div className="options__left">
                   <button
-                    className="btn btn--wide btn--blue"
+                    className="btn btn--wide"
                     onClick={() => editUser("password")}
                   >
                     Change Password

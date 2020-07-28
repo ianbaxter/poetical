@@ -79,10 +79,11 @@ footer {
   flex-shrink: 0;
   justify-content: center;
   align-items: center;
-  height: 12vh;
+  height: 68px;
   background-color: #282c34;
   a {
     color: $secondaryColor;
+    transition: all 0.2s ease;
   }
 }
 
@@ -98,9 +99,6 @@ footer {
   height: 100%;
   a {
     color: $primaryColor;
-  }
-  .btn:hover {
-    color: $highlightColor;
   }
 }
 
@@ -136,7 +134,7 @@ footer {
 }
 
 .user-options {
-  top: 12vh;
+  top: 68px;
   display: none;
   position: absolute;
   z-index: 1;
@@ -144,9 +142,7 @@ footer {
   background: #282c34;
   align-items: flex-end;
   .btn {
-    text-align: left;
     margin: 10px 5vw 10px 0;
-    border-color: $primaryColor;
     &:last-child {
       margin-bottom: 20px;
     }
@@ -291,12 +287,19 @@ textarea,
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  padding: 0 8px;
   width: 100%;
   border-radius: 3px;
-  border-color: black;
+  border: solid 1px black;
   background: #3c5168;
   color: $primaryColor;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  height: 38px;
 }
 
 ::placeholder {
@@ -342,7 +345,7 @@ input[type="password"] {
   align-items: center;
 }
 
-.options-nav-wrapper {
+.card-width-wrapper {
   width: 90%;
   padding: 0 20px;
 }
@@ -361,35 +364,21 @@ input[type="password"] {
 
 .btn {
   color: $primaryColor;
+  font-weight: 600;
   width: 80px;
   background: transparent;
   border: 1px solid $primaryColor;
   &:hover {
-    color: $highlightColor;
     border: 1px solid $highlightColor;
   }
 }
 
-.btn--blue {
-  border: 1px solid $highlightColor;
-  &:hover {
-    color: $highlightColor;
-  }
-}
-
-.btn--red {
+.btn--red:hover {
   border: 1px solid rgb(148, 0, 0);
-  &:hover {
-    color: rgb(148, 0, 0);
-    border: 1px solid rgb(148, 0, 0);
-  }
 }
 
-.btn--submit {
+.btn--full-width {
   width: 100%;
-  margin-top: 20px;
-  height: 28px;
-  padding: 0;
 }
 
 .btn--wide {
@@ -401,29 +390,23 @@ input[type="password"] {
 }
 
 .entry {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 60vh;
-  form {
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    margin: 20px 0px;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px 0 #282c34, 0 6px 20px 0 #282c34f6;
+  input,
+  button {
+    font-size: 18px;
   }
 }
 
-.entry-nav {
+.entry__nav {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  text-align: center;
+  font-style: italic;
+  color: $secondaryColor;
+  a {
+    color: $primaryColor;
+    text-decoration: underline;
+  }
 }
 
 .bottom {
@@ -458,14 +441,14 @@ input[type="password"] {
 
   header,
   footer {
-    height: 10vh;
+    height: 8.5vh;
     #top {
       width: 60%;
     }
   }
 
   .user-options {
-    top: 10vh;
+    top: 8.5vh;
     .btn {
       text-align: left;
       margin: 10px 20vw 10px 0;
@@ -476,15 +459,8 @@ input[type="password"] {
     width: 60%;
   }
 
-  .options-nav-wrapper {
+  .card-width-wrapper {
     width: 60%;
-  }
-
-  .entry {
-    height: 50vh;
-    form {
-      width: 33%;
-    }
   }
 }
 
@@ -506,11 +482,13 @@ input[type="password"] {
     width: 33%;
   }
 
-  .options-nav-wrapper {
+  .card-width-wrapper {
     width: 33%;
   }
+}
 
-  .entry form {
-    width: 20%;
+@media only screen and (max-width: 355px) {
+  .small-screen-margin-bottom {
+    margin-bottom: 20px;
   }
 }

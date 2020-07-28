@@ -7,6 +7,7 @@ const Comment = ({ post, isLoggedIn, getPost }) => {
   const [comment, setComment] = useState("");
 
   const saveComment = () => {
+    if (comment === "") return;
     const data = {
       body: comment,
       username: sessionStorage.getItem("username"),
@@ -33,7 +34,7 @@ const Comment = ({ post, isLoggedIn, getPost }) => {
       {post.comments.length === 0 ? (
         <div>
           <hr></hr>
-          <p class="font--secondary-color">No comments</p>
+          <p className="font--secondary-color">No comments</p>
         </div>
       ) : (
         post.comments.reverse().map((comment) => (
@@ -67,7 +68,7 @@ const Comment = ({ post, isLoggedIn, getPost }) => {
             value={comment}
             onChange={handleInputChange}
           ></textarea>
-          <button className="btn btn--blue" onClick={saveComment}>
+          <button className="btn" onClick={saveComment}>
             Save
           </button>
         </div>

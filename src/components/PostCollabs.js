@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Options from "../components/Options";
-import Textarea from "react-textarea-autosize";
 
 const PostCollab = ({ post }) => {
   const [newCollaborator, setCollaborator] = useState("");
@@ -98,17 +97,22 @@ const PostCollab = ({ post }) => {
       </div>
       <hr className="divider" />
       <div>
-        <Textarea
+        <label htmlFor="collaborator" id="collaborator-label">
+          Collaborator Username:
+        </label>
+        <input
+          type="text"
           name="collaborator"
+          aria-labelledby="collaborator-label"
           cols="50"
           rows="1"
-          placeholder="Enter Username (Case Sensitive)"
+          placeholder="Username (case sensitive)"
           value={newCollaborator}
           onChange={handleInputChange}
         />
         <Options>
           <div className="options__left">
-            <button className="btn btn--blue" onClick={addCollaborator}>
+            <button className="btn" onClick={addCollaborator}>
               Add
             </button>
           </div>

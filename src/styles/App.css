@@ -98,13 +98,15 @@ footer {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 12vh;
+  height: 68px;
   background-color: #282c34;
 }
 
 header a,
 footer a {
   color: rgba(255, 255, 255, 0.589);
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 footer {
@@ -127,10 +129,6 @@ footer {
 
 #top a {
   color: white;
-}
-
-#top .btn:hover {
-  color: #007bff;
 }
 
 .menu {
@@ -174,7 +172,7 @@ footer {
 }
 
 .user-options {
-  top: 12vh;
+  top: 68px;
   display: none;
   position: absolute;
   z-index: 1;
@@ -186,9 +184,7 @@ footer {
 }
 
 .user-options .btn {
-  text-align: left;
   margin: 10px 5vw 10px 0;
-  border-color: white;
 }
 
 .user-options .btn:last-child {
@@ -368,12 +364,19 @@ textarea,
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  padding: 0 8px;
   width: 100%;
   border-radius: 3px;
-  border-color: black;
+  border: solid 1px black;
   background: #3c5168;
   color: white;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  height: 38px;
 }
 
 ::-webkit-input-placeholder {
@@ -450,7 +453,7 @@ input[type="password"] {
           align-items: center;
 }
 
-.options-nav-wrapper {
+.card-width-wrapper {
   width: 90%;
   padding: 0 20px;
 }
@@ -474,38 +477,22 @@ input[type="password"] {
 
 .btn {
   color: white;
+  font-weight: 600;
   width: 80px;
   background: transparent;
   border: 1px solid white;
 }
 
 .btn:hover {
-  color: #007bff;
   border: 1px solid #007bff;
-}
-
-.btn--blue {
-  border: 1px solid #007bff;
-}
-
-.btn--blue:hover {
-  color: #007bff;
-}
-
-.btn--red {
-  border: 1px solid #940000;
 }
 
 .btn--red:hover {
-  color: #940000;
   border: 1px solid #940000;
 }
 
-.btn--submit {
+.btn--full-width {
   width: 100%;
-  margin-top: 20px;
-  height: 28px;
-  padding: 0;
 }
 
 .btn--wide {
@@ -516,7 +503,12 @@ input[type="password"] {
   margin-top: 0;
 }
 
-.entry {
+.entry input,
+.entry button {
+  font-size: 18px;
+}
+
+.entry__nav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -524,49 +516,17 @@ input[type="password"] {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 60vh;
+  text-align: center;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.589);
 }
 
-.entry form {
-  width: 90%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  margin: 20px 0px;
-  padding: 10px;
-  border-radius: 5px;
-  -webkit-box-shadow: 0 4px 8px 0 #282c34, 0 6px 20px 0 #282c34f6;
-          box-shadow: 0 4px 8px 0 #282c34, 0 6px 20px 0 #282c34f6;
-}
-
-.entry-nav {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+.entry__nav a {
+  color: white;
+  text-decoration: underline;
 }
 
 .bottom {
@@ -615,14 +575,14 @@ input[type="password"] {
   }
   header,
   footer {
-    height: 10vh;
+    height: 8.5vh;
   }
   header #top,
   footer #top {
     width: 60%;
   }
   .user-options {
-    top: 10vh;
+    top: 8.5vh;
   }
   .user-options .btn {
     text-align: left;
@@ -631,14 +591,8 @@ input[type="password"] {
   .card {
     width: 60%;
   }
-  .options-nav-wrapper {
+  .card-width-wrapper {
     width: 60%;
-  }
-  .entry {
-    height: 50vh;
-  }
-  .entry form {
-    width: 33%;
   }
 }
 
@@ -653,11 +607,14 @@ input[type="password"] {
   .card {
     width: 33%;
   }
-  .options-nav-wrapper {
+  .card-width-wrapper {
     width: 33%;
   }
-  .entry form {
-    width: 20%;
+}
+
+@media only screen and (max-width: 355px) {
+  .small-screen-margin-bottom {
+    margin-bottom: 20px;
   }
 }
 /*# sourceMappingURL=App.css.map */

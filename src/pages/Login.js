@@ -5,11 +5,12 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 const Login = () => {
-  const [email, setEmail] = useState([]);
-  const [password, setPassword] = useState([]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleInputChange = (event) => {
-    const { value, name } = event.target;
+  const handleInputChange = (e) => {
+    const { value, name } = e.target;
     switch (name) {
       case "email":
         setEmail(value);
@@ -22,8 +23,9 @@ const Login = () => {
     }
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (email === "" || password === "") return;
     fetch(process.env.REACT_APP_BASE_URL + "/api/auth/login", {
       method: "POST",
       headers: {
@@ -41,14 +43,13 @@ const Login = () => {
         }
       })
       .then((data) => {
-        // Add data to sessionStorage
         sessionStorage.setItem("username", data.username);
         sessionStorage.setItem("userId", data.userId);
         history.push("/");
       })
       .catch((err) => {
         console.error(err);
-        alert("Error logging in please try again");
+        setErrorMessage("The user name or password provided is incorrect.");
       });
   };
 
@@ -56,35 +57,42 @@ const Login = () => {
     <div className="wrapper">
       <Header />
       <main>
-        <section className="entry">
-          <h2>Login</h2>
-          <form onSubmit={onSubmit}>
+        <section className="cards entry">
+          <form onSubmit={onSubmit} className="card">
+            <label htmlFor="email" id="login-email">
+              Email:
+            </label>
             <input
               type="email"
+              aria-labelledby="login-email"
               placeholder="Email"
               name="email"
               value={email}
               onChange={handleInputChange}
               autoComplete="email"
             />
+            <label htmlFor="password" id="login-password">
+              Password:
+            </label>
             <input
               type="password"
+              aria-labelledby="login-password"
               placeholder="Password"
               name="password"
               value={password}
               onChange={handleInputChange}
               autoComplete="current-password"
             />
-            <button className="btn btn--submit" type="submit">
-              Submit
+            <button className="btn btn--full-width" type="submit">
+              Login
             </button>
           </form>
-        </section>
-        <section className="entry-nav">
-          <p>Not yet registered?</p>
-          <Link to="/register" className="btn">
-            Register
-          </Link>
+          <div className="entry__nav card-width-wrapper">
+            <p>
+              Not yet registered? <Link to="/register">Sign up</Link>
+            </p>
+            <p className="font--secondary-color">{errorMessage}</p>
+          </div>
         </section>
       </main>
       <Footer />

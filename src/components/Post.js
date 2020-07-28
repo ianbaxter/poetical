@@ -6,6 +6,7 @@ const Post = ({ post, setPosts }) => {
   const [postFavs, setPostFavs] = useState(post.meta.favs);
   const [postFavsUserIds, setPostFavsUserIds] = useState(post.meta.favsUserIds);
 
+  let favouritingPost = false;
   let userId = sessionStorage.getItem("userId");
 
   const toggleFavourite = (e) => {
@@ -29,18 +30,23 @@ const Post = ({ post, setPosts }) => {
       favs++;
     }
 
-    const data = {
-      meta: { favs, favsUserIds },
-    };
-    axios
-      .put(process.env.REACT_APP_BASE_URL + "/api/home/" + post._id, data)
-      .then((res) => {
-        setPostFavs(favs);
-        setPostFavsUserIds(favsUserIds);
-      })
-      .catch((err) => {
-        console.log("Error updating post: " + err);
-      });
+    if (!favouritingPost) {
+      const data = {
+        meta: { favs, favsUserIds },
+      };
+      axios
+        .put(process.env.REACT_APP_BASE_URL + "/api/home/" + post._id, data)
+        .then((res) => {
+          setPostFavs(favs);
+          setPostFavsUserIds(favsUserIds);
+          favouritingPost = false;
+        })
+        .catch((err) => {
+          console.log("Error updating post: " + err);
+          favouritingPost = false;
+        });
+    }
+    favouritingPost = true;
   };
 
   const handleFilterClick = (e, filter, filterType) => {

@@ -73,7 +73,8 @@ const EditPost = ({ post, updatePost }) => {
       <label htmlFor="newTitle" id="newTitle-label">
         Title:
       </label>
-      <textarea
+      <input
+        type="text"
         name="newTitle"
         aria-labelledby="newTitle-label"
         cols="50"
@@ -88,7 +89,7 @@ const EditPost = ({ post, updatePost }) => {
         name="newBody"
         aria-labelledby="newBody-label"
         cols="50"
-        rows="1"
+        rows="3"
         value={newBody}
         onChange={handleInputChange}
       />
@@ -96,7 +97,8 @@ const EditPost = ({ post, updatePost }) => {
       <label htmlFor="newTags" id="newTags-label">
         Tags:
       </label>
-      <textarea
+      <input
+        type="text"
         name="newTags"
         aria-labelledby="newTags-label"
         cols="50"
@@ -114,10 +116,7 @@ const EditPost = ({ post, updatePost }) => {
       </div>
       <Options>
         <div className="options__left">
-          <button
-            className="btn btn--blue"
-            onClick={() => saveEditedPost(post.date)}
-          >
+          <button className="btn" onClick={() => saveEditedPost(post.date)}>
             Save
           </button>
         </div>

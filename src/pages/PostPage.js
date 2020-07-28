@@ -118,11 +118,11 @@ class PostPage extends Component {
                 <Post post={this.state.post} />
               </div>
               {this.state.userCanEdit && (
-                <div className="options-nav-wrapper">
+                <div className="card-width-wrapper margin-bottom">
                   <Options>
                     <div className="options__left">
                       <button
-                        className="btn"
+                        className="btn small-screen-margin-bottom"
                         onClick={() => this.toggleEditMode()}
                       >
                         Edit
@@ -149,7 +149,7 @@ class PostPage extends Component {
         {editMode && (
           <main className="cards">
             <EditPost post={this.state.post} updatePost={this.updatePost} />
-            <div className="options-nav-wrapper">
+            <div className="card-width-wrapper">
               <Options>
                 <button className="btn" onClick={() => this.cancel("edit")}>
                   Cancel
@@ -161,7 +161,7 @@ class PostPage extends Component {
         {collabMode && (
           <main className="cards">
             <PostCollabs post={this.state.post} />
-            <div className="options-nav-wrapper">
+            <div className="card-width-wrapper">
               <Options>
                 <button className="btn " onClick={() => this.cancel("collab")}>
                   Back
