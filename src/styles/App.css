@@ -476,6 +476,12 @@ input[type="password"] {
 }
 
 .btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   color: white;
   font-weight: 600;
   width: 80px;
@@ -571,11 +577,7 @@ input[type="password"] {
 
 @media only screen and (min-width: 600px) {
   h1 {
-    font-size: 3.5rem;
-  }
-  header,
-  footer {
-    height: 8.5vh;
+    font-size: 3rem;
   }
   header #top,
   footer #top {
@@ -597,6 +599,13 @@ input[type="password"] {
 }
 
 @media only screen and (min-width: 1050px) {
+  h1 {
+    font-size: 3.5rem;
+  }
+  header,
+  footer {
+    height: 8.5vh;
+  }
   header #top,
   footer #top {
     width: 33%;

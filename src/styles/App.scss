@@ -363,6 +363,8 @@ input[type="password"] {
 }
 
 .btn {
+  display: flex;
+  justify-content: center;
   color: $primaryColor;
   font-weight: 600;
   width: 80px;
@@ -436,12 +438,11 @@ input[type="password"] {
 
 @media only screen and (min-width: 600px) {
   h1 {
-    font-size: 3.5rem;
+    font-size: 3rem;
   }
 
   header,
   footer {
-    height: 8.5vh;
     #top {
       width: 60%;
     }
@@ -465,8 +466,13 @@ input[type="password"] {
 }
 
 @media only screen and (min-width: 1050px) {
+  h1 {
+    font-size: 3.5rem;
+  }
+
   header,
   footer {
+    height: 8.5vh;
     #top {
       width: 33%;
     }
