@@ -28,12 +28,19 @@ class PostPage extends Component {
   }
 
   componentDidMount() {
+    window.addEventListener("beforeunload", (e) => {
+      this.updatePostCurrentUserOnExit();
+    });
     this._isMounted = true;
     this.getPost();
   }
 
   componentWillUnmount() {
     this._isMounted = false;
+    this.updatePostCurrentUserOnExit();
+  }
+
+  updatePostCurrentUserOnExit() {
     if (this._isLoggedIn === this.state.post.currentUser) {
       const data = {
         currentUser: "",
