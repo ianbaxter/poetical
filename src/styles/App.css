@@ -283,17 +283,13 @@ footer {
   background: transparent;
 }
 
-.tags button:focus {
-  outline: none;
-}
-
-.tags--highlight button:hover {
+.tags button:hover {
   color: white;
   border-color: white;
   cursor: pointer;
 }
 
-.tags--highlight button:focus {
+.tags button:focus {
   -webkit-box-shadow: 0 0 0.5px 0.5px white;
           box-shadow: 0 0 0.5px 0.5px white;
 }
@@ -347,16 +343,12 @@ footer {
   background: transparent;
 }
 
-.authors button:focus {
-  outline: none;
-}
-
-.authors--highlight button:hover {
+.authors button:hover {
   color: white;
   cursor: pointer;
 }
 
-.authors--highlight button:focus {
+.authors button:focus {
   color: white;
 }
 
@@ -582,9 +574,6 @@ input[type="password"] {
   header #top,
   footer #top {
     width: 60%;
-  }
-  .user-options {
-    top: 8.5vh;
   }
   .user-options .btn {
     text-align: left;

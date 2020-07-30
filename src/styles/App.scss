@@ -218,20 +218,14 @@ footer {
     margin-right: 8px;
     margin-bottom: 8px;
     background: transparent;
-    &:focus {
-      outline: none;
+    &:hover {
+      color: $primaryColor;
+      border-color: $primaryColor;
+      cursor: pointer;
     }
-  }
-}
-
-.tags--highlight button {
-  &:hover {
-    color: $primaryColor;
-    border-color: $primaryColor;
-    cursor: pointer;
-  }
-  &:focus {
-    box-shadow: 0 0 0.5px 0.5px $primaryColor;
+    &:focus {
+      box-shadow: 0 0 0.5px 0.5px $primaryColor;
+    }
   }
 }
 
@@ -267,19 +261,13 @@ footer {
     border: none;
     margin-bottom: 4px;
     background: transparent;
-    &:focus {
-      outline: none;
+    &:hover {
+      color: $primaryColor;
+      cursor: pointer;
     }
-  }
-}
-
-.authors--highlight button {
-  &:hover {
-    color: $primaryColor;
-    cursor: pointer;
-  }
-  &:focus {
-    color: $primaryColor;
+    &:focus {
+      color: $primaryColor;
+    }
   }
 }
 
@@ -449,7 +437,6 @@ input[type="password"] {
   }
 
   .user-options {
-    top: 8.5vh;
     .btn {
       text-align: left;
       margin: 10px 20vw 10px 0;

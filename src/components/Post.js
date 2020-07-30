@@ -51,8 +51,6 @@ const Post = ({ post, setPosts }) => {
 
   const handleFilterClick = (e, filter, filterType) => {
     e.preventDefault();
-    if (!setPosts) return;
-    if (filter === "Anonymous") return;
 
     let data;
     switch (filterType) {
@@ -92,7 +90,7 @@ const Post = ({ post, setPosts }) => {
       <p>{post.body}</p>
       <hr className="divider" />
       {post.tags.length > 0 && (
-        <div className={"tags" + (setPosts ? " tags--highlight" : "")}>
+        <div className={"tags"}>
           {post.tags.map((tag, index) => (
             <button
               key={index}
@@ -108,17 +106,11 @@ const Post = ({ post, setPosts }) => {
           <label>
             {post.collaborators.length > 0 ? "Authors:" : "Author:"}
           </label>
-          <p className={"authors" + (setPosts ? " authors--highlight" : "")}>
+          <p className={"authors"}>
             <button
-              onClick={(e) =>
-                handleFilterClick(
-                  e,
-                  post.username ? post.username : "Anonymous",
-                  "username"
-                )
-              }
+              onClick={(e) => handleFilterClick(e, post.username, "username")}
             >
-              {post.username ? post.username : "Anonymous"}
+              {post.username}
             </button>
             {post.collaborators.map((collaborator, index) => {
               return (
