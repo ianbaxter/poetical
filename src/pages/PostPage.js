@@ -34,6 +34,19 @@ class PostPage extends Component {
 
   componentWillUnmount() {
     this._isMounted = false;
+    if (this._isLoggedIn === this.state.post.currentUser) {
+      const data = {
+        currentUser: "",
+      };
+      axios
+        .put(
+          process.env.REACT_APP_BASE_URL + "/api/home/" + this.state.post._id,
+          data
+        )
+        .catch((err) => {
+          console.log("Error updating post: " + err);
+        });
+    }
   }
 
   getPost() {
@@ -45,11 +58,16 @@ class PostPage extends Component {
       )
       .then((res) => {
         if (this._isMounted) {
-          const post = res.data;
-          const userCanEdit = this.authUser(post);
+          let userCanEdit = false;
+          if (res.data.userId === sessionStorage.getItem("userId"))
+            userCanEdit = true;
+          res.data.collaborators.forEach((collaborator) => {
+            if (collaborator.id === sessionStorage.getItem("userId"))
+              userCanEdit = true;
+          });
 
           this.setState({
-            post,
+            post: res.data,
             title: res.data.title,
             body: res.data.body,
             tags: res.data.tags,
@@ -61,32 +79,43 @@ class PostPage extends Component {
       .catch((err) => console.log("Error getting post: " + err));
   }
 
-  authUser(post) {
-    const userId = sessionStorage.getItem("userId");
-    let userCanEdit = false;
-    if (post.userId === userId) userCanEdit = true;
-    post.collaborators.forEach((collaborator) => {
-      if (collaborator.id === userId) userCanEdit = true;
-    });
-    return userCanEdit;
-  }
-
   toggleEditMode() {
-    this.setState({ editMode: true });
+    if (!this.state.post.currentUser) {
+      this.updatePostCurrentUser(this._isLoggedIn, true);
+    }
   }
 
-  toggleColabMode() {
-    this.setState({ collabMode: true });
+  updatePostCurrentUser(currentUser, editMode) {
+    const data = {
+      currentUser,
+    };
+    axios
+      .put(
+        process.env.REACT_APP_BASE_URL + "/api/home/" + this.state.post._id,
+        data
+      )
+      .then((res) => {
+        let updatedPost = this.state.post;
+        updatedPost.currentUser = currentUser;
+        this.setState({ post: updatedPost, editMode });
+      })
+      .catch((err) => {
+        console.log("Error accessing editmode: " + err);
+      });
   }
 
   updatePost = (updatedPost) => {
     this.setState({ post: updatedPost, editMode: false });
   };
 
+  toggleColabMode() {
+    this.setState({ collabMode: true });
+  }
+
   cancel(mode) {
     switch (mode) {
       case "edit":
-        this.setState({ editMode: false });
+        this.updatePostCurrentUser("", false);
         break;
       case "collab":
         this.setState({ collabMode: false });
@@ -97,14 +126,11 @@ class PostPage extends Component {
   }
 
   render() {
-    const editMode = this.state.editMode;
-    const collabMode = this.state.collabMode;
-
     return (
       <div className="wrapper">
         <Header isLoggedIn={this._isLoggedIn} />
-        {!editMode &&
-          !collabMode &&
+        {!this.state.editMode &&
+          !this.state.collabMode &&
           (this.state.post === null ? (
             <main className="cards main--loading">
               <PostStatus
@@ -119,24 +145,31 @@ class PostPage extends Component {
               </div>
               {this.state.userCanEdit && (
                 <div className="card-width-wrapper margin-bottom">
-                  <Options>
-                    <div className="options__left">
-                      <button
-                        className="btn small-screen-margin-bottom"
-                        onClick={() => this.toggleEditMode()}
-                      >
-                        Edit
-                      </button>
-                    </div>
-                    <div className="options__right">
-                      <button
-                        className="btn btn--wide"
-                        onClick={() => this.toggleColabMode()}
-                      >
-                        Manage Collaborators
-                      </button>
-                    </div>
-                  </Options>
+                  {this.state.post.currentUser ? (
+                    <p className="font--secondary-color">
+                      {"Currently being edited by: " +
+                        this.state.post.currentUser}
+                    </p>
+                  ) : (
+                    <Options>
+                      <div className="options__left">
+                        <button
+                          className="btn small-screen-margin-bottom"
+                          onClick={() => this.toggleEditMode()}
+                        >
+                          Edit
+                        </button>
+                      </div>
+                      <div className="options__right">
+                        <button
+                          className="btn btn--wide"
+                          onClick={() => this.toggleColabMode()}
+                        >
+                          Manage Collaborators
+                        </button>
+                      </div>
+                    </Options>
+                  )}
                 </div>
               )}
               <Comment
@@ -146,7 +179,7 @@ class PostPage extends Component {
               />
             </main>
           ))}
-        {editMode && (
+        {this.state.editMode && (
           <main className="cards">
             <EditPost post={this.state.post} updatePost={this.updatePost} />
             <div className="card-width-wrapper">
@@ -158,7 +191,7 @@ class PostPage extends Component {
             </div>
           </main>
         )}
-        {collabMode && (
+        {this.state.collabMode && (
           <main className="cards">
             <PostCollabs post={this.state.post} />
             <div className="card-width-wrapper">

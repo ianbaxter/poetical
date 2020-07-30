@@ -30,6 +30,7 @@ const EditPost = ({ post, updatePost }) => {
       tags: tagsArray,
       dateEdited: new Date(),
       isPrivate: newIsPrivate,
+      currentUser: "",
     };
 
     axios
@@ -40,6 +41,7 @@ const EditPost = ({ post, updatePost }) => {
         updatedPost.body = newBody;
         updatedPost.tags = tagsArray;
         updatedPost.isPrivate = newIsPrivate;
+        updatedPost.currentUser = "";
         updatePost(updatedPost);
       })
       .catch((err) => {
