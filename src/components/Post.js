@@ -146,7 +146,7 @@ const Post = ({ post, setPosts }) => {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
-              fill="white"
+              fill="black"
               width="18px"
               height="18px"
             >
@@ -159,7 +159,7 @@ const Post = ({ post, setPosts }) => {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
-              fill="white"
+              fill="black"
               width="18px"
               height="18px"
             >

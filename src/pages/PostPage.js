@@ -29,7 +29,7 @@ class PostPage extends Component {
 
   componentDidMount() {
     window.addEventListener("beforeunload", (e) => {
-      this.updatePostCurrentUserOnExit();
+      this.updateCurrentUserOnExit();
     });
     this._isMounted = true;
     this.getPost();
@@ -37,10 +37,10 @@ class PostPage extends Component {
 
   componentWillUnmount() {
     this._isMounted = false;
-    this.updatePostCurrentUserOnExit();
+    this.updateCurrentUserOnExit();
   }
 
-  updatePostCurrentUserOnExit() {
+  updateCurrentUserOnExit() {
     if (this._isLoggedIn === this.state.post.currentUser) {
       const data = {
         currentUser: "",
@@ -88,11 +88,11 @@ class PostPage extends Component {
 
   toggleEditMode() {
     if (!this.state.post.currentUser) {
-      this.updatePostCurrentUser(this._isLoggedIn, true);
+      this.updateCurrentUser(this._isLoggedIn, true);
     }
   }
 
-  updatePostCurrentUser(currentUser, editMode) {
+  updateCurrentUser(currentUser, editMode) {
     const data = {
       currentUser,
     };
@@ -122,7 +122,7 @@ class PostPage extends Component {
   cancel(mode) {
     switch (mode) {
       case "edit":
-        this.updatePostCurrentUser("", false);
+        this.updateCurrentUser("", false);
         break;
       case "collab":
         this.setState({ collabMode: false });

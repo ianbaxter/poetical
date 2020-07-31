@@ -1,10 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Cookie&display=swap");
 
-$primaryColor: white;
-$secondaryColor: rgba(255, 255, 255, 0.589);
-$highlightColor: #007bff;
-$backgroundColor: #2c3e50;
-
 html {
   scroll-behavior: smooth;
 }
@@ -22,8 +17,8 @@ h2 {
 }
 
 h3 {
-  color: white;
-  font-style: italic;
+  font-family: "Cookie", serif;
+  font-size: 2.5rem;
 }
 
 h5 {
@@ -32,34 +27,33 @@ h5 {
   font-weight: 400;
 }
 
-.font--secondary-color {
-  color: $secondaryColor;
-}
-
 a:link {
   text-decoration: none;
 }
 
-a:hover {
-  color: $primaryColor;
-}
-
-.p--secondary {
-  color: $secondaryColor;
-}
-
 .app {
   align-items: center;
-  background-color: $backgroundColor;
   min-height: 100vh;
   min-width: 100px;
-  color: $primaryColor;
 }
 
 .wrapper {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+header,
+footer {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  height: 68px;
+  a {
+    transition: all 0.2s ease;
+  }
 }
 
 main {
@@ -72,21 +66,6 @@ main {
   justify-content: center;
 }
 
-header,
-footer {
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  justify-content: center;
-  align-items: center;
-  height: 68px;
-  background-color: #282c34;
-  a {
-    color: $secondaryColor;
-    transition: all 0.2s ease;
-  }
-}
-
 footer {
   margin-top: 20px;
 }
@@ -97,20 +76,19 @@ footer {
   justify-content: space-between;
   width: 90%;
   height: 100%;
-  a {
-    color: $primaryColor;
-  }
 }
 
 .menu {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
   cursor: pointer;
+  margin-right: 4px;
   div {
-    box-sizing: border-box;
     width: 30px;
     height: 3px;
-    background-color: $primaryColor;
-    margin: 7px 0;
     transition: all 0.3s ease;
+    border-radius: 23%;
   }
 }
 
@@ -127,6 +105,10 @@ footer {
   }
 }
 
+.visible-top-options {
+  display: flex;
+}
+
 .top-options-wrapper {
   display: flex;
   justify-content: center;
@@ -139,7 +121,6 @@ footer {
   position: absolute;
   z-index: 1;
   width: 100%;
-  background: #282c34;
   align-items: flex-end;
   .btn {
     margin: 10px 5vw 10px 0;
@@ -162,18 +143,12 @@ footer {
 
 .card {
   width: 90%;
-  background: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.125);
   margin: 20px 0px;
   padding: 20px;
-  border-radius: 5px;
   overflow: hidden;
-  box-shadow: 0 4px 4px 0 #282c34, 0 6px 10px 0 #282c34f6;
+  border-radius: 5px;
   p {
     white-space: pre-line;
-  }
-  &:hover {
-    border-color: #2e323a;
   }
 }
 
@@ -188,7 +163,6 @@ footer {
 
 .post {
   p {
-    color: $primaryColor;
     overflow: hidden;
   }
 }
@@ -200,7 +174,6 @@ footer {
     -webkit-box-orient: vertical;
   }
   &:hover {
-    background: #2e323a;
     transition: 0.2s;
   }
 }
@@ -210,21 +183,14 @@ footer {
   flex-wrap: wrap;
   margin-bottom: 16px;
   button {
-    color: $secondaryColor;
     font-size: 14px;
     padding: 2px 4px;
-    border: solid 1px $secondaryColor;
-    border-radius: 5px;
+    border: solid 1px;
     margin-right: 8px;
     margin-bottom: 8px;
-    background: transparent;
+    border-radius: 5px;
     &:hover {
-      color: $primaryColor;
-      border-color: $primaryColor;
       cursor: pointer;
-    }
-    &:focus {
-      box-shadow: 0 0 0.5px 0.5px $primaryColor;
     }
   }
 }
@@ -236,11 +202,9 @@ footer {
     align-content: flex-end;
     align-items: flex-end;
     font-size: 14px;
-    color: $secondaryColor;
     margin: 0;
   }
   label {
-    color: $secondaryColor;
     font-size: 14px;
     margin: 0;
     margin-right: 4px;
@@ -256,17 +220,11 @@ footer {
   button {
     box-sizing: border-box;
     font-style: italic;
-    color: $secondaryColor;
     padding: 0;
     border: none;
     margin-bottom: 4px;
-    background: transparent;
     &:hover {
-      color: $primaryColor;
       cursor: pointer;
-    }
-    &:focus {
-      color: $primaryColor;
     }
   }
 }
@@ -278,20 +236,14 @@ input[type="password"] {
   margin-bottom: 20px;
   padding: 0 8px;
   width: 100%;
-  border-radius: 3px;
-  border: solid 1px black;
-  background: #3c5168;
-  color: $primaryColor;
+  border: none;
+  border-radius: 5px;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="password"] {
   height: 38px;
-}
-
-::placeholder {
-  color: rgba(255, 255, 255, 0.8);
 }
 
 .post__stats {
@@ -301,18 +253,16 @@ input[type="password"] {
   p {
     font-size: 14px;
     margin: 0 0 0 16px;
-    color: $secondaryColor;
   }
   button {
     display: flex;
-    background: transparent;
     border: none;
     padding: 0;
   }
   svg {
     cursor: pointer;
     &:hover {
-      border: 1px solid $secondaryColor;
+      border: 1px solid;
       border-radius: 5px;
     }
   }
@@ -353,18 +303,10 @@ input[type="password"] {
 .btn {
   display: flex;
   justify-content: center;
-  color: $primaryColor;
   font-weight: 600;
   width: 80px;
-  background: transparent;
-  border: 1px solid $primaryColor;
-  &:hover {
-    border: 1px solid $highlightColor;
-  }
-}
-
-.btn--red:hover {
-  border: 1px solid rgb(148, 0, 0);
+  border: 1px solid;
+  border-radius: 5px;
 }
 
 .btn--full-width {
@@ -373,6 +315,15 @@ input[type="password"] {
 
 .btn--wide {
   width: 200px;
+}
+
+.btn--minimal {
+  align-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  margin-left: 16px;
+  border: none;
 }
 
 .divider {
@@ -392,9 +343,7 @@ input[type="password"] {
   align-items: center;
   text-align: center;
   font-style: italic;
-  color: $secondaryColor;
   a {
-    color: $primaryColor;
     text-decoration: underline;
   }
 }

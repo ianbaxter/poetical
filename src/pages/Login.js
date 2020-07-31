@@ -88,7 +88,7 @@ const Login = () => {
             </button>
           </form>
           <div className="entry__nav card-width-wrapper">
-            <p>
+            <p className="font--secondary-color">
               Not yet registered? <Link to="/register">Sign up</Link>
             </p>
             <p className="font--secondary-color">{errorMessage}</p>

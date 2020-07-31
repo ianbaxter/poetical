@@ -91,7 +91,7 @@ const PostCollab = ({ post }) => {
               <li key={collaborator.id}>{collaborator.username}</li>
             ))
           ) : (
-            <p className="p--secondary">No Collaborators</p>
+            <p className="font--secondary-color">No Collaborators</p>
           )}
         </div>
       </div>

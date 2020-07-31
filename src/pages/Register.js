@@ -105,7 +105,7 @@ const Register = () => {
             </button>
           </form>
           <div className="entry__nav card-width-wrapper">
-            <p>
+            <p className="font--secondary-color">
               Already registered? <Link to="/login">Login</Link>
             </p>
             <p className="font--secondary-color">{errorMessage}</p>
