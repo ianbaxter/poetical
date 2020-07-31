@@ -108,8 +108,10 @@ const Wrapper = styled.div`
 `;
 
 export const MyThemeProvider = ({ children }) => {
+  const storedMode = localStorage.getItem("mode");
+
   const [themeState, setThemeState] = useState({
-    mode: localStorage.getItem("mode"),
+    mode: storedMode ? storedMode : "dark",
   });
 
   const toggle = () => {
