@@ -53,6 +53,7 @@ const Header = (props) => {
             </Link>
           )}
           <button
+            aria-label="Change Theme"
             className="btn btn--minimal"
             onClick={() => themeToggle.toggle()}
           >
