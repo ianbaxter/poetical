@@ -1,6 +1,6 @@
 import React from "react";
 
-const PostStatus = ({ message, animation }) => {
+const StatusMessage = ({ message, animation }) => {
   return (
     <section className={animation}>
       <h2>{message}</h2>
@@ -8,4 +8,4 @@ const PostStatus = ({ message, animation }) => {
   );
 };
 
-export default PostStatus;
+export default StatusMessage;

@@ -1,13 +1,15 @@
-import React, { Component } from "react";
+import React, { Component, Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
 import history from "../history";
-import Post from "../components/Post";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import NewPost from "../components/NewPost";
-import PostStatus from "../components/PostStatus";
+import StatusMessage from "../components/StatusMessage";
 import Options from "../components/Options";
+import ErrorBoundary from "../components/ErrorBoundary";
 import axios from "axios";
+
+const Post = lazy(() => import("../components/Post"));
 
 class Home extends Component {
   _isMounted = false;
@@ -101,12 +103,12 @@ class Home extends Component {
           }
         >
           {this.state.posts === null ? (
-            <PostStatus
+            <StatusMessage
               message={"Loading Posts . . ."}
               animation={"animate-flicker"}
             />
           ) : this.state.posts === "Empty" ? (
-            <PostStatus message={"There are no posts"} />
+            <StatusMessage message={"There are no posts"} />
           ) : (
             <div>
               {this._isLoggedIn && (
@@ -114,58 +116,73 @@ class Home extends Component {
                   <NewPost getPosts={() => this.getPosts()} />
                 </section>
               )}
-              <section className="cards">
-                {window.location.search && (
-                  <div className="card-width-wrapper">
-                    <hr className="divider" />
-                    <Options>
-                      <div className="options__left">
-                        <h5>
-                          {window.location.search.includes("tag")
-                            ? "Showing posts tagged as: " +
-                              new URL(window.location.href).searchParams.get(
-                                "tag"
-                              )
-                            : "Showing posts by: " +
-                              new URL(window.location.href).searchParams.get(
-                                "username"
-                              )}
-                        </h5>
+              <Suspense
+                fallback={
+                  <StatusMessage
+                    message={"Loading Posts . . ."}
+                    animation={"animate-flicker"}
+                  />
+                }
+              >
+                <ErrorBoundary
+                  fallback={
+                    <StatusMessage message={<h1>Something went wrong</h1>} />
+                  }
+                >
+                  <section className="cards">
+                    {window.location.search && (
+                      <div className="card-width-wrapper">
+                        <hr className="divider" />
+                        <Options>
+                          <div className="options__left">
+                            <h5>
+                              {window.location.search.includes("tag")
+                                ? "Showing posts tagged as: " +
+                                  new URL(
+                                    window.location.href
+                                  ).searchParams.get("tag")
+                                : "Showing posts by: " +
+                                  new URL(
+                                    window.location.href
+                                  ).searchParams.get("username")}
+                            </h5>
+                          </div>
+                          <div className="options__right">
+                            <button
+                              className="btn btn--red"
+                              onClick={() => this.clearFilter()}
+                            >
+                              Clear
+                            </button>
+                          </div>
+                        </Options>
                       </div>
-                      <div className="options__right">
-                        <button
-                          className="btn btn--red"
-                          onClick={() => this.clearFilter()}
-                        >
-                          Clear
-                        </button>
-                      </div>
-                    </Options>
-                  </div>
-                )}
-                {this.state.posts.map(
-                  (post) =>
-                    (!post.isPrivate ||
-                      post.userId === userId ||
-                      post.collaborators.filter(
-                        (collaborator) => collaborator.id === userId
-                      ).length > 0) && (
-                      <Link
-                        to={{
-                          pathname: `/post/${post._id}`,
-                          state: {
-                            postId: post._id,
-                          },
-                        }}
-                        className="card post--summary"
-                        key={post._id}
-                        aria-label={post.title}
-                      >
-                        <Post post={post} setPosts={this.setPosts} />
-                      </Link>
-                    )
-                )}
-              </section>
+                    )}
+                    {this.state.posts.map(
+                      (post) =>
+                        (!post.isPrivate ||
+                          post.userId === userId ||
+                          post.collaborators.filter(
+                            (collaborator) => collaborator.id === userId
+                          ).length > 0) && (
+                          <Link
+                            to={{
+                              pathname: `/post/${post._id}`,
+                              state: {
+                                postId: post._id,
+                              },
+                            }}
+                            className="card post--summary"
+                            key={post._id}
+                            aria-label={post.title}
+                          >
+                            <Post post={post} setPosts={this.setPosts} />
+                          </Link>
+                        )
+                    )}
+                  </section>
+                </ErrorBoundary>
+              </Suspense>
               <section className="bottom">
                 <a href="#top" aria-label="Go to top of page">
                   <svg
@@ -183,10 +200,9 @@ class Home extends Component {
             </div>
           )}
         </main>
-        <Footer
-          message={"View on GitHub"}
-          link={"https://github.com/ianbaxter/chat-wall"}
-        />
+        <Footer>
+          <a href="https://github.com/ianbaxter/chat-wall">View on GitHub</a>
+        </Footer>
       </div>
     );
   }

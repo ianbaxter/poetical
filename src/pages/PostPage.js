@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Post from "../components/Post";
 import EditPost from "../components/EditPost";
-import PostStatus from "../components/PostStatus";
+import StatusMessage from "../components/StatusMessage";
 import PostCollabs from "../components/PostCollabs";
 import Options from "../components/Options";
 import Comment from "../components/Comment";
@@ -140,7 +140,7 @@ class PostPage extends Component {
           !this.state.collabMode &&
           (this.state.post === null ? (
             <main className="cards main--loading">
-              <PostStatus
+              <StatusMessage
                 message={"Loading Posts . . ."}
                 animation={"animate-flicker"}
               />

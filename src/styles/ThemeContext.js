@@ -32,12 +32,14 @@ const Wrapper = styled.div`
     border-color: ${borderColor};
     background: ${"transparent"};
     &:hover {
+      color: ${primaryTextColor};
       border-color: ${highlightColor};
     }
   }
   a {
     color: ${primaryTextColor};
     &:hover {
+      color: ${primaryTextColor};
       border-color: ${highlightColor};
     }
   }
