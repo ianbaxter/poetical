@@ -56,18 +56,12 @@ footer {
   }
 }
 
-main {
-  flex-grow: 1;
-}
-
-.main--loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 footer {
   margin-top: 20px;
+}
+
+main {
+  flex-grow: 1;
 }
 
 #top {
@@ -159,6 +153,13 @@ footer {
   p {
     margin-bottom: 32px;
   }
+}
+
+.status-message {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
 }
 
 .post {
@@ -346,11 +347,6 @@ input[type="password"] {
   a {
     text-decoration: underline;
   }
-}
-
-.bottom {
-  display: flex;
-  justify-content: center;
 }
 
 @keyframes flickerAnimation {

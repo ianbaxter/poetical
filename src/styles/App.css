@@ -75,26 +75,14 @@ footer a {
   transition: all 0.2s ease;
 }
 
+footer {
+  margin-top: 20px;
+}
+
 main {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
-}
-
-.main--loading {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-footer {
-  margin-top: 20px;
 }
 
 #top {
@@ -229,6 +217,21 @@ footer {
 
 .card--intro p {
   margin-bottom: 32px;
+}
+
+.status-message {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .post p {
@@ -470,15 +473,6 @@ input[type="password"] {
 
 .entry__nav a {
   text-decoration: underline;
-}
-
-.bottom {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
 }
 
 @-webkit-keyframes flickerAnimation {

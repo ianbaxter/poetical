@@ -41,7 +41,7 @@ class PostPage extends Component {
   }
 
   updateCurrentUserOnExit() {
-    if (this._isLoggedIn === this.state.post.currentUser) {
+    if (this.state.post && this._isLoggedIn === this.state.post.currentUser) {
       const data = {
         currentUser: "",
       };
@@ -139,12 +139,10 @@ class PostPage extends Component {
         {!this.state.editMode &&
           !this.state.collabMode &&
           (this.state.post === null ? (
-            <main className="cards main--loading">
-              <StatusMessage
-                message={"Loading Posts . . ."}
-                animation={"animate-flicker"}
-              />
-            </main>
+            <StatusMessage
+              message={"Loading Post . . ."}
+              animation={"animate-flicker"}
+            />
           ) : (
             <main className="cards">
               <div className="card">
