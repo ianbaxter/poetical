@@ -59,26 +59,22 @@ const Login = () => {
       <main>
         <section className="cards entry">
           <form onSubmit={onSubmit} className="card">
-            <label htmlFor="email" id="login-email">
-              Email:
-            </label>
+            <label htmlFor="email">Email:</label>
             <input
               type="email"
-              aria-labelledby="login-email"
-              placeholder="Email"
               name="email"
+              id="email"
+              placeholder="Email"
               value={email}
               onChange={handleInputChange}
               autoComplete="email"
             />
-            <label htmlFor="password" id="login-password">
-              Password:
-            </label>
+            <label htmlFor="password">Password:</label>
             <input
               type="password"
-              aria-labelledby="login-password"
-              placeholder="Password"
               name="password"
+              id="password"
+              placeholder="Password"
               value={password}
               onChange={handleInputChange}
               autoComplete="current-password"

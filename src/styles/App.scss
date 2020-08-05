@@ -76,8 +76,12 @@ main {
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
+  border: 0;
   cursor: pointer;
   margin-right: 4px;
+  &:focus {
+    outline: 0;
+  }
   div {
     width: 30px;
     height: 3px;

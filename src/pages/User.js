@@ -155,16 +155,14 @@ const User = () => {
       <Header isLoggedIn={sessionStorage.getItem("username")} />
       <main className="cards">
         <div className="card">
-          <label htmlFor="email" id="change-email">
-            Email:
-          </label>
+          <label htmlFor="email">Email:</label>
           {emailEditMode ? (
             <div>
               <input
                 type="email"
-                aria-labelledby="change-email"
-                placeholder="New Email"
                 name="email"
+                id="email"
+                placeholder="New Email"
                 value={email}
                 onChange={handleInputChange}
               />
@@ -204,15 +202,13 @@ const User = () => {
             </div>
           )}
           <hr className="divider" />
-          <label htmlFor="username" id="change-username">
-            Username:
-          </label>
+          <label htmlFor="username">Username:</label>
           {usernameEditMode ? (
             <div>
               <input
                 type="text"
                 name="username"
-                aria-labelledby="change-username"
+                id="username"
                 cols="50"
                 rows="1"
                 value={username}
@@ -259,14 +255,12 @@ const User = () => {
           <hr className="divider" />
           {passwordEditMode ? (
             <div>
-              <label htmlFor="password" id="change-password">
-                New Password:
-              </label>
+              <label htmlFor="password">New Password:</label>
               <input
                 type="password"
-                aria-labelledby="change-password"
-                placeholder="New Password"
                 name="password"
+                id="password"
+                placeholder="New Password"
                 value={password}
                 onChange={handleInputChange}
               />

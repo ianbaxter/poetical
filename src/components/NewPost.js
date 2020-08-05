@@ -61,25 +61,21 @@ const NewPost = ({ getPosts }) => {
         Hi <i>{sessionStorage.getItem("username")}</i>, add your new post here:
       </p>
       <hr className="divider" />
-      <label htmlFor="title" id="title-label">
-        Title:
-      </label>
+      <label htmlFor="title">Title:</label>
       <input
         type="text"
         name="title"
-        aria-labelledby="title-label"
+        id="title"
         cols="50"
         rows="1"
         placeholder="Title..."
         value={title}
         onChange={handleInputChange}
       />
-      <label htmlFor="body" id="body-label">
-        Content:
-      </label>
+      <label htmlFor="content">Content:</label>
       <textarea
         name="body"
-        aria-labelledby="body-label"
+        id="content"
         cols="50"
         rows="3"
         placeholder="Content..."
@@ -87,13 +83,11 @@ const NewPost = ({ getPosts }) => {
         onChange={handleInputChange}
       />
       <hr className="divider" />
-      <label htmlFor="tags" id="tags-label">
-        Tags:
-      </label>
+      <label htmlFor="tags">Tags:</label>
       <input
         type="text"
         name="tags"
-        aria-labelledby="tags-label"
+        id="tags"
         cols="50"
         rows="1"
         placeholder="Song, Rap, Poem, Haiku..."

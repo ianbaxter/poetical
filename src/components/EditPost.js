@@ -5,10 +5,10 @@ import OptionPrivate from "../components/OptionPrivate";
 import axios from "axios";
 
 const EditPost = ({ post, updatePost }) => {
-  const [newTitle, setNewTitle] = useState(post.title);
-  const [newBody, setNewBody] = useState(post.body);
-  const [newTags, setNewTags] = useState(post.tags.toString());
-  const [newIsPrivate, setNewIsPrivate] = useState(post.isPrivate);
+  const [title, setTitle] = useState(post.title);
+  const [body, setBody] = useState(post.body);
+  const [tags, setTags] = useState(post.tags.toString());
+  const [isPrivate, setIsPrivate] = useState(post.isPrivate);
 
   const deletePost = () => {
     axios
@@ -23,13 +23,13 @@ const EditPost = ({ post, updatePost }) => {
 
   const saveEditedPost = (dateEdited) => {
     // Check if tags input field is empty
-    let tagsArray = newTags === "" ? [] : newTags.split(",");
+    let tagsArray = tags === "" ? [] : tags.split(",");
     const data = {
-      title: newTitle,
-      body: newBody,
+      title,
+      body,
       tags: tagsArray,
       dateEdited: new Date(),
-      isPrivate: newIsPrivate,
+      isPrivate,
       currentUser: "",
     };
 
@@ -37,10 +37,10 @@ const EditPost = ({ post, updatePost }) => {
       .put(process.env.REACT_APP_BASE_URL + "/api/home/" + post._id, data)
       .then((res) => {
         let updatedPost = post;
-        updatedPost.title = newTitle;
-        updatedPost.body = newBody;
+        updatedPost.title = title;
+        updatedPost.body = body;
         updatedPost.tags = tagsArray;
-        updatedPost.isPrivate = newIsPrivate;
+        updatedPost.isPrivate = isPrivate;
         updatedPost.currentUser = "";
         updatePost(updatedPost);
       })
@@ -53,17 +53,17 @@ const EditPost = ({ post, updatePost }) => {
     const name = e.target.name;
     const value = e.target.value;
     switch (name) {
-      case "newTitle":
-        setNewTitle(value);
+      case "title":
+        setTitle(value);
         break;
-      case "newBody":
-        setNewBody(value);
+      case "body":
+        setBody(value);
         break;
-      case "newTags":
-        setNewTags(value);
+      case "tags":
+        setTags(value);
         break;
-      case "newIsPrivate":
-        setNewIsPrivate(e.target.checked);
+      case "isPrivate":
+        setIsPrivate(e.target.checked);
         break;
       default:
         return;
@@ -72,47 +72,41 @@ const EditPost = ({ post, updatePost }) => {
 
   return (
     <div className="card">
-      <label htmlFor="newTitle" id="newTitle-label">
-        Title:
-      </label>
+      <label htmlFor="title">Title:</label>
       <input
         type="text"
-        name="newTitle"
-        aria-labelledby="newTitle-label"
+        name="title"
+        id="title"
         cols="50"
         rows="1"
-        value={newTitle}
+        value={title}
         onChange={handleInputChange}
       />
-      <label htmlFor="newBody" id="newBody-label">
-        Content:
-      </label>
+      <label htmlFor="body">Content:</label>
       <textarea
-        name="newBody"
-        aria-labelledby="newBody-label"
+        name="body"
+        id="body"
         cols="50"
         rows="3"
-        value={newBody}
+        value={body}
         onChange={handleInputChange}
       />
       <hr className="divider" />
-      <label htmlFor="newTags" id="newTags-label">
-        Tags:
-      </label>
+      <label htmlFor="tags">Tags:</label>
       <input
         type="text"
-        name="newTags"
-        aria-labelledby="newTags-label"
+        name="tags"
+        id="tags"
         cols="50"
         rows="1"
         placeholder="Enter Tags"
-        value={newTags}
+        value={tags}
         onChange={handleInputChange}
       />
       <div className="margin-bottom">
         <OptionPrivate
           name="newIsPrivate"
-          checked={newIsPrivate}
+          checked={isPrivate}
           handleOnChange={handleInputChange}
         />
       </div>

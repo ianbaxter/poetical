@@ -39,14 +39,15 @@ const Header = (props) => {
         </Link>
         <div className="visible-top-options">
           {props.isLoggedIn ? (
-            <div
+            <button
               className={"menu " + (menuVisible && "menu--active")}
               onClick={toggleMenu}
+              aria-label="Main menu"
             >
               <div className="line1"></div>
               <div className="line2"></div>
               <div className="line3"></div>
-            </div>
+            </button>
           ) : (
             <Link to="/login" className="btn">
               Login

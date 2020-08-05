@@ -97,13 +97,11 @@ const PostCollab = ({ post }) => {
       </div>
       <hr className="divider" />
       <div>
-        <label htmlFor="collaborator" id="collaborator-label">
-          Collaborator Username:
-        </label>
+        <label htmlFor="collaborator">Collaborator Username:</label>
         <input
           type="text"
           name="collaborator"
-          aria-labelledby="collaborator-label"
+          id="collaborator"
           cols="50"
           rows="1"
           placeholder="Username (case sensitive)"

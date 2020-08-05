@@ -110,8 +110,13 @@ main {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  border: 0;
   cursor: pointer;
   margin-right: 4px;
+}
+
+.menu:focus {
+  outline: 0;
 }
 
 .menu div {

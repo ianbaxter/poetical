@@ -187,9 +187,11 @@ class Home extends Component {
             </Suspense>
           )}
         </main>
-        <Footer>
-          <a href="https://github.com/ianbaxter/chat-wall">View on GitHub</a>
-        </Footer>
+        {this.state.posts && (
+          <Footer>
+            <a href="https://github.com/ianbaxter/chat-wall">View on GitHub</a>
+          </Footer>
+        )}
       </div>
     );
   }

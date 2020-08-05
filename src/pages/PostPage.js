@@ -208,7 +208,7 @@ class PostPage extends Component {
             </div>
           </main>
         )}
-        <Footer />
+        {this.state.post && <Footer />}
       </div>
     );
   }

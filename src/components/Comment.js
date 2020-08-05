@@ -57,12 +57,10 @@ const Comment = ({ post, isLoggedIn, getPost }) => {
       {isLoggedIn ? (
         <div>
           <hr></hr>
-          <label htmlFor="comment" id="new-comment-label">
-            New comment:
-          </label>
+          <label htmlFor="comment">New comment:</label>
           <textarea
             name="comment"
-            aria-labelledby="new-comment-label"
+            id="comment"
             cols="50"
             rows="2"
             value={comment}
