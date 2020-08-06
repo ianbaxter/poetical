@@ -12,7 +12,7 @@ const Post = ({ post, setPosts }) => {
   const toggleFavourite = (e) => {
     e.preventDefault();
     if (!userId) {
-      console.log("You must be logged in to favoutie posts");
+      console.error("You must be logged in to favoutie posts");
       return;
     }
 
@@ -42,7 +42,7 @@ const Post = ({ post, setPosts }) => {
           favouritingPost = false;
         })
         .catch((err) => {
-          console.log("Error updating post: " + err);
+          console.error("Error updating post: " + err);
           favouritingPost = false;
         });
     }
@@ -80,7 +80,7 @@ const Post = ({ post, setPosts }) => {
         setPosts(postsReversed);
       })
       .catch((err) => {
-        console.log("Error getting posts by tag: " + err);
+        console.error("Error getting posts by tag: " + err);
       });
   };
 

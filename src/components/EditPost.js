@@ -17,7 +17,7 @@ const EditPost = ({ post, updatePost }) => {
         history.push("/");
       })
       .catch((err) => {
-        console.log("Error deleting post: " + err);
+        console.error("Error deleting post: " + err);
       });
   };
 
@@ -45,7 +45,7 @@ const EditPost = ({ post, updatePost }) => {
         updatePost(updatedPost);
       })
       .catch((err) => {
-        console.log("Error updating post: " + err);
+        console.error("Error updating post: " + err);
       });
   };
 

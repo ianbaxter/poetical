@@ -30,7 +30,7 @@ const User = () => {
         setEmail(res.data.email);
         setUsername(res.data.username);
       })
-      .catch((err) => console.log("Error getting user: " + err));
+      .catch((err) => console.error("Error getting user: " + err));
   };
 
   const saveEditedUser = (userField) => {
@@ -51,7 +51,7 @@ const User = () => {
             setEmailEditMode(false);
           })
           .catch((err) => {
-            console.log("Error updating user: " + err);
+            console.error("Error updating user: " + err);
           });
         break;
       case "username":
@@ -71,7 +71,7 @@ const User = () => {
             setUsernameEditMode(false);
           })
           .catch((err) => {
-            console.log("Error updating user: " + err);
+            console.error("Error updating user: " + err);
           });
         break;
       case "password":
@@ -89,7 +89,7 @@ const User = () => {
             setPasswordnameEditMode(false);
           })
           .catch((err) => {
-            console.log("Error updating user: " + err);
+            console.error("Error updating user: " + err);
           });
         break;
       default:
@@ -315,8 +315,7 @@ function updatePostsByUser(user, username) {
     .put(process.env.REACT_APP_BASE_URL + "/api/account/", usernameData, {
       withCredentials: true,
     })
-    .then((res) => console.log("User posts updated with new username"))
     .catch((err) => {
-      console.log("Error updating user: " + err);
+      console.error("Error updating user: " + err);
     });
 }

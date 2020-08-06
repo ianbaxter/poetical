@@ -20,7 +20,7 @@ const Comment = ({ post, isLoggedIn, getPost }) => {
         setComment("");
         getPost();
       })
-      .catch((err) => console.log("Eror saving comment: " + err));
+      .catch((err) => console.error("Eror saving comment: " + err));
   };
 
   const handleInputChange = (e) => {

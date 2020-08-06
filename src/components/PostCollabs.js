@@ -8,7 +8,7 @@ const PostCollab = ({ post }) => {
   const addCollaborator = () => {
     if (newCollaborator === "") return;
     if (newCollaborator === sessionStorage.getItem("username"))
-      return console.log("Cannot add yourself as a collaborator");
+      return console.error("Cannot add yourself as a collaborator");
 
     let collaborators = post.collaborators;
 
@@ -19,7 +19,7 @@ const PostCollab = ({ post }) => {
         (collaborator) => collaborator.username === newCollaborator
       ).length > 0
     ) {
-      console.log("User is already a collaborator");
+      console.error("User is already a collaborator");
       return;
     }
 
@@ -41,14 +41,13 @@ const PostCollab = ({ post }) => {
         axios
           .put(process.env.REACT_APP_BASE_URL + "/api/home/" + post._id, data)
           .then((res) => {
-            console.log("Added new collaborator: " + newCollaborator);
             setCollaborator("");
           })
           .catch((err) => {
-            console.log("Error updating post: " + err);
+            console.error("Error updating post: " + err);
           });
       })
-      .catch((err) => console.log("This user does not exist: " + err));
+      .catch((err) => console.error("This user does not exist: " + err));
   };
 
   const removeCollaborator = () => {
@@ -60,8 +59,6 @@ const PostCollab = ({ post }) => {
     });
 
     if (collaboratorIndex >= 0) {
-      console.log("Remove collaborator");
-
       collaborators.splice(collaboratorIndex, 1);
 
       const data = { collaborators };
@@ -71,7 +68,7 @@ const PostCollab = ({ post }) => {
           setCollaborator("");
         })
         .catch((err) => {
-          console.log("Error updating post: " + err);
+          console.error("Error updating post: " + err);
         });
     }
     return;

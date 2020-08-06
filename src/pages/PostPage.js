@@ -51,7 +51,7 @@ class PostPage extends Component {
           data
         )
         .catch((err) => {
-          console.log("Error updating post: " + err);
+          console.error("Error updating post: " + err);
         });
     }
   }
@@ -83,7 +83,7 @@ class PostPage extends Component {
           });
         }
       })
-      .catch((err) => console.log("Error getting post: " + err));
+      .catch((err) => console.error("Error getting post: " + err));
   }
 
   toggleEditMode() {
@@ -107,7 +107,7 @@ class PostPage extends Component {
         this.setState({ post: updatedPost, editMode });
       })
       .catch((err) => {
-        console.log("Error accessing editmode: " + err);
+        console.error("Error accessing editmode: " + err);
       });
   }
 

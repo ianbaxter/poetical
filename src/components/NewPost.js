@@ -30,7 +30,7 @@ const NewPost = ({ getPosts }) => {
         getPosts();
       })
       .catch((err) => {
-        console.log("Error saving new post: " + err);
+        console.error("Error saving new post: " + err);
       });
   };
 

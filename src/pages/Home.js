@@ -14,6 +14,7 @@ const Post = lazy(() => import("../components/Post"));
 class Home extends Component {
   _isMounted = false;
   _isLoggedIn = sessionStorage.getItem("username");
+  userId = sessionStorage.getItem("userId");
 
   constructor(props) {
     super(props);
@@ -63,7 +64,7 @@ class Home extends Component {
         }
       })
       .catch((err) => {
-        console.log("Error from posts: " + err);
+        console.error("Error from posts: " + err);
       });
   }
 
@@ -77,7 +78,6 @@ class Home extends Component {
   }
 
   render() {
-    const userId = sessionStorage.getItem("userId");
     return (
       <div className="wrapper">
         <Header isLoggedIn={this._isLoggedIn} />
@@ -151,9 +151,9 @@ class Home extends Component {
                   {this.state.posts.map(
                     (post) =>
                       (!post.isPrivate ||
-                        post.userId === userId ||
+                        post.userId === this.userId ||
                         post.collaborators.filter(
-                          (collaborator) => collaborator.id === userId
+                          (collaborator) => collaborator.id === this.userId
                         ).length > 0) && (
                         <Link
                           to={{
