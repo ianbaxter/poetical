@@ -2,7 +2,7 @@
   "name": "poetical",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ianbaxter.github.io/poetical/",
+  "homepage": "https://ianbaxter.github.io/poetical",
   "dependencies": {
     "axios": "^0.19.0",
     "bootstrap": "^4.5.2",
