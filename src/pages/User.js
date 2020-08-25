@@ -209,6 +209,7 @@ const User = () => {
                 type="text"
                 name="username"
                 id="username"
+                placeholder="New Username"
                 cols="50"
                 rows="1"
                 value={username}
