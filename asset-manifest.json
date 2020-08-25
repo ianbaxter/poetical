@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/poetical/static/css/main.3631e4e2.chunk.css",
+    "main.js": "/poetical/static/js/main.c7c513d9.chunk.js",
+    "main.js.map": "/poetical/static/js/main.c7c513d9.chunk.js.map",
+    "runtime-main.js": "/poetical/static/js/runtime-main.2b64be6e.js",
+    "runtime-main.js.map": "/poetical/static/js/runtime-main.2b64be6e.js.map",
+    "static/css/2.11829350.chunk.css": "/poetical/static/css/2.11829350.chunk.css",
+    "static/js/2.3fbc98d1.chunk.js": "/poetical/static/js/2.3fbc98d1.chunk.js",
+    "static/js/2.3fbc98d1.chunk.js.map": "/poetical/static/js/2.3fbc98d1.chunk.js.map",
+    "index.html": "/poetical/index.html",
+    "precache-manifest.77befe76187737af7d88508ab8d0afca.js": "/poetical/precache-manifest.77befe76187737af7d88508ab8d0afca.js",
+    "service-worker.js": "/poetical/service-worker.js",
+    "static/css/2.11829350.chunk.css.map": "/poetical/static/css/2.11829350.chunk.css.map",
+    "static/css/main.3631e4e2.chunk.css.map": "/poetical/static/css/main.3631e4e2.chunk.css.map",
+    "static/js/2.3fbc98d1.chunk.js.LICENSE.txt": "/poetical/static/js/2.3fbc98d1.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2b64be6e.js",
+    "static/css/2.11829350.chunk.css",
+    "static/js/2.3fbc98d1.chunk.js",
+    "static/css/main.3631e4e2.chunk.css",
+    "static/js/main.c7c513d9.chunk.js"
+  ]
+}
