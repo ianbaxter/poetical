@@ -1,6 +1,8 @@
 # Poetical
 
-An application for collaborating on creative prose.
+An application for collaborating on creative writing.
+
+Built using the MERN stack (MongoDB, Express, Node.js & React) and hosted on firebase.
 
 [Back-end (server) source code](https://github.com/ianbaxter/poetical-server).
 
@@ -34,10 +36,6 @@ Then go to http://localhost:3000 in the browser to view the application.
 
 ## Deploy
 
-Replace all instances of https://floating-woodland-24825.herokuapp.com in HTML verbs with your own Heroku app URL.
+Change the .env file so that REACT_APP_BASE_URL=your_server_URL.
 
-To create a production build with Heroku:
-
-```
-npm start
-```
+Then deploy to the hosting service of your choice.
